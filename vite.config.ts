@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-09 13:58:51
- * @LastEditors: wangqiaoling
- * @Description:
- */
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import { defineConfig, loadEnv } from "vite";
@@ -29,6 +22,12 @@ export default ({ command, mode }) => {
         imports: ["vue", "vue-router"],
         //存放的位置
         dts: "src/auto-import.d.ts",
+        // eslint报错解决
+        eslintrc: {
+          enabled: false, // Default `false`
+          filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
+          globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+        },
       }),
       Components({
         // 引入组件的,包括自定义组件
