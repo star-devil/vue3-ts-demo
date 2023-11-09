@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-09 13:58:51
+ * @LastEditTime: 2023-11-09 17:27:26
  * @LastEditors: wangqiaoling
  * @Description:
  */
@@ -13,8 +13,10 @@ import { defineConfig, loadEnv } from "vite";
 import eslint from "vite-plugin-eslint";
 // 自动导入vue中hook reactive ref等
 import AutoImport from "unplugin-auto-import/vite";
-//自动导入ui-组件 比如说ant-design-vue  element-plus等
+// 自动导入ui-组件 比如说ant-design-vue  element-plus等
 import Components from "unplugin-vue-components/vite";
+// antdv自动按需引入组件
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -29,11 +31,23 @@ export default ({ command, mode }) => {
         imports: ["vue", "vue-router"],
         //存放的位置
         dts: "src/auto-import.d.ts",
+        // eslint报错解决
+        eslintrc: {
+          enabled: false, // Default `false`
+          filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
+          globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+        },
       }),
       Components({
         // 引入组件的,包括自定义组件
         // 存放的位置
         dts: "src/components.d.ts",
+        resolvers: [
+          AntDesignVueResolver({
+            importStyle: false, // css in js
+            resolveIcons: true, // 自动导入图标
+          }),
+        ],
       }),
       eslint({ lintOnStart: true, cache: false }),
     ],
