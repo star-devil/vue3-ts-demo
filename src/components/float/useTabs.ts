@@ -1,13 +1,14 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 09:55:44
- * @LastEditTime: 2023-11-10 13:28:10
+ * @LastEditTime: 2023-11-10 14:51:35
  * @LastEditors: wangqiaoling
  * @Description: 菜单tab
  */
 import { MenuProps } from "ant-design-vue";
+import { Key } from "ant-design-vue/es/_util/type";
 export function useTabs() {
-  const current = ref<string[]>(["treatment"]);
+  const current = ref<Key[] | undefined>(["treatment"]);
   const items = ref<MenuProps["items"]>([
     {
       key: "treatment",
@@ -20,8 +21,11 @@ export function useTabs() {
       title: "用药助手",
     },
   ]);
-  const changeMenu = (key: string) => {
-    current.value = [key];
+  const router = useRouter();
+
+  const changeMenu: MenuProps["onClick"] = (menuInfo) => {
+    current.value = menuInfo.keyPath;
+    router.replace(`/${menuInfo.key}`);
   };
   return {
     changeMenu,

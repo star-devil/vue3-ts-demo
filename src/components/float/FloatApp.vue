@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 16:08:55
- * @LastEditTime: 2023-11-10 13:28:25
+ * @LastEditTime: 2023-11-10 15:02:47
  * @LastEditors: wangqiaoling
  * @Description: 全局悬浮式应用
 -->
@@ -37,7 +37,7 @@ const { current, items, changeMenu } = useTabs();
           <div class="header-left-box">
             <img
               class="logo-box"
-              src="@/assets/images/floatApp/robotLogo.svg"
+              src="@assets/images/floatApp/robotLogo.svg"
               alt="logo"
             />
             <span class="title-box">基层医疗AI智能助手</span>
@@ -57,10 +57,7 @@ const { current, items, changeMenu } = useTabs();
           />
         </div>
         <div class="insert-chat-wrap">
-          <div class="content-box">
-            <Chat />
-          </div>
-          <ItemSwitcher />
+          <router-view />
         </div>
       </div>
     </div>
@@ -241,13 +238,6 @@ const { current, items, changeMenu } = useTabs();
         align-items: center;
         justify-content: center;
         min-height: 0;
-
-        .content-box {
-          position: relative;
-          flex: 1;
-          min-width: 0;
-          height: 100%;
-        }
       }
     }
   }

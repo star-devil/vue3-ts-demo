@@ -1,12 +1,12 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:07:42
- * @LastEditTime: 2023-11-10 13:24:15
+ * @LastEditTime: 2023-11-10 15:02:51
  * @LastEditors: wangqiaoling
  * @Description: 聊天组件
 -->
 <script setup lang="ts">
-import { getContainer } from "@/utils/provideConfig";
+import { getContainer } from "@utils/provideConfig.ts";
 </script>
 
 <template>

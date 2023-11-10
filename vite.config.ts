@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-09 17:37:33
+ * @LastEditTime: 2023-11-10 15:01:59
  * @LastEditors: wangqiaoling
  * @Description:
  */
@@ -54,6 +54,8 @@ export default ({ command, mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
+        "@utils": resolve(__dirname, "src/utils"),
+        "@assets": resolve(__dirname, "src/assets"),
       },
     },
     // 在.env.production文件中配置VITE_DROP_CONSOLE = true,

@@ -10,6 +10,10 @@
     "allowJs": true, // 允许编译器编译JS，JSX文件
     "allowSyntheticDefaultImports": true, //允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。默认值：module === "system" 或设置了 --esModuleInterop 且 module 不为 es2015 / esnext
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler", // 模块解析策略，ts5默认用bundler的解析策略，即相对的方式导入

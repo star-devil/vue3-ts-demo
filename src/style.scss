@@ -11,3 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.content-box {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
