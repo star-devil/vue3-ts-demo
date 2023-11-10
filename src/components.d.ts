@@ -7,6 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CloseOutlined: typeof import('@ant-design/icons-vue')['CloseOutlined']
+    EmbedLayout: typeof import('./components/float/EmbedLayout.vue')['default']
+    FloatApp: typeof import('./components/float/FloatApp.vue')['default']
+    MessageOutlined: typeof import('@ant-design/icons-vue')['MessageOutlined']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

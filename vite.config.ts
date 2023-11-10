@@ -1,3 +1,10 @@
+/*
+ * @Author: wangqiaoling
+ * @Date: 2023-11-09 10:13:48
+ * @LastEditTime: 2023-11-09 17:37:33
+ * @LastEditors: wangqiaoling
+ * @Description:
+ */
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import { defineConfig, loadEnv } from "vite";
@@ -6,8 +13,10 @@ import { defineConfig, loadEnv } from "vite";
 import eslint from "vite-plugin-eslint";
 // 自动导入vue中hook reactive ref等
 import AutoImport from "unplugin-auto-import/vite";
-//自动导入ui-组件 比如说ant-design-vue  element-plus等
+// 自动导入ui-组件 比如说ant-design-vue  element-plus等
 import Components from "unplugin-vue-components/vite";
+// antdv自动按需引入组件
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -33,6 +42,12 @@ export default ({ command, mode }) => {
         // 引入组件的,包括自定义组件
         // 存放的位置
         dts: "src/components.d.ts",
+        resolvers: [
+          AntDesignVueResolver({
+            importStyle: false, // css in js
+            resolveIcons: true, // 自动导入图标
+          }),
+        ],
       }),
       eslint({ lintOnStart: true, cache: false }),
     ],
