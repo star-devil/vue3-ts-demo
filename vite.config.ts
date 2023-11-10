@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-10 15:01:59
+ * @LastEditTime: 2023-11-10 17:09:19
  * @LastEditors: wangqiaoling
  * @Description:
  */
@@ -54,6 +54,7 @@ export default ({ command, mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
+        "@api": resolve(__dirname, "src/api"),
         "@utils": resolve(__dirname, "src/utils"),
         "@assets": resolve(__dirname, "src/assets"),
       },
@@ -69,7 +70,13 @@ export default ({ command, mode }) => {
       hmr: true, // 开启热更新
       open: true, // 在服务器启动时自动在浏览器中打开应用程序
       https: false, // 是否开启 https
-      proxy: {},
+      proxy: {
+        "/proxy-api": {
+          target: "http://10.1.200.131:30788/",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(RegExp("/proxy-api"), ""),
+        },
+      },
     },
   });
 };

@@ -1,0 +1,38 @@
+[
+    {
+        "label": "心血管病",
+        "iconName": "XinXueGuan"
+    },
+    {
+        "label": "传染病",
+        "iconName": "ChuanRan"
+    },
+    {
+        "label": "内分泌",
+        "iconName": "NeiFenMi"
+    },
+    {
+        "label": "呼吸病",
+        "iconName": "HuXi"
+    },
+    {
+        "label": "消化病",
+        "iconName": "XiaoHua"
+    },
+    {
+        "label": "皮肤病",
+        "iconName": "PiFu"
+    },
+    {
+        "label": "神经病",
+        "iconName": "ShenJing"
+    },
+    {
+        "label": "精神病学",
+        "iconName": "JingShen"
+    },
+    {
+        "label": "风湿免疫病",
+        "iconName": "FengShiMianYi"
+    }
+]

@@ -1,23 +1,48 @@
+<!--
+ * @Author: wangqiaoling
+ * @Date: 2023-11-10 13:18:37
+ * @LastEditTime: 2023-11-10 18:01:44
+ * @LastEditors: wangqiaoling
+ * @Description: 侧边选项切换
+-->
 <script setup lang="ts">
+import { getContainer } from "@utils/provideConfig.ts";
+import { ListItem } from "./data";
 import { useSwitch } from "./index.ts";
-const { currentAppKey, chooseApp } = useSwitch();
+
+const { getIcon, currentAppKey, chooseApp } = useSwitch();
+// 项目数据
+const props = defineProps({
+  itemData: {
+    type: Object as PropType<ListItem[]>,
+    default: () => {},
+  },
+});
 </script>
 
 <template>
   <div class="app-switcher-box">
-    <span
-      :class="['app-icon-list', currentAppKey === i ? 'choose-app' : '']"
-      v-for="i in 4"
-      :key="i"
-      @click="chooseApp(i)"
+    <a-tooltip
+      v-for="(item, index) in props.itemData"
+      :key="`listItem_` + index"
+      :title="item.show_type"
+      placement="left"
+      :getPopupContainer="(trigger) => getContainer(trigger)"
     >
-      <img
-        class="app-logo-box"
-        :src="`src/assets/images/floatApp/robot_${i}.svg`"
-        alt="logo"
-      />
-      <span class="app-tips">诊疗助手{{ i }}</span>
-    </span>
+      <span
+        :class="[
+          'app-icon-list',
+          currentAppKey === item.show_type ? 'choose-app' : '',
+        ]"
+        @click="chooseApp(item.show_type)"
+      >
+        <img
+          class="app-logo-box"
+          :src="`src/assets/images/floatApp/${getIcon(item.show_type)}.svg`"
+          alt="logo"
+        />
+      </span>
+    </a-tooltip>
   </div>
 </template>
 
@@ -47,49 +72,10 @@ const { currentAppKey, chooseApp } = useSwitch();
     -webkit-user-drag: none;
     -webkit-tap-highlight-color: transparent;
 
-    &:hover {
-      .app-tips {
-        position: absolute;
-        top: 10px;
-        right: 44px;
-        display: inline-flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        justify-content: flex-end;
-        width: max-content;
-        padding: 3px 5px;
-        font-size: 14px;
-        font-weight: 400;
-        color: #fff;
-        text-align: right;
-        background-color: rgba($color: #000, $alpha: 80%);
-        border-radius: 5px;
-      }
-    }
-
     .app-logo-box {
       width: 32px;
       height: 32px;
       border-radius: 32px;
-    }
-
-    .app-tips {
-      display: none;
-      box-shadow:
-        0 6px 16px 0 rgb(0 0 0 / 8%),
-        0 3px 6px -4px rgb(0 0 0 / 12%),
-        0 9px 28px 8px rgb(0 0 0 / 5%);
-
-      &::before {
-        position: absolute;
-        top: 7px;
-        right: -11px;
-        content: "";
-        border-color: transparent transparent transparent
-          rgba($color: #000, $alpha: 80%);
-        border-style: solid;
-        border-width: 6px;
-      }
     }
   }
 

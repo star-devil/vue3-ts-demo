@@ -8,12 +8,12 @@ const routes = [
   {
     path: "/treatment",
     name: "treatment",
-    component: async () => await import("../views/AppViews/Treatment.vue"),
+    component: async () => await import("../views/treatment/Treatment.vue"),
   },
   {
     path: "/medicine",
     name: "medicine",
-    component: async () => await import("../views/AppViews/Medicine.vue"),
+    component: async () => await import("../views/medicine/Medicine.vue"),
   },
   // {
   // 配置404页面
