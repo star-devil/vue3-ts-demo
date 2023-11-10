@@ -3,8 +3,17 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: async () => await import("../views/HomeView.vue"),
+    redirect: "/treatment",
+  },
+  {
+    path: "/treatment",
+    name: "treatment",
+    component: async () => await import("../views/AppViews/Treatment.vue"),
+  },
+  {
+    path: "/medicine",
+    name: "medicine",
+    component: async () => await import("../views/AppViews/Medicine.vue"),
   },
   // {
   // 配置404页面
