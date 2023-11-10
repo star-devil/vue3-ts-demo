@@ -39,6 +39,8 @@ export default ({ command, mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
+        "@utils": resolve(__dirname, "src/utils"),
+        "@assets": resolve(__dirname, "src/assets"),
       },
     },
     // 在.env.production文件中配置VITE_DROP_CONSOLE = true,
