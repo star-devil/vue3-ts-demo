@@ -1,9 +1,9 @@
 /*
  * @Author: wangqiaoling
- * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-10 15:01:59
+ * @Date: 2023-11-10 15:12:45
+ * @LastEditTime: 2023-11-13 10:22:40
  * @LastEditors: wangqiaoling
- * @Description:
+ * @Description: 整体配置
  */
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
@@ -54,6 +54,7 @@ export default ({ command, mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
+        "@api": resolve(__dirname, "src/api"),
         "@utils": resolve(__dirname, "src/utils"),
         "@assets": resolve(__dirname, "src/assets"),
       },
