@@ -1,16 +1,14 @@
 <!--
  * @Author: wangqiaoling
- * @Date: 2023-11-10 14:49:54
- * @LastEditTime: 2023-11-10 14:56:57
+ * @Date: 2023-11-13 11:14:56
+ * @LastEditTime: 2023-11-13 11:15:03
  * @LastEditors: wangqiaoling
- * @Description: 
+ * @Description: 主页面
 -->
 <script setup lang="ts"></script>
 
 <template>
-  <div class="content-box">
-    <div>诊疗助手</div>
-  </div>
+  <div>test</div>
 </template>
 
 <style lang="scss" scoped></style>

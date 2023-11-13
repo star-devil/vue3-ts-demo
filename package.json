@@ -17,8 +17,6 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@ant-design/icons-vue": "^7.0.1",
-    "ant-design-vue": "4.x",
     "axios": "^1.6.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",

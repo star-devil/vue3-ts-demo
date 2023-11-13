@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-11-10 14:48:02
+ * @LastEditTime: 2023-11-13 11:13:57
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -9,6 +9,6 @@
 
 <template>
   <div>
-    <FloatApp />
+    <router-view />
   </div>
 </template>

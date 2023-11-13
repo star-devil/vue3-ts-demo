@@ -2,10 +2,10 @@
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:13:49
  * @LastEditors: wangqiaoling
- * @LastEditTime: 2023-11-13 10:44:48
+ * @LastEditTime: 2023-11-13 11:17:14
  * @Description: 配置封装axios 请求
  */
-import { message as Message } from "ant-design-vue"; // 框架的message提示
+// import { message as Message } from "ant-design-vue"; // 框架的message提示
 import type {
   AxiosError,
   AxiosInstance,
@@ -46,9 +46,9 @@ const err = (error: AxiosError) => {
     // }
     // Message.error(message);
     // 否则：（这个项目没有确定，就不具体处理了）
-    Message.error("接口响应失败，请联系管理员");
+    // Message.error("接口响应失败，请联系管理员");
   } else if (String(error).indexOf("timeout") > -1) {
-    Message.warning("网络不稳定，响应超时，请稍后再试。");
+    // Message.warning("网络不稳定，响应超时，请稍后再试。");
   }
   // console.log('error-', error)
   return Promise.reject(error);
@@ -84,11 +84,11 @@ instance.interceptors.response.use((response: AxiosResponse) => {
   if (code) {
     if (code !== 200) {
       if (code === 500) {
-        Message.error(`服务请求出错: ${msg}`);
+        // Message.error(`服务请求出错: ${msg}`);
       }
       // TODO: 因为目前不确定接口code规则，暂时不对其他code做处理
       else {
-        msg && Message.warning(`${msg}`);
+        // msg && Message.warning(`${msg}`);
       }
       return Promise.reject(msg);
     } else {
@@ -100,7 +100,7 @@ instance.interceptors.response.use((response: AxiosResponse) => {
       // console.log('response',response)
       return response.data;
     } else {
-      Message.warning("服务无法响应，请检查网络或联系管理员");
+      // Message.warning("服务无法响应，请检查网络或联系管理员");
       return Promise.reject(response);
     }
   }

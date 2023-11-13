@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2023-11-13 10:22:40
+ * @LastEditTime: 2023-11-13 11:12:16
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -70,7 +70,13 @@ export default ({ command, mode }) => {
       hmr: true, // 开启热更新
       open: true, // 在服务器启动时自动在浏览器中打开应用程序
       https: false, // 是否开启 https
-      proxy: {},
+      proxy: {
+        "/proxy-api": {
+          target: "http://10.1.200.131:30788/",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(RegExp("/proxy-api"), ""),
+        },
+      },
     },
   });
 };
