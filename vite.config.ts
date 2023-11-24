@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2023-11-13 11:12:16
+ * @LastEditTime: 2023-11-24 16:52:17
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -51,10 +51,18 @@ export default ({ command, mode }) => {
       }),
       eslint({ lintOnStart: true, cache: false }),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: "@import '@assets/styles/theme.scss';",
+        },
+      },
+    },
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
         "@api": resolve(__dirname, "src/api"),
+        "@store": resolve(__dirname, "src/store"),
         "@utils": resolve(__dirname, "src/utils"),
         "@assets": resolve(__dirname, "src/assets"),
       },
