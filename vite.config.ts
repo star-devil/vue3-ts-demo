@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2023-11-24 16:52:17
+ * @LastEditTime: 2023-12-06 16:00:30
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -15,7 +15,7 @@ import eslint from "vite-plugin-eslint";
 import AutoImport from "unplugin-auto-import/vite";
 // 自动导入ui-组件 比如说ant-design-vue  element-plus等
 import Components from "unplugin-vue-components/vite";
-// antdv自动按需引入组件
+// 如果你使用了antdv：antdv自动按需引入组件
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
@@ -43,6 +43,7 @@ export default ({ command, mode }) => {
         // 存放的位置
         dts: "src/components.d.ts",
         resolvers: [
+          // 如果你使用了antdv：
           AntDesignVueResolver({
             importStyle: false, // css in js
             resolveIcons: true, // 自动导入图标
@@ -80,7 +81,7 @@ export default ({ command, mode }) => {
       https: false, // 是否开启 https
       proxy: {
         "/proxy-api": {
-          target: "http://10.1.200.131:30788/",
+          target: "http://XX.XX.XX.XX:XXXX/",
           changeOrigin: true,
           rewrite: (path) => path.replace(RegExp("/proxy-api"), ""),
         },

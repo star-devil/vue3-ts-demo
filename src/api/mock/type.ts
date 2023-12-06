@@ -3,7 +3,7 @@
  * @Date: 2023-11-13 10:05:02
  * @LastEditTime: 2023-11-13 10:44:50
  * @LastEditors: wangqiaoling
- * @Description: 诊疗助手接口需要的参数的类型，和接口返回数据的类型
+ * @Description: 接口需要的参数的类型，和接口返回数据的类型
  */
 
 /**
