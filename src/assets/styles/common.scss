@@ -1,0 +1,15 @@
+.layout-system-logo {
+  height: 30px;
+}
+
+.layout-system-name {
+  display: inline-block;
+  height: 32px;
+  margin: 2px 0 0 10px;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 32px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

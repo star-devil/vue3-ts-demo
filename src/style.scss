@@ -18,3 +18,40 @@
   min-width: 0;
   height: 100%;
 }
+
+body {
+  margin: 0;
+}
+
+/* 全局重置浏览器滚动条，不需要可以删除 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:hover::-webkit-scrollbar-thumb {
+  display: block;
+  background: hsl(0deg 0% 53% / 40%);
+}
+
+/** 布局组件样式重置 */
+.ant-layout .ant-layout-header {
+  height: 48px;
+  padding: unset;
+  line-height: 48px;
+  background: unset;
+}
+
+.ant-layout .ant-layout-footer {
+  padding: 15px 30px;
+}
+

@@ -1,6 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+// 重置样式
 import "./style.scss";
+// 通用样式
+import "./assets/styles/common.scss";
 
 // routes
 import router from "./router/index";
