@@ -1,13 +1,15 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-12 13:58:49
+ * @LastEditTime: 2023-12-13 17:36:48
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store";
 import { MenuProps } from "ant-design-vue";
+import LogoName from "./LogoName.vue";
+// 临时菜单
 const current = ref<string[]>(["mail"]);
 const items = ref<MenuProps["items"]>([
   {
@@ -68,6 +70,9 @@ const items = ref<MenuProps["items"]>([
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
+
+// 系统配置抽屉
+const showSetting = ref<boolean>(false);
 </script>
 
 <template>
@@ -80,12 +85,7 @@ const layoutName = themeData.layoutName;
     >
       <div class="horizontal-header">
         <div class="horizontal-header-left" v-if="layoutName !== 'custom'">
-          <img
-            class="layout-system-logo"
-            src="https://next.antdv.com/assets/logo.1ef800a8.svg"
-            alt="logo"
-          />
-          <span class="layout-system-name">Vue3Ts自定义框架</span>
+          <LogoName />
         </div>
         <div class="horizontal-header-menu">
           <a-menu
@@ -97,20 +97,42 @@ const layoutName = themeData.layoutName;
         </div>
         <div class="horizontal-header-right">
           <div class="right-actions user-info">
-            <a-space>
-              <a-avatar style="color: #f56a00; background-color: #fde3cf"
-                >U</a-avatar
-              >
-              <span>admin</span>
-            </a-space>
+            <a-dropdown :trigger="['click']" :arrow="true">
+              <a-space>
+                <a-avatar style="color: #f56a00; background-color: #fde3cf"
+                  >N
+                </a-avatar>
+                <span>admin</span>
+              </a-space>
+              <template #overlay>
+                <a-menu>
+                  <a-menu-item key="loginout">
+                    <LogoutOutlined />
+                    退出系统
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
           </div>
-          <div class="right-actions setting">
+          <div class="right-actions setting" @click="showSetting = true">
             <SettingOutlined />
           </div>
         </div>
       </div>
     </div>
   </a-layout-header>
+  <!-- 主题和布局配置抽屉 -->
+  <a-drawer
+    v-model:open="showSetting"
+    class="custom-class"
+    title="系统配置"
+    placement="right"
+    width="315"
+  >
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-drawer>
 </template>
 
 <style lang="scss" scoped>
@@ -134,6 +156,7 @@ const layoutName = themeData.layoutName;
     width: 100%;
     height: 48px;
     background: #fff;
+    border-bottom: 1px solid $border-color;
 
     .horizontal-header-left {
       display: flex;

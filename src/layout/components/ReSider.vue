@@ -1,27 +1,26 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2023-12-12 11:26:51
+ * @LastEditTime: 2023-12-13 17:26:12
  * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store";
+import LogoName from "./LogoName.vue";
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
 </script>
 
 <template>
-  <a-layout-sider>
+  <a-layout-sider
+    theme="light"
+    :class="[layoutName === 'mixinRight' ? 'right-side-bar' : 'left-side-bar']"
+  >
     <div class="side-bar-logo-container">
       <a href="" class="side-logo-link" v-if="layoutName === 'custom'">
-        <img
-          class="layout-system-logo"
-          src="https://next.antdv.com/assets/logo.1ef800a8.svg"
-          alt="logo"
-        />
-        <span class="layout-system-name">Vue3Ts</span>
+        <LogoName />
       </a>
     </div>
   </a-layout-sider>
@@ -33,6 +32,7 @@ const layoutName = themeData.layoutName;
   width: 100%;
   height: 48px;
   overflow: hidden;
+  color: #333;
 
   .side-logo-link {
     display: flex;
@@ -54,5 +54,13 @@ const layoutName = themeData.layoutName;
   a:focus {
     outline: none;
   }
+}
+
+.right-side-bar {
+  border-left: 1px solid $border-color;
+}
+
+.left-side-bar {
+  border-right: 1px solid $border-color;
 }
 </style>

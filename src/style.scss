@@ -44,14 +44,14 @@ body {
 }
 
 /** 布局组件样式重置 */
-.ant-layout .ant-layout-header {
-  height: 48px;
-  padding: unset;
-  line-height: 48px;
-  background: unset;
+.ant-layout {
+  .ant-layout-header {
+    height: 48px;
+    padding: unset;
+    line-height: 48px;
+    background: unset;
+  }
 }
 
-.ant-layout .ant-layout-footer {
-  padding: 15px 30px;
-}
+
 

@@ -7,8 +7,8 @@
   "scripts": {
     "serve": "pnpm dev",
     "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
-    "dev:pro": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode pro",
-    "dev:test": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode test",
+    "pro": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode pro",
+    "test": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode test",
     "build": "vue-tsc && vite build",
     "build:dev": "vue-tsc && vite build --mode dev",
     "build:pro": "vue-tsc && vite build --mode pro",

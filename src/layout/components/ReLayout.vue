@@ -1,13 +1,17 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2023-12-12 11:24:53
+ * @LastEditTime: 2023-12-13 17:09:13
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store";
 import { assign } from "lodash";
+import ReContent from "./ReContent.vue";
+import ReFooter from "./ReFooter.vue";
+import ReHeader from "./ReHeader.vue";
+import ReSider from "./ReSider.vue";
 const props = defineProps({
   layoutName: {
     type: String,
@@ -25,12 +29,16 @@ const props = defineProps({
 
 const themeData = useThemeStore();
 
-const layoutData: ComputedRef<string> = computed(() => {
+const layoutData: ComputedRef = computed(() => {
   //   props.layout &&
   //     (store.state.systemStyleSet.styleSetting.layout = props.layout);
   //   return props.layout || store.state.systemStyleSet.styleSetting.layout;
   themeData.layoutName = props.layoutName;
-  return props.layoutName;
+  themeData.hasFooter = props.showFooter;
+  return {
+    name: props.layoutName,
+    footer: props.showFooter,
+  };
 });
 
 let watermarkConfig = ref({
@@ -74,10 +82,10 @@ nextTick(() => {
          #noSider：顶部栏布局 
          #上:header（导航菜单在顶部） 中:content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
-    <a-layout v-if="layoutData === 'noSider'">
+    <a-layout v-if="layoutData.name === 'noSider'">
       <ReHeader />
       <ReContent />
-      <ReFooter v-if="showFooter" />
+      <ReFooter v-if="layoutData.footer" />
     </a-layout>
     <!-- #endIf -->
 
@@ -85,13 +93,15 @@ nextTick(() => {
          #mixinLeft：混合模式,sider在左边
          #上:header（可自定义辅助菜单） 中:sider/左+content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
-    <a-layout v-if="layoutData === 'mixinLeft'">
+    <a-layout v-if="layoutData.name === 'mixinLeft'">
       <ReHeader />
       <a-layout>
         <ReSider />
-        <ReContent />
+        <a-layout>
+          <ReContent />
+          <ReFooter v-if="layoutData.footer" />
+        </a-layout>
       </a-layout>
-      <ReFooter v-if="showFooter" />
     </a-layout>
     <!-- #endIf -->
 
@@ -99,13 +109,15 @@ nextTick(() => {
          #mixinRight：混合模式,sider在右边
          #上:header（可自定义辅助菜单） 中:sider/右+content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
-    <a-layout v-if="layoutData === 'mixinRight'">
+    <a-layout v-if="layoutData.name === 'mixinRight'">
       <ReHeader />
       <a-layout>
-        <ReContent />
+        <a-layout>
+          <ReContent />
+          <ReFooter v-if="layoutData.footer" />
+        </a-layout>
         <ReSider />
       </a-layout>
-      <ReFooter v-if="showFooter" />
     </a-layout>
     <!-- #endIf -->
 
@@ -113,12 +125,12 @@ nextTick(() => {
          #custom：侧边栏布局
          #左:sider 右:header+content+footer
          #此布局的logo在sider内，已设置基础样式  -->
-    <a-layout v-if="layoutData === 'custom'">
+    <a-layout v-if="layoutData.name === 'custom'">
       <ReSider />
       <a-layout>
         <ReHeader />
         <ReContent />
-        <ReFooter v-if="showFooter" />
+        <ReFooter v-if="layoutData.footer" />
       </a-layout>
     </a-layout>
     <!-- #endIf -->

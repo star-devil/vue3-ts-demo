@@ -1,11 +1,12 @@
 <!--
  * @Author: wangqiaoling
- * @Date: 2023-11-13 11:14:56
- * @LastEditTime: 2023-12-12 13:44:10
+ * @Date: 2023-12-13 14:29:26
+ * @LastEditTime: 2023-12-13 17:31:36
  * @LastEditors: wangqiaoling
- * @Description: 主页面
+ * @Description: 布局入口文件
 -->
 <script setup lang="ts">
+import ReLayout from "./components/ReLayout.vue";
 const waterMarkConfig = {
   font: {
     content: "Egg‘s demo",
@@ -15,7 +16,7 @@ const waterMarkConfig = {
 </script>
 
 <template>
-  <Relayout layoutName="custom" :waterMarkModel="waterMarkConfig" />
+  <ReLayout layoutName="noSider" :waterMarkModel="waterMarkConfig" />
 </template>
 
 <style lang="scss" scoped></style>
