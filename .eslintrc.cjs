@@ -1,3 +1,10 @@
+/*
+ * @Author: wangqiaoling
+ * @Date: 2023-12-07 09:53:38
+ * @LastEditTime: 2023-12-18 10:28:03
+ * @LastEditors: wangqiaoling
+ * @Description: eslint检查规则配置
+ */
 module.exports = {
     "env": {
         "browser": true,
@@ -70,6 +77,15 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-namespace': 'off', // 禁止使用自定义 TypeScript 模块和命名空间。
         '@typescript-eslint/semi': 'off',
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "types": {
+                    "Function": false // 专门取消禁止此类型
+                },
+                "extendDefaults": true
+            }
+        ],
 
         // eslint-plugin-vue (https://eslint.vuejs.org/rules/)
         'vue/multi-word-component-names': 'off', // 要求组件名称始终为 “-” 链接的单词

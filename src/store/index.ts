@@ -1,24 +1,17 @@
 /*
  * @Author: wangqiaoling
- * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-13 16:51:52
+ * @Date: 2023-12-13 17:47:35
+ * @LastEditTime: 2023-12-18 13:52:58
  * @LastEditors: wangqiaoling
- * @Description: 定义pinia（替代vuex）容器
+ * @Description: 导出pinia store并设置持久化
  */
-import { defineStore } from "pinia";
+import { createPinia } from "pinia"; // pinia
+import type { App } from "vue";
 
-export const useThemeStore = defineStore({
-  // 主题、布局数据
-  id: "themeData",
-  // 定义状态
-  state: () => ({
-    layoutName: "",
-    hasFooter: true,
-  }),
-  /**
-   * 类似组件的 computed, 用来封装计算属性, 具有缓存特性
-   */
-  getters: {},
-  // 定义操作
-  actions: {},
-});
+const store = createPinia();
+
+export function setupStore(app: App<Element>) {
+  app.use(store);
+}
+
+export { store };

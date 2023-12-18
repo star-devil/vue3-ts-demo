@@ -1,12 +1,12 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2023-12-13 17:09:13
+ * @LastEditTime: 2023-12-18 11:21:15
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
 <script setup lang="ts">
-import { useThemeStore } from "@store";
+import { useThemeStore } from "@store/modules/setting";
 import { assign } from "lodash";
 import ReContent from "./ReContent.vue";
 import ReFooter from "./ReFooter.vue";

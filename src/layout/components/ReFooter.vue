@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:31:15
- * @LastEditTime: 2023-12-13 16:40:41
+ * @LastEditTime: 2023-12-15 16:27:09
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -17,6 +17,5 @@
   font-size: 12px;
   color: $text-color;
   text-align: left;
-  background-color: #fff;
 }
 </style>

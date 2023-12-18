@@ -2,7 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.5;
-  color: rgb(255 255 255 / 87%);
   color-scheme: light dark;
   background-color: #242424;
   font-synthesis: none;
@@ -50,6 +49,10 @@ body {
     padding: unset;
     line-height: 48px;
     background: unset;
+  }
+
+  .ant-menu-horizontal {
+    border: unset;
   }
 }
 

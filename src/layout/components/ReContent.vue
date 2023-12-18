@@ -1,12 +1,12 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:30:07
- * @LastEditTime: 2023-12-13 16:57:15
+ * @LastEditTime: 2023-12-18 11:21:09
  * @LastEditors: wangqiaoling
  * @Description: Content：内容部分，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
-import { useThemeStore } from "@store";
+import { useThemeStore } from "@store/modules/setting";
 const themeData = useThemeStore();
 
 const contentHeight: ComputedRef<string> = computed(() => {
@@ -33,7 +33,5 @@ const contentHeight: ComputedRef<string> = computed(() => {
 <style lang="scss" scoped>
 .content-container {
   padding: $main-gap;
-  color: #333;
-  background: #fff;
 }
 </style>

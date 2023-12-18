@@ -1,12 +1,12 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-13 17:36:48
+ * @LastEditTime: 2023-12-18 11:20:57
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
-import { useThemeStore } from "@store";
+import { useThemeStore } from "@store/modules/setting";
 import { MenuProps } from "ant-design-vue";
 import LogoName from "./LogoName.vue";
 // 临时菜单
@@ -115,6 +115,8 @@ const showSetting = ref<boolean>(false);
             </a-dropdown>
           </div>
           <div class="right-actions setting" @click="showSetting = true">
+            <FontIcon icon="circum:light" />
+            <a-divider type="vertical" />
             <SettingOutlined />
           </div>
         </div>
@@ -155,7 +157,6 @@ const showSetting = ref<boolean>(false);
     justify-content: space-around;
     width: 100%;
     height: 48px;
-    background: #fff;
     border-bottom: 1px solid $border-color;
 
     .horizontal-header-left {
