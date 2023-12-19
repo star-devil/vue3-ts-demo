@@ -1,13 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-18 11:20:57
+ * @LastEditTime: 2023-12-19 15:58:02
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
 import { MenuProps } from "ant-design-vue";
+import { useDataThemeChange } from "../hooks/useDataThemeChange";
 import LogoName from "./LogoName.vue";
 // 临时菜单
 const current = ref<string[]>(["mail"]);
@@ -73,6 +74,9 @@ const layoutName = themeData.layoutName;
 
 // 系统配置抽屉
 const showSetting = ref<boolean>(false);
+
+// 主题切换
+const { dataThemeChange } = useDataThemeChange();
 </script>
 
 <template>
@@ -114,9 +118,10 @@ const showSetting = ref<boolean>(false);
               </template>
             </a-dropdown>
           </div>
+          <div class="right-actions theme-type" @click="dataThemeChange">
+            <SvgIcon iconName="light" />
+          </div>
           <div class="right-actions setting" @click="showSetting = true">
-            <FontIcon icon="circum:light" />
-            <a-divider type="vertical" />
             <SettingOutlined />
           </div>
         </div>
@@ -188,6 +193,10 @@ const showSetting = ref<boolean>(false);
         &:hover {
           background: #f6f6f6;
         }
+      }
+
+      .theme-type {
+        font-size: 16px;
       }
     }
   }

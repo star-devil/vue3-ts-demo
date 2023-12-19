@@ -1,51 +1,31 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-18 14:07:09
- * @LastEditTime: 2023-12-18 17:08:29
+ * @LastEditTime: 2023-12-19 09:39:22
  * @LastEditors: wangqiaoling
- * @Description: 数据加密解密党发
+ * @Description: 数据加密解密
  */
 import CryptoJS from "crypto-js";
 
-const key = "r4lHpyNLtXMgsIFviyIVjFNi0nNSWuWrbFxeRT9USKTYZjbswzdMjymavWO2oYkF";
-/**
- * 解密字符
- * @param {String} word 解密内容
- * @returns
- */
-
-function plainTextDecrypt(word: string) {
-  const decrypt = CryptoJS.AES.decrypt(word, key);
-  return decrypt.toString(CryptoJS.enc.Utf8);
-}
+const key = "r4lHpyNLtXMgsIFviyIVjFNi0nNSWuWrbFxeRT9USKTYZjbswzdMjymavWO2oYkF"; // 生成密钥请妥善保存，不要硬编码在代码中；最好放入环境变量或者由服务端返回。此处只用作示范
 
 /**
- * 加密字符
- * @param {String} word 加密内容
+ * 加密对象
+ * @param {any} data 加密内容
  * @returns
  */
-function plainTextEncrypt(word: string) {
-  const encrypted = CryptoJS.AES.encrypt(word, key);
-  return encrypted.toString();
+function dataEncrypt(data: any) {
+  return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
 }
+
 /**
  * 解密对象
  * @param {string} data 解密内容
  * @returns
  */
-
-function objectDecrypt(data: string) {
+function dataDecrypt(data: string) {
   const decrypt = CryptoJS.AES.decrypt(data, key);
   return JSON.parse(decrypt.toString(CryptoJS.enc.Utf8));
 }
 
-/**
- * 加密对象
- * @param {object} data 加密内容
- * @returns
- */
-function objectEncrypt(data: object) {
-  return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
-}
-
-export { objectDecrypt, objectEncrypt, plainTextDecrypt, plainTextEncrypt };
+export { dataDecrypt, dataEncrypt };

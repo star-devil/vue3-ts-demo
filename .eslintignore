@@ -17,3 +17,4 @@ docs
 !.build
 .build/*
 !.build/test.js
+/src/assets/iconfont/index.js

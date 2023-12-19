@@ -25,5 +25,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SettingOutlined: typeof import('@ant-design/icons-vue')['SettingOutlined']
+    SvgIcon: typeof import('./components/iconfont/SvgIcon.vue')['default']
   }
 }

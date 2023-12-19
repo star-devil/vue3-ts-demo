@@ -6,3 +6,4 @@ node_modules/**
 **/*.sh
 public/*
 .eslintignore
+/src/assets/iconfont/index.js

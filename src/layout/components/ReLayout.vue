@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2023-12-18 11:21:15
+ * @LastEditTime: 2023-12-19 16:09:48
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
@@ -13,31 +13,18 @@ import ReFooter from "./ReFooter.vue";
 import ReHeader from "./ReHeader.vue";
 import ReSider from "./ReSider.vue";
 const props = defineProps({
-  layoutName: {
-    type: String,
-    default: "custom",
-  },
   waterMarkModel: {
     type: Object,
     default: () => {},
-  },
-  showFooter: {
-    type: Boolean,
-    default: true,
   },
 });
 
 const themeData = useThemeStore();
 
 const layoutData: ComputedRef = computed(() => {
-  //   props.layout &&
-  //     (store.state.systemStyleSet.styleSetting.layout = props.layout);
-  //   return props.layout || store.state.systemStyleSet.styleSetting.layout;
-  themeData.layoutName = props.layoutName;
-  themeData.hasFooter = props.showFooter;
   return {
-    name: props.layoutName,
-    footer: props.showFooter,
+    name: themeData.layoutName,
+    footer: themeData.hasFooter,
   };
 });
 

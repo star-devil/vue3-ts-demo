@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2023-12-18 11:20:09
+ * @LastEditTime: 2023-12-19 15:08:27
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
@@ -12,22 +12,16 @@ import "./assets/styles/common.scss";
 // routes
 import router from "./router/index";
 
+import { setupStore } from "@store";
 import { createApp } from "vue";
 import App from "./App.vue";
-
-// 全局注册`@iconify/vue`图标库
-import { setupStore } from "@store";
-import {
-  FontIcon,
-  IconifyIconOffline,
-  IconifyIconOnline,
-} from "./components/ReIcon";
+// 全局注册封装的iconfont。图标修改之后请务必更新src/assets/iconfont/index.js文件
+import "./assets/iconfont/index";
+import SvgIcon from "./components/iconfont/SvgIcon.vue";
 
 const app = createApp(App);
 
-app.component("IconifyIconOffline", IconifyIconOffline);
-app.component("IconifyIconOnline", IconifyIconOnline);
-app.component("FontIcon", FontIcon);
+app.component("SvgIcon", SvgIcon);
 
 app.use(router);
 setupStore(app);

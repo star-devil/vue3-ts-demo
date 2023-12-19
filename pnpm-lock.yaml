@@ -52,9 +52,6 @@ devDependencies:
   '@commitlint/config-conventional':
     specifier: ^18.1.0
     version: 18.1.0
-  '@iconify/vue':
-    specifier: ^4.1.1
-    version: registry.npmmirror.com/@iconify/vue@4.1.1(vue@3.3.8)
   '@types/lodash':
     specifier: ^4.14.201
     version: 4.14.201
@@ -4136,24 +4133,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  registry.npmmirror.com/@iconify/types@2.0.0:
-    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify/types/-/types-2.0.0.tgz}
-    name: '@iconify/types'
-    version: 2.0.0
-    dev: true
-
-  registry.npmmirror.com/@iconify/vue@4.1.1(vue@3.3.8):
-    resolution: {integrity: sha512-RL85Bm/DAe8y6rT6pux7D2FJSiUEM/TPfyK7GrbAOfTSwrhvwJW+S5yijdGcmtXouA8MtuH9C7l4hiSE4mLMjg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify/vue/-/vue-4.1.1.tgz}
-    id: registry.npmmirror.com/@iconify/vue/4.1.1
-    name: '@iconify/vue'
-    version: 4.1.1
-    peerDependencies:
-      vue: '>=3'
-    dependencies:
-      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
-      vue: 3.3.8(typescript@5.2.2)
-    dev: true
 
   registry.npmmirror.com/@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz}

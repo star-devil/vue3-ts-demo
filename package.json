@@ -6,7 +6,7 @@
   "author": "wondersEGG",
   "scripts": {
     "serve": "pnpm dev",
-    "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
+    "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode dev",
     "pro": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode pro",
     "test": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode test",
     "build": "vue-tsc && vite build",
@@ -40,7 +40,6 @@
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
-    "@iconify/vue": "^4.1.1",
     "@types/lodash": "^4.14.201",
     "@types/node": "^20.9.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",

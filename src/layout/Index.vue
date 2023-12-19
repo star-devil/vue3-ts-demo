@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-13 14:29:26
- * @LastEditTime: 2023-12-13 17:31:36
+ * @LastEditTime: 2023-12-19 16:09:00
  * @LastEditors: wangqiaoling
  * @Description: 布局入口文件
 -->
@@ -16,7 +16,7 @@ const waterMarkConfig = {
 </script>
 
 <template>
-  <ReLayout layoutName="noSider" :waterMarkModel="waterMarkConfig" />
+  <ReLayout :waterMarkModel="waterMarkConfig" />
 </template>
 
 <style lang="scss" scoped></style>
