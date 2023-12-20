@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2023-12-19 15:08:27
+ * @LastEditTime: 2023-12-19 17:52:08
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
@@ -16,12 +16,14 @@ import { setupStore } from "@store";
 import { createApp } from "vue";
 import App from "./App.vue";
 // 全局注册封装的iconfont。图标修改之后请务必更新src/assets/iconfont/index.js文件
-import "./assets/iconfont/index";
-import SvgIcon from "./components/iconfont/SvgIcon.vue";
+import { createFromIconfontCN } from "@ant-design/icons-vue";
 
 const app = createApp(App);
 
-app.component("SvgIcon", SvgIcon);
+const IconFont = createFromIconfontCN({
+  scriptUrl: new URL("./assets/iconfont/index", import.meta.url).href, // 在 iconfont.cn 上生成
+});
+app.component("IconFont", IconFont);
 
 app.use(router);
 setupStore(app);

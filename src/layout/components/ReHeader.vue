@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-19 15:58:02
+ * @LastEditTime: 2023-12-20 10:02:46
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -76,7 +76,7 @@ const layoutName = themeData.layoutName;
 const showSetting = ref<boolean>(false);
 
 // 主题切换
-const { dataThemeChange } = useDataThemeChange();
+const { dataThemeChange, isLight } = useDataThemeChange();
 </script>
 
 <template>
@@ -119,7 +119,7 @@ const { dataThemeChange } = useDataThemeChange();
             </a-dropdown>
           </div>
           <div class="right-actions theme-type" @click="dataThemeChange">
-            <SvgIcon iconName="light" />
+            <IconFont :type="isLight ? 'light' : 'dark'" />
           </div>
           <div class="right-actions setting" @click="showSetting = true">
             <SettingOutlined />
