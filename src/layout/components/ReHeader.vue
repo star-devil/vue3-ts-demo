@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-20 10:02:46
+ * @LastEditTime: 2023-12-26 16:27:28
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -9,7 +9,12 @@
 import { useThemeStore } from "@store/modules/setting";
 import { MenuProps } from "ant-design-vue";
 import { useDataThemeChange } from "../hooks/useDataThemeChange";
+import { useLayout } from "../hooks/useLayout";
 import LogoName from "./LogoName.vue";
+// 获取当前主题
+// const { useToken } = theme;
+// const { token } = useToken();
+// console.log("token--", token.value);
 // 临时菜单
 const current = ref<string[]>(["mail"]);
 const items = ref<MenuProps["items"]>([
@@ -76,7 +81,15 @@ const layoutName = themeData.layoutName;
 const showSetting = ref<boolean>(false);
 
 // 主题切换
-const { dataThemeChange, isLight } = useDataThemeChange();
+const { dataThemeChange, isLight, getThemesColors, setThemeColor } =
+  useDataThemeChange();
+
+// 布局切换
+const { layoutList, layoutChange } = useLayout();
+
+// 主题颜色切换
+const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
+const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
 </script>
 
 <template>
@@ -122,7 +135,7 @@ const { dataThemeChange, isLight } = useDataThemeChange();
             <IconFont :type="isLight ? 'light' : 'dark'" />
           </div>
           <div class="right-actions setting" @click="showSetting = true">
-            <SettingOutlined />
+            <IconFont :type="isLight ? 'lightset' : 'darkset'" />
           </div>
         </div>
       </div>
@@ -136,9 +149,33 @@ const { dataThemeChange, isLight } = useDataThemeChange();
     placement="right"
     width="315"
   >
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
+    <a-divider>导航模式</a-divider>
+    <a-space class="layout-wrap">
+      <a-tooltip
+        v-for="(name, key) in layoutList"
+        :key="key"
+        :title="name"
+        placement="bottom"
+      >
+        <span
+          :class="['layout-mode', key === layoutName ? 'is-select' : '']"
+          @click="layoutChange(key)"
+        >
+          <div :class="key + '-mode-1'"></div>
+          <div :class="key + '-mode-2'"></div>
+        </span>
+      </a-tooltip>
+    </a-space>
+    <a-divider>主题色</a-divider>
+    <a-space>
+      <span
+        class="colors-item"
+        v-for="item in themeColorsList"
+        :key="item.name"
+        :style="{ background: item.color }"
+        @click="setThemeColor(item.name)"
+      ></span>
+    </a-space>
   </a-drawer>
 </template>
 
@@ -188,17 +225,113 @@ const { dataThemeChange, isLight } = useDataThemeChange();
 
       .right-actions {
         padding: 0 10px;
+        font-size: 16px;
         cursor: pointer;
 
         &:hover {
           background: #f6f6f6;
         }
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+/** 系统配置抽屉重置 */
+.custom-class {
+  .ant-drawer-body {
+    padding: 5px 20px;
+  }
 
-      .theme-type {
-        font-size: 16px;
+  .layout-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 50px;
+    margin-top: 25px;
+
+    .layout-mode {
+      position: relative;
+      display: inline-block;
+      width: 55px;
+      height: 45px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #f0f2f5;
+      border-radius: 4px;
+      box-shadow: 0 1px 2.5px #0000002e;
+
+      .noSider-mode-1 {
+        width: 100%;
+        height: 30%;
+        background: #1b2a47;
+        box-shadow: 0 0 1px #888;
+      }
+
+      .mixinLeft-mode-1 {
+        width: 100%;
+        height: 30%;
+        background: #1b2a47;
+        box-shadow: 0 0 1px #888;
+      }
+
+      .mixinLeft-mode-2 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30%;
+        height: 70%;
+        background: #fff;
+        box-shadow: 0 0 1px #888;
+      }
+
+      .mixinRight-mode-1 {
+        width: 100%;
+        height: 30%;
+        background: #1b2a47;
+        box-shadow: 0 0 1px #888;
+      }
+
+      .mixinRight-mode-2 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 30%;
+        height: 70%;
+        background: #fff;
+        box-shadow: 0 0 1px #888;
+      }
+
+      .custom-mode-1 {
+        width: 30%;
+        height: 100%;
+        background: #1b2a47;
+      }
+
+      .custom-mode-2 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 30%;
+        background: #fff;
+        box-shadow: 0 0 1px #888;
       }
     }
+
+    .is-select {
+      border: 2px solid #722ed1;
+    }
+  }
+
+  .colors-item {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border: 1px solid $border-color;
+    border-radius: 2px;
   }
 }
 </style>

@@ -9,7 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
-    ADivider: (typeof import("ant-design-vue/es"))["Divider"]
+    ADivider: typeof import('ant-design-vue/es')['Divider']
     ADrawer: typeof import('ant-design-vue/es')['Drawer']
     ADropdown: typeof import('ant-design-vue/es')['Dropdown']
     ALayout: typeof import('ant-design-vue/es')['Layout']
@@ -20,6 +20,7 @@ declare module 'vue' {
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     ASpace: typeof import('ant-design-vue/es')['Space']
+    ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
     RouterLink: typeof import('vue-router')['RouterLink']
