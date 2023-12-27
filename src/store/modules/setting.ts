@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-26 17:45:59
+ * @LastEditTime: 2023-12-27 11:08:48
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -59,6 +59,10 @@ export const useThemeStore = defineStore({
         },
         expireTime // 该缓存将在7天后过期
       );
+      this.name = name;
+      this.footer = footer;
+      this.type = type;
+      this.color = color;
       this.expireTime = expireTime;
     },
     /**

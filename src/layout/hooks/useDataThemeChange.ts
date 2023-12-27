@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2023-12-26 16:28:39
+ * @LastEditTime: 2023-12-26 18:12:50
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
@@ -39,7 +39,6 @@ export function useDataThemeChange() {
     };
   };
   const setThemeColor = (colorName: string) => {
-    console.log(colorName);
     themeStore.setThemeColor(colorName);
   };
 

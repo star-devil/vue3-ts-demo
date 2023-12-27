@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-12-26 18:11:20
+ * @LastEditTime: 2023-12-27 11:08:57
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -18,10 +18,13 @@ dayjs.locale("zh-cn");
 const locale = zhCN;
 // 设置需要的布局和主题
 const themes = useThemeStore();
-themes.setTheme("noSider", true, "light", "black", 60 * 24 * 7);
-// 动态切换暗黑和明亮主题
+if (!themes.name) {
+  // 如果缓存中不存在主题配置， 则使用默认配置
+  themes.setTheme("noSider", true, "light", "black", 60 * 24 * 7);
+}
+// 动态切换暗黑和明亮主题、主题颜色
 const themeAlgorithm = ref(theme.defaultAlgorithm);
-let color: keyof ThemeColors = "black";
+let color: keyof ThemeColors = themes.color || "black";
 const themeToken = ref<any>(themeColors[color]);
 watchEffect(() => {
   // 当前主题类型
