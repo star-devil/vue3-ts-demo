@@ -22,9 +22,9 @@ declare module 'vue' {
     ASpace: typeof import('ant-design-vue/es')['Space']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
+    CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SettingOutlined: typeof import('@ant-design/icons-vue')['SettingOutlined']
   }
 }

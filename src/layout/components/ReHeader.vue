@@ -1,20 +1,25 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-26 16:27:28
+ * @LastEditTime: 2023-12-27 17:54:39
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
-import { MenuProps } from "ant-design-vue";
+import { useThemeToken } from "@store/modules/themeTokenData";
+import { MenuProps, theme } from "ant-design-vue";
+import { delay } from "lodash";
 import { useDataThemeChange } from "../hooks/useDataThemeChange";
 import { useLayout } from "../hooks/useLayout";
 import LogoName from "./LogoName.vue";
-// 获取当前主题
-// const { useToken } = theme;
-// const { token } = useToken();
-// console.log("token--", token.value);
+// 获取并存储当前主题
+const themeToken = useThemeToken();
+const { useToken } = theme;
+const { token } = useToken();
+// 获取当前样式需要的变量
+const borderColor = ref<string>("");
+const backgroundColor = ref<string>("");
 // 临时菜单
 const current = ref<string[]>(["mail"]);
 const items = ref<MenuProps["items"]>([
@@ -89,7 +94,25 @@ const { layoutList, layoutChange } = useLayout();
 
 // 主题颜色切换
 const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
-const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
+let themeColorsList = ref();
+watch(
+  isLight,
+  (newVal) => {
+    themeColorsList.value = newVal
+      ? lightThemesColorsList
+      : darkThemesColorsList;
+
+    /** 这个渲染顺序，真是 */
+    delay(() => {
+      themeToken.setThemeToken(token.value);
+      borderColor.value = token.value.colorBorderSecondary;
+      backgroundColor.value = token.value.colorBgTextHover;
+    }, 2);
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <template>
@@ -174,15 +197,17 @@ const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
         :key="item.name"
         :style="{ background: item.color }"
         @click="setThemeColor(item.name)"
-      ></span>
+      >
+        <CheckOutlined
+          v-if="themeData.color === item.name"
+          class="checked-icon"
+        />
+      </span>
     </a-space>
   </a-drawer>
 </template>
 
 <style lang="scss" scoped>
-// .right-header {
-// }
-
 .fix-header {
   position: fixed;
   top: 0;
@@ -199,7 +224,7 @@ const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
     justify-content: space-around;
     width: 100%;
     height: 48px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid v-bind("borderColor");
 
     .horizontal-header-left {
       display: flex;
@@ -229,7 +254,7 @@ const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
         cursor: pointer;
 
         &:hover {
-          background: #f6f6f6;
+          background: v-bind("backgroundColor");
         }
       }
     }
@@ -326,12 +351,21 @@ const themeColorsList = isLight ? lightThemesColorsList : darkThemesColorsList;
   }
 
   .colors-item {
+    position: relative;
     display: inline-block;
     width: 18px;
     height: 18px;
     cursor: pointer;
-    border: 1px solid $border-color;
+    border: 1px solid v-bind("borderColor");
     border-radius: 2px;
+
+    .checked-icon {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      color: #fff;
+      vertical-align: middle;
+    }
   }
 }
 </style>
