@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:31:15
- * @LastEditTime: 2023-12-28 10:55:57
+ * @LastEditTime: 2023-12-28 15:34:48
  * @LastEditors: wangqiaoling
  * @Description: 底部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -15,14 +15,38 @@ watchEffect(() => {
 </script>
 
 <template>
-  <a-layout-footer class="footer-container">Footer</a-layout-footer>
+  <a-layout-footer class="footer-container">
+    <span class="left-footer"> ©2024 EGG </span>
+    <span class="right-footer">
+      <a-space>
+        <a
+          href="https://github.com/star-devil/vue3-ts-demo"
+          target="_blank"
+          class="link-text"
+          >关于</a
+        >
+        <a class="link-text">联系我们</a>
+      </a-space>
+    </span>
+  </a-layout-footer>
 </template>
 
 <style lang="scss" scoped>
 .footer-container {
+  display: inline-flex;
+  justify-content: space-between;
   padding: $main-gap;
   font-size: 12px;
-  color: v-bind("textColor");
-  text-align: left;
+  color: v-bind(textColor);
+
+  .link-text {
+    font-size: 12px;
+    color: v-bind(textColor);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 </style>

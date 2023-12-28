@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-28 15:02:50
+ * @LastEditTime: 2023-12-28 17:45:02
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -9,6 +9,9 @@ import { storage } from "@utils/reStorage";
 import { defineStore } from "pinia";
 
 const themesStorage = storage.get("themes");
+const greyStorage = storage.get("grey");
+const weakStorage = storage.get("weak");
+
 export const useThemeStore = defineStore({
   id: "layoutData",
   state: () => ({
@@ -17,6 +20,8 @@ export const useThemeStore = defineStore({
     type: themesStorage?.themeType,
     color: themesStorage?.themeColor,
     time: themesStorage?.expireTime,
+    grey: greyStorage?.isGrey,
+    weak: weakStorage?.isWeak,
   }),
   getters: {
     layoutName: (state) => state.name,
@@ -119,6 +124,36 @@ export const useThemeStore = defineStore({
           themeType: this.themeType,
           themeColor: color,
           expireTime: this.time,
+        },
+        this.time // 过期时间使用用户初始化时传入的值
+      );
+    },
+    /**
+     * @description 设置灰色模式
+     * @param grey 是否设置
+     */
+    setGreyMode(grey: boolean) {
+      this.grey = grey;
+      /** 设置默认主题 */
+      storage.set(
+        "grey",
+        {
+          isGrey: grey,
+        },
+        this.time // 过期时间使用用户初始化时传入的值
+      );
+    },
+    /**
+     * @description 设置色弱模式
+     * @param weak 是否设置
+     */
+    setWeakMode(weak: boolean) {
+      this.weak = weak;
+      /** 设置默认主题 */
+      storage.set(
+        "weak",
+        {
+          isWeak: weak,
         },
         this.time // 过期时间使用用户初始化时传入的值
       );
