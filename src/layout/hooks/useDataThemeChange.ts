@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2023-12-26 18:12:50
+ * @LastEditTime: 2023-12-28 14:11:33
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
@@ -16,7 +16,7 @@ interface colorList {
 
 const themeStore = useThemeStore();
 export function useDataThemeChange() {
-  /** 设置主题色 */
+  /** 明亮和黑暗模式对应的不同主题色数据数组 */
   const getThemesColors = () => {
     const darkThemesColorsList: colorList[] = [];
     const lightThemesColorsList: colorList[] = [];
@@ -38,11 +38,18 @@ export function useDataThemeChange() {
       lightThemesColorsList,
     };
   };
-  const setThemeColor = (colorName: string) => {
+  /** 当前选中主题色index, 因为黑暗模式下的主题色名称不同，只有index相同 */
+  const currentColorIndex = ref<number>(-1);
+  /** 当前选中主题色string */
+  const currentColor = ref<string>("");
+  /** 设置主题色 */
+  const setThemeColor = (colorName: string, index: number) => {
+    currentColorIndex.value = index;
+    currentColor.value = colorName;
     themeStore.setThemeColor(colorName);
   };
 
-  /** 日间、夜间主题切换 */
+  /** 日间、夜间模式切换 */
   const isLight = ref<boolean>(themeStore.themeType === "light");
   function dataThemeChange() {
     if (themeStore.themeType === "light") {
@@ -57,6 +64,8 @@ export function useDataThemeChange() {
   return {
     getThemesColors,
     dataThemeChange,
+    currentColor,
+    currentColorIndex,
     setThemeColor,
     isLight,
   };

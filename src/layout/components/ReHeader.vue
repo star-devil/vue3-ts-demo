@@ -1,25 +1,25 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-27 17:54:39
+ * @LastEditTime: 2023-12-28 14:24:59
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
-import { useThemeToken } from "@store/modules/themeTokenData";
 import { MenuProps, theme } from "ant-design-vue";
-import { delay } from "lodash";
 import { useDataThemeChange } from "../hooks/useDataThemeChange";
 import { useLayout } from "../hooks/useLayout";
+import {
+  borderColorSecondary,
+  setToken,
+  textHoverBgColor,
+} from "../theme/getTokenStore"; // 当前存储的主题配置
 import LogoName from "./LogoName.vue";
 // 获取并存储当前主题
-const themeToken = useThemeToken();
 const { useToken } = theme;
 const { token } = useToken();
-// 获取当前样式需要的变量
-const borderColor = ref<string>("");
-const backgroundColor = ref<string>("");
+
 // 临时菜单
 const current = ref<string[]>(["mail"]);
 const items = ref<MenuProps["items"]>([
@@ -79,15 +79,26 @@ const items = ref<MenuProps["items"]>([
   },
 ]);
 
+// 存储的主题配置
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
+
+// 获取当前样式需要的变量
+const borderColor = ref<string>("");
+const backgroundColor = ref<string>("");
 
 // 系统配置抽屉
 const showSetting = ref<boolean>(false);
 
 // 主题切换
-const { dataThemeChange, isLight, getThemesColors, setThemeColor } =
-  useDataThemeChange();
+const {
+  dataThemeChange,
+  isLight,
+  getThemesColors,
+  currentColor,
+  currentColorIndex,
+  setThemeColor,
+} = useDataThemeChange();
 
 // 布局切换
 const { layoutList, layoutChange } = useLayout();
@@ -102,17 +113,21 @@ watch(
       ? lightThemesColorsList
       : darkThemesColorsList;
 
-    /** 这个渲染顺序，真是 */
-    delay(() => {
-      themeToken.setThemeToken(token.value);
-      borderColor.value = token.value.colorBorderSecondary;
-      backgroundColor.value = token.value.colorBgTextHover;
-    }, 2);
+    nextTick(() => {
+      setToken(token.value);
+      borderColor.value = borderColorSecondary();
+      backgroundColor.value = textHoverBgColor();
+    });
   },
   {
     immediate: true,
   }
 );
+watch(currentColor, () => {
+  nextTick(() => {
+    setToken(token.value);
+  });
+});
 </script>
 
 <template>
@@ -193,13 +208,17 @@ watch(
     <a-space>
       <span
         class="colors-item"
-        v-for="item in themeColorsList"
+        v-for="(item, index) in themeColorsList"
         :key="item.name"
         :style="{ background: item.color }"
-        @click="setThemeColor(item.name)"
+        @click="setThemeColor(item.name, index)"
       >
         <CheckOutlined
-          v-if="themeData.color === item.name"
+          v-if="
+            currentColorIndex === -1
+              ? themeData.color === item.name
+              : currentColorIndex === index
+          "
           class="checked-icon"
         />
       </span>
@@ -224,7 +243,7 @@ watch(
     justify-content: space-around;
     width: 100%;
     height: 48px;
-    border-bottom: 1px solid v-bind("borderColor");
+    border-bottom: 1px solid v-bind(borderColor);
 
     .horizontal-header-left {
       display: flex;
@@ -254,14 +273,13 @@ watch(
         cursor: pointer;
 
         &:hover {
-          background: v-bind("backgroundColor");
+          background: v-bind(backgroundColor);
         }
       }
     }
   }
 }
-</style>
-<style lang="scss">
+
 /** 系统配置抽屉重置 */
 .custom-class {
   .ant-drawer-body {
@@ -346,7 +364,7 @@ watch(
     }
 
     .is-select {
-      border: 2px solid #722ed1;
+      border: 2px solid #1677ff;
     }
   }
 
@@ -356,7 +374,7 @@ watch(
     width: 18px;
     height: 18px;
     cursor: pointer;
-    border: 1px solid v-bind("borderColor");
+    border: 1px solid v-bind(borderColor);
     border-radius: 2px;
 
     .checked-icon {

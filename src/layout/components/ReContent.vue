@@ -1,12 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:30:07
- * @LastEditTime: 2023-12-18 11:21:09
+ * @LastEditTime: 2023-12-28 14:05:14
  * @LastEditors: wangqiaoling
  * @Description: Content：内容部分，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
+import { colorText } from "../theme/getTokenStore";
+
 const themeData = useThemeStore();
 
 const contentHeight: ComputedRef<string> = computed(() => {
@@ -15,6 +17,11 @@ const contentHeight: ComputedRef<string> = computed(() => {
   } else {
     return "calc(100vh - 49px)";
   }
+});
+
+const contentColorText = ref<string>("");
+watchEffect(() => {
+  contentColorText.value = colorText();
 });
 </script>
 
@@ -33,5 +40,6 @@ const contentHeight: ComputedRef<string> = computed(() => {
 <style lang="scss" scoped>
 .content-container {
   padding: $main-gap;
+  color: v-bind(contentColorText);
 }
 </style>

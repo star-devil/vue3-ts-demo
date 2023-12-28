@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2023-12-19 16:09:48
+ * @LastEditTime: 2023-12-28 13:50:44
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
@@ -64,7 +64,7 @@ nextTick(() => {
 </script>
 
 <template>
-  <a-watermark :content="['wondersgroup', 'egg']" v-bind="watermarkConfig">
+  <a-watermark v-bind="watermarkConfig">
     <!-- #ifDef 
          #noSider：顶部栏布局 
          #上:header（导航菜单在顶部） 中:content 下:footer 

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-27 11:08:48
+ * @LastEditTime: 2023-12-28 15:02:50
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -16,7 +16,7 @@ export const useThemeStore = defineStore({
     footer: themesStorage?.hasFooter,
     type: themesStorage?.themeType,
     color: themesStorage?.themeColor,
-    expireTime: 0,
+    time: themesStorage?.expireTime,
   }),
   getters: {
     layoutName: (state) => state.name,
@@ -56,6 +56,7 @@ export const useThemeStore = defineStore({
           hasFooter: footer,
           themeType: type,
           themeColor: color,
+          expireTime: expireTime,
         },
         expireTime // 该缓存将在7天后过期
       );
@@ -63,7 +64,7 @@ export const useThemeStore = defineStore({
       this.footer = footer;
       this.type = type;
       this.color = color;
-      this.expireTime = expireTime;
+      this.time = expireTime;
     },
     /**
      * @description 设置主题类型
@@ -79,8 +80,9 @@ export const useThemeStore = defineStore({
           hasFooter: this.hasFooter,
           themeType: type,
           themeColor: this.themeColor,
+          expireTime: this.time,
         },
-        this.expireTime // 缓存使用用户初始化时传入的值
+        this.time // 过期时间使用用户初始化时传入的值
       );
     },
     /**
@@ -97,8 +99,9 @@ export const useThemeStore = defineStore({
           hasFooter: this.hasFooter,
           themeType: this.themeType,
           themeColor: this.themeColor,
+          expireTime: this.time,
         },
-        this.expireTime // 缓存使用用户初始化时传入的值
+        this.time // 过期时间使用用户初始化时传入的值
       );
     },
     /**
@@ -115,8 +118,9 @@ export const useThemeStore = defineStore({
           hasFooter: this.hasFooter,
           themeType: this.themeType,
           themeColor: color,
+          expireTime: this.time,
         },
-        this.expireTime // 缓存使用用户初始化时传入的值
+        this.time // 过期时间使用用户初始化时传入的值
       );
     },
   },
