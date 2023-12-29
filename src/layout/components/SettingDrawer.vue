@@ -45,7 +45,7 @@ const { getThemesColors, currentColor, currentColorIndex, setThemeColor } =
 // 布局切换
 const { layoutList, layoutChange } = useLayout();
 
-// 主题颜色切换
+// 主题模式对应主题色数组切换
 const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
 let themeColorsList = ref();
 watch(
@@ -70,7 +70,7 @@ watch(currentColor, () => {
   });
 });
 // 界面配置
-const { greyChange, settings, weakChange } = useViewsChange();
+const { greyChange, settings, weakChange, footerChange } = useViewsChange();
 </script>
 
 <template>
@@ -135,6 +135,15 @@ const { greyChange, settings, weakChange } = useViewsChange();
         un-checked-children="关"
         v-model:checked="settings.weakVal"
         @change="(checked) => weakChange(checked)"
+      />
+    </div>
+    <div class="set-box">
+      <span class="box-name">显示页脚</span>
+      <a-switch
+        checked-children="开"
+        un-checked-children="关"
+        v-model:checked="settings.footerVal"
+        @change="(checked) => footerChange(checked)"
       />
     </div>
   </a-drawer>

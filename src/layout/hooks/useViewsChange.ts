@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 15:57:35
- * @LastEditTime: 2023-12-28 17:33:52
+ * @LastEditTime: 2023-12-29 11:19:27
  * @LastEditors: wangqiaoling
  * @Description: 界面配置，包括灰色模式、色弱模式等
  */
@@ -11,6 +11,7 @@ import { useThemeStore } from "@store/modules/setting";
 const settings = reactive({
   greyVal: useThemeStore().grey,
   weakVal: useThemeStore().weak,
+  footerVal: useThemeStore().footer,
 });
 
 /** 添加全局类名 */
@@ -40,9 +41,14 @@ export const useViewsChange = () => {
     );
     useThemeStore().setWeakMode(value);
   };
+  /** 隐藏页脚设置 */
+  const footerChange = (value: any): void => {
+    useThemeStore().setFooter(value);
+  };
   return {
     greyChange,
     weakChange,
+    footerChange,
     settings,
   };
 };

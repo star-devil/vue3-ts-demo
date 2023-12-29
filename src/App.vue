@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-12-28 15:03:01
+ * @LastEditTime: 2023-12-29 11:21:18
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -20,7 +20,7 @@ const locale = zhCN;
 const themes = useThemeStore();
 if (!themes.name) {
   // 如果缓存中不存在主题配置， 则使用默认配置
-  themes.setTheme("noSider", true, "light", "black", 60 * 24 * 7);
+  themes.setTheme("noSider", false, "light", "black", 60 * 24 * 7);
 }
 // 动态切换暗黑和明亮主题、主题颜色
 const themeAlgorithm = ref(theme.defaultAlgorithm);

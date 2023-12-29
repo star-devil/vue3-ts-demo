@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-28 17:45:02
+ * @LastEditTime: 2023-12-29 11:18:48
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -154,6 +154,25 @@ export const useThemeStore = defineStore({
         "weak",
         {
           isWeak: weak,
+        },
+        this.time // 过期时间使用用户初始化时传入的值
+      );
+    },
+    /**
+     * @description 设置隐藏页脚
+     * @param footer 是否隐藏
+     */
+    setFooter(footer: boolean) {
+      this.footer = footer;
+      /** 设置默认主题 */
+      storage.set(
+        "themes",
+        {
+          layoutName: this.layoutName,
+          hasFooter: footer,
+          themeType: this.themeType,
+          themeColor: this.themeColor,
+          expireTime: this.time,
         },
         this.time // 过期时间使用用户初始化时传入的值
       );
