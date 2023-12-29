@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2023-12-29 10:30:56
+ * @LastEditTime: 2023-12-29 16:48:47
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
@@ -39,7 +39,9 @@ export function useDataThemeChange() {
     };
   };
   /** 当前选中主题色index, 因为黑暗模式下的主题色名称不同，只有index相同 */
-  const currentColorIndex = ref<number>(-1);
+  const currentColorIndex = ref<number>(
+    themeStore.color.indexOf("black") > -1 ? 0 : -1
+  );
   /** 当前选中主题色string */
   const currentColor = ref<string>("");
   /** 设置主题色 */
