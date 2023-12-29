@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-29 14:08:50
+ * @LastEditTime: 2023-12-29 17:59:33
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -241,123 +241,6 @@ onBeforeMount(() => {
         }
       }
     }
-  }
-}
-
-/** 系统配置抽屉重置 */
-.custom-class {
-  .ant-drawer-body {
-    padding: 5px 20px;
-  }
-
-  // 模式
-  .layout-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 100%;
-    height: 50px;
-    margin-top: 25px;
-
-    .layout-mode {
-      position: relative;
-      display: inline-block;
-      width: 55px;
-      height: 45px;
-      overflow: hidden;
-      cursor: pointer;
-      background: #f0f2f5;
-      border-radius: 4px;
-      box-shadow: 0 1px 2.5px #0000002e;
-
-      .noSider-mode-1 {
-        width: 100%;
-        height: 30%;
-        background: #1b2a47;
-        box-shadow: 0 0 1px #888;
-      }
-
-      .mixinLeft-mode-1 {
-        width: 100%;
-        height: 30%;
-        background: #1b2a47;
-        box-shadow: 0 0 1px #888;
-      }
-
-      .mixinLeft-mode-2 {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 30%;
-        height: 70%;
-        background: #fff;
-        box-shadow: 0 0 1px #888;
-      }
-
-      .mixinRight-mode-1 {
-        width: 100%;
-        height: 30%;
-        background: #1b2a47;
-        box-shadow: 0 0 1px #888;
-      }
-
-      .mixinRight-mode-2 {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 30%;
-        height: 70%;
-        background: #fff;
-        box-shadow: 0 0 1px #888;
-      }
-
-      .custom-mode-1 {
-        width: 30%;
-        height: 100%;
-        background: #1b2a47;
-      }
-
-      .custom-mode-2 {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 30%;
-        background: #fff;
-        box-shadow: 0 0 1px #888;
-      }
-    }
-
-    .is-select {
-      border: 2px solid #1677ff;
-    }
-  }
-
-  // 主题色
-  .colors-item {
-    position: relative;
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    border: 1px solid v-bind(borderColor);
-    border-radius: 2px;
-
-    .checked-icon {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      color: #fff;
-      vertical-align: middle;
-    }
-  }
-
-  // 界面
-  .set-box {
-    display: inline-flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: $main-gap;
   }
 }
 </style>
