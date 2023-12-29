@@ -1,3 +1,13 @@
+/* 灰色模式 */
+.html-grey {
+  filter: grayscale(100%);
+}
+
+/* 色弱模式 */
+.html-weakness {
+  filter: invert(80%);
+}
+
 .layout-system-logo {
   height: 30px;
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-29 11:06:57
+ * @LastEditTime: 2023-12-29 13:41:19
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -175,7 +175,11 @@ onBeforeMount(() => {
     </div>
   </a-layout-header>
   <!-- 主题和布局配置抽屉 -->
-  <SettingDrawer :visible="showSetting" @close="closeSetting" />
+  <SettingDrawer
+    :light="isLight"
+    :visible="showSetting"
+    @close="closeSetting"
+  />
 </template>
 
 <style lang="scss" scoped>

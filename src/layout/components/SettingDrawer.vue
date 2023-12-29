@@ -4,12 +4,16 @@ import { theme } from "ant-design-vue";
 import { useDataThemeChange } from "../hooks/useDataThemeChange";
 import { useLayout } from "../hooks/useLayout";
 import { useViewsChange } from "../hooks/useViewsChange";
-import { borderColorSecondary, setToken } from "../theme/getTokenStore"; // 当前存储的主题配置
+import { setToken } from "../theme/getTokenStore"; // 当前存储的主题配置
 
 const props = defineProps({
   visible: {
     type: Boolean,
     default: false,
+  },
+  light: {
+    type: Boolean,
+    default: true,
   },
 });
 const emit = defineEmits<{
@@ -18,8 +22,10 @@ const emit = defineEmits<{
 
 // 系统配置抽屉
 const showSetting = ref<boolean>(false);
+const isLight = ref<boolean>(true);
 watchEffect(() => {
   showSetting.value = props.visible;
+  isLight.value = props.light;
 });
 
 const closeDrawer = () => {
@@ -33,10 +39,6 @@ const { token } = useToken();
 // 存储的主题配置
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
-const themeType = ref<string>(themeData.type);
-
-// 获取当前样式需要的变量
-const borderColor = ref<string>("");
 
 // 主题切换
 const { getThemesColors, currentColor, currentColorIndex, setThemeColor } =
@@ -49,7 +51,7 @@ const { layoutList, layoutChange } = useLayout();
 const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
 let themeColorsList = ref();
 watch(
-  themeType,
+  isLight,
   (newVal) => {
     themeColorsList.value = newVal
       ? lightThemesColorsList
@@ -57,7 +59,6 @@ watch(
 
     nextTick(() => {
       setToken(token.value);
-      borderColor.value = borderColorSecondary();
     });
   },
   {
@@ -120,7 +121,7 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
     </a-space>
     <a-divider>界面配置</a-divider>
     <div class="set-box">
-      <span class="box-name">灰色模式</span>
+      <a-typography-text class="box-name">灰色模式</a-typography-text>
       <a-switch
         checked-children="开"
         un-checked-children="关"
@@ -129,7 +130,7 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
       />
     </div>
     <div class="set-box">
-      <span class="box-name">色弱模式</span>
+      <a-typography-text class="box-name">色弱模式</a-typography-text>
       <a-switch
         checked-children="开"
         un-checked-children="关"
@@ -138,7 +139,7 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
       />
     </div>
     <div class="set-box">
-      <span class="box-name">显示页脚</span>
+      <a-typography-text class="box-name">显示页脚</a-typography-text>
       <a-switch
         checked-children="开"
         un-checked-children="关"
@@ -152,10 +153,6 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
 <style lang="scss" scoped>
 /** 系统配置抽屉重置 */
 .custom-class {
-  .ant-drawer-body {
-    padding: 5px 20px;
-  }
-
   // 模式
   .layout-wrap {
     display: flex;
@@ -246,7 +243,7 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
     width: 18px;
     height: 18px;
     cursor: pointer;
-    border: 1px solid v-bind(borderColor);
+    border: 1px solid rgba(28 28 28 / 5%);
     border-radius: 2px;
 
     .checked-icon {
