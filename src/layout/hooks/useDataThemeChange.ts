@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2023-12-28 14:11:33
+ * @LastEditTime: 2023-12-29 10:30:56
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
@@ -49,24 +49,10 @@ export function useDataThemeChange() {
     themeStore.setThemeColor(colorName);
   };
 
-  /** 日间、夜间模式切换 */
-  const isLight = ref<boolean>(themeStore.themeType === "light");
-  function dataThemeChange() {
-    if (themeStore.themeType === "light") {
-      themeStore.setThemeType("dark");
-      isLight.value = false;
-    } else {
-      themeStore.setThemeType("light");
-      isLight.value = true;
-    }
-  }
-
   return {
     getThemesColors,
-    dataThemeChange,
     currentColor,
     currentColorIndex,
     setThemeColor,
-    isLight,
   };
 }

@@ -1,22 +1,22 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-28 17:42:03
+ * @LastEditTime: 2023-12-29 11:06:57
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
 import { MenuProps, theme } from "ant-design-vue";
-import { useDataThemeChange } from "../hooks/useDataThemeChange";
-import { useLayout } from "../hooks/useLayout";
-import { useViewsChange } from "../hooks/useViewsChange";
+import { useThemeType } from "../hooks/useThemeType";
 import {
   borderColorSecondary,
   setToken,
   textHoverBgColor,
 } from "../theme/getTokenStore"; // 当前存储的主题配置
-import LogoName from "./LogoName.vue";
+import LogoName from "./LogoName.vue"; // 系统名称和logo
+import SettingDrawer from "./SettingDrawer.vue"; // 主题设置弹窗
+
 // 获取并存储当前主题
 const { useToken } = theme;
 const { token } = useToken();
@@ -90,30 +90,19 @@ const backgroundColor = ref<string>("");
 
 // 系统配置抽屉
 const showSetting = ref<boolean>(false);
+const openSetting = () => {
+  showSetting.value = true;
+};
+const closeSetting = () => {
+  showSetting.value = false;
+};
 
-// 主题切换
-const {
-  dataThemeChange,
-  isLight,
-  getThemesColors,
-  currentColor,
-  currentColorIndex,
-  setThemeColor,
-} = useDataThemeChange();
+// 主题模式切换
+const { dataThemeChange, isLight } = useThemeType();
 
-// 布局切换
-const { layoutList, layoutChange } = useLayout();
-
-// 主题颜色切换
-const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
-let themeColorsList = ref();
 watch(
   isLight,
-  (newVal) => {
-    themeColorsList.value = newVal
-      ? lightThemesColorsList
-      : darkThemesColorsList;
-
+  () => {
     nextTick(() => {
       setToken(token.value);
       borderColor.value = borderColorSecondary();
@@ -124,20 +113,13 @@ watch(
     immediate: true,
   }
 );
-watch(currentColor, () => {
-  nextTick(() => {
-    setToken(token.value);
-  });
-});
-// 界面配置
-const { greyChange, settings, weakChange } = useViewsChange();
 
 onBeforeMount(() => {
   /* 初始化项目配置 */
   nextTick(() => {
-    settings.greyVal &&
+    useThemeStore().grey &&
       document.querySelector("html")?.setAttribute("class", "html-grey");
-    settings.weakVal &&
+    useThemeStore().weak &&
       document.querySelector("html")?.setAttribute("class", "html-weakness");
   });
 });
@@ -185,7 +167,7 @@ onBeforeMount(() => {
           <div class="right-actions theme-type" @click="dataThemeChange">
             <IconFont :type="isLight ? 'light' : 'dark'" />
           </div>
-          <div class="right-actions setting" @click="showSetting = true">
+          <div class="right-actions setting" @click="openSetting">
             <IconFont :type="isLight ? 'lightset' : 'darkset'" />
           </div>
         </div>
@@ -193,69 +175,7 @@ onBeforeMount(() => {
     </div>
   </a-layout-header>
   <!-- 主题和布局配置抽屉 -->
-  <a-drawer
-    v-model:open="showSetting"
-    class="custom-class"
-    title="系统配置"
-    placement="right"
-    width="315"
-  >
-    <a-divider>导航模式</a-divider>
-    <a-space class="layout-wrap">
-      <a-tooltip
-        v-for="(name, key) in layoutList"
-        :key="key"
-        :title="name"
-        placement="bottom"
-      >
-        <span
-          :class="['layout-mode', key === layoutName ? 'is-select' : '']"
-          @click="layoutChange(key)"
-        >
-          <div :class="key + '-mode-1'"></div>
-          <div :class="key + '-mode-2'"></div>
-        </span>
-      </a-tooltip>
-    </a-space>
-    <a-divider>主题色</a-divider>
-    <a-space>
-      <span
-        class="colors-item"
-        v-for="(item, index) in themeColorsList"
-        :key="item.name"
-        :style="{ background: item.color }"
-        @click="setThemeColor(item.name, index)"
-      >
-        <CheckOutlined
-          v-if="
-            currentColorIndex === -1
-              ? themeData.color === item.name
-              : currentColorIndex === index
-          "
-          class="checked-icon"
-        />
-      </span>
-    </a-space>
-    <a-divider>界面配置</a-divider>
-    <div class="set-box">
-      <span class="box-name">灰色模式</span>
-      <a-switch
-        checked-children="开"
-        un-checked-children="关"
-        v-model:checked="settings.greyVal"
-        @change="(checked) => greyChange(checked)"
-      />
-    </div>
-    <div class="set-box">
-      <span class="box-name">色弱模式</span>
-      <a-switch
-        checked-children="开"
-        un-checked-children="关"
-        v-model:checked="settings.weakVal"
-        @change="(checked) => weakChange(checked)"
-      />
-    </div>
-  </a-drawer>
+  <SettingDrawer :visible="showSetting" @close="closeSetting" />
 </template>
 
 <style lang="scss" scoped>

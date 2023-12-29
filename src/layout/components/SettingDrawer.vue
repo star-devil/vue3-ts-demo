@@ -4,11 +4,28 @@ import { theme } from "ant-design-vue";
 import { useDataThemeChange } from "../hooks/useDataThemeChange";
 import { useLayout } from "../hooks/useLayout";
 import { useViewsChange } from "../hooks/useViewsChange";
-import {
-  borderColorSecondary,
-  setToken,
-  textHoverBgColor,
-} from "../theme/getTokenStore"; // 当前存储的主题配置
+import { borderColorSecondary, setToken } from "../theme/getTokenStore"; // 当前存储的主题配置
+
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+});
+const emit = defineEmits<{
+  (e: "close"): void;
+}>();
+
+// 系统配置抽屉
+const showSetting = ref<boolean>(false);
+watchEffect(() => {
+  showSetting.value = props.visible;
+});
+
+const closeDrawer = () => {
+  emit("close");
+};
+
 // 获取并存储当前主题
 const { useToken } = theme;
 const { token } = useToken();
@@ -16,22 +33,14 @@ const { token } = useToken();
 // 存储的主题配置
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
+const themeType = ref<string>(themeData.type);
 
 // 获取当前样式需要的变量
 const borderColor = ref<string>("");
-const backgroundColor = ref<string>("");
-
-// 系统配置抽屉
-const showSetting = ref<boolean>(false);
 
 // 主题切换
-const {
-  isLight,
-  getThemesColors,
-  currentColor,
-  currentColorIndex,
-  setThemeColor,
-} = useDataThemeChange();
+const { getThemesColors, currentColor, currentColorIndex, setThemeColor } =
+  useDataThemeChange();
 
 // 布局切换
 const { layoutList, layoutChange } = useLayout();
@@ -40,7 +49,7 @@ const { layoutList, layoutChange } = useLayout();
 const { darkThemesColorsList, lightThemesColorsList } = getThemesColors();
 let themeColorsList = ref();
 watch(
-  isLight,
+  themeType,
   (newVal) => {
     themeColorsList.value = newVal
       ? lightThemesColorsList
@@ -49,7 +58,6 @@ watch(
     nextTick(() => {
       setToken(token.value);
       borderColor.value = borderColorSecondary();
-      backgroundColor.value = textHoverBgColor();
     });
   },
   {
@@ -63,16 +71,6 @@ watch(currentColor, () => {
 });
 // 界面配置
 const { greyChange, settings, weakChange } = useViewsChange();
-
-onBeforeMount(() => {
-  /* 初始化项目配置 */
-  nextTick(() => {
-    settings.greyVal &&
-      document.querySelector("html")?.setAttribute("class", "html-grey");
-    settings.weakVal &&
-      document.querySelector("html")?.setAttribute("class", "html-weakness");
-  });
-});
 </script>
 
 <template>
@@ -82,6 +80,7 @@ onBeforeMount(() => {
     title="系统配置"
     placement="right"
     width="315"
+    @close="closeDrawer"
   >
     <a-divider>导航模式</a-divider>
     <a-space class="layout-wrap">
