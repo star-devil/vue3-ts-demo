@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-29 13:41:19
+ * @LastEditTime: 2023-12-29 14:08:50
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -16,6 +16,13 @@ import {
 } from "../theme/getTokenStore"; // 当前存储的主题配置
 import LogoName from "./LogoName.vue"; // 系统名称和logo
 import SettingDrawer from "./SettingDrawer.vue"; // 主题设置弹窗
+
+defineProps({
+  set: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 // 获取并存储当前主题
 const { useToken } = theme;
@@ -167,7 +174,7 @@ onBeforeMount(() => {
           <div class="right-actions theme-type" @click="dataThemeChange">
             <IconFont :type="isLight ? 'light' : 'dark'" />
           </div>
-          <div class="right-actions setting" @click="openSetting">
+          <div v-if="set" class="right-actions setting" @click="openSetting">
             <IconFont :type="isLight ? 'lightset' : 'darkset'" />
           </div>
         </div>
@@ -176,6 +183,7 @@ onBeforeMount(() => {
   </a-layout-header>
   <!-- 主题和布局配置抽屉 -->
   <SettingDrawer
+    v-if="set"
     :light="isLight"
     :visible="showSetting"
     @close="closeSetting"

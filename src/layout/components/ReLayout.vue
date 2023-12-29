@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2023-12-28 13:49:16
+ * @LastEditTime: 2023-12-29 14:07:49
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
@@ -16,6 +16,10 @@ const props = defineProps({
   waterMarkModel: {
     type: Object,
     default: () => {},
+  },
+  needSet: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -70,7 +74,7 @@ nextTick(() => {
          #上:header（导航菜单在顶部） 中:content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
     <a-layout v-if="layoutData.name === 'noSider'">
-      <ReHeader />
+      <ReHeader :set="needSet" />
       <ReContent />
       <ReFooter v-if="layoutData.footer" />
     </a-layout>
@@ -81,7 +85,7 @@ nextTick(() => {
          #上:header（可自定义辅助菜单） 中:sider/左+content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
     <a-layout v-if="layoutData.name === 'mixinLeft'">
-      <ReHeader />
+      <ReHeader :set="needSet" />
       <a-layout>
         <ReSider />
         <a-layout>
@@ -97,7 +101,7 @@ nextTick(() => {
          #上:header（可自定义辅助菜单） 中:sider/右+content 下:footer 
          #此布局的logo在header内，已设置基础样式  -->
     <a-layout v-if="layoutData.name === 'mixinRight'">
-      <ReHeader />
+      <ReHeader :set="needSet" />
       <a-layout>
         <a-layout>
           <ReContent />
@@ -115,7 +119,7 @@ nextTick(() => {
     <a-layout v-if="layoutData.name === 'custom'">
       <ReSider />
       <a-layout>
-        <ReHeader />
+        <ReHeader :set="needSet" />
         <ReContent />
         <ReFooter v-if="layoutData.footer" />
       </a-layout>
