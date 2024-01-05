@@ -1,9 +1,9 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-13 14:19:21
- * @LastEditTime: 2024-01-05 16:18:59
+ * @LastEditTime: 2024-01-05 16:37:26
  * @LastEditors: wangqiaoling
- * @Description: 跳转到首页
+ * @Description: 首页，展示布局结构的入口，且永远排在菜单第一项，不可删除
  */
 const Layout = () => import("@/layout/Index.vue");
 

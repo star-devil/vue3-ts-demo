@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:31:22
- * @LastEditTime: 2024-01-04 16:44:10
+ * @LastEditTime: 2024-01-05 16:38:11
  * @LastEditors: wangqiaoling
  * @Description: 其他无需layout页面，不需要展示菜单导航以及额外模块，只需要展示业务内容模块
  */
@@ -25,7 +25,6 @@ const remainingRoutes: { [key: string]: any } = [
     meta: {
       icon: "informationLine",
       title: "异常页面",
-      // showLink: false,
       rank: 102,
     },
     children: [
