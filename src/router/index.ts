@@ -1,19 +1,36 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:45:50
- * @LastEditTime: 2023-12-13 15:00:31
+ * @LastEditTime: 2024-01-04 17:16:38
  * @LastEditors: wangqiaoling
  * @Description: 简单路由配置
  */
-import { createRouter, createWebHistory } from "vue-router";
+import NProgress from "@/utils/progress";
+import { buildHierarchyTree } from "@utils/tree";
+import {
+  RouteComponent,
+  RouteRecordRaw,
+  Router,
+  createRouter,
+  createWebHistory,
+} from "vue-router";
+import {
+  ascending,
+  formatFlatteningRoutes,
+  formatTwoStageRoutes,
+} from "./utils";
 
+import remainingRouter from "./modules/remaining";
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
  */
-const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts"], {
-  eager: true,
-});
+const modules: Record<string, any> = import.meta.glob(
+  ["./modules/**/*.ts", "!./modules/**/remaining.ts", "!./modules/**/error.ts"],
+  {
+    eager: true,
+  }
+);
 /** 原始静态路由（未做任何处理） */
 const routes: any[] = [];
 
@@ -21,10 +38,43 @@ Object.keys(modules).forEach((key) => {
   routes.push(modules[key].default);
 });
 
+/** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
+  formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity))))
+);
+
+/** 用于渲染菜单，保持原始层级 */
+export const constantMenus: Array<RouteComponent> = ascending(
+  routes.flat(Infinity)
+);
+
+/** 不参与菜单的路由 */
+export const remainingPaths = Object.keys(remainingRouter).map((v) => {
+  return remainingRouter[v].path;
+});
+
 // 路由
-const router = createRouter({
+export const router: Router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: constantRoutes.concat(...(remainingRouter as any)),
+  strict: true,
+  scrollBehavior(_to, from, savedPosition) {
+    return new Promise((resolve) => {
+      if (savedPosition) {
+        return savedPosition;
+      } else {
+        if (from.meta.saveSrollTop) {
+          const top: number =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          resolve({ left: 0, top });
+        }
+      }
+    });
+  },
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 // 导出
 export default router;

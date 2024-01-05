@@ -5,11 +5,15 @@
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
-// 全局配置
+/**
+ * @description 获取悬浮节点
+ * */
 export function getContainer(triggerNode: HTMLElement) {
   return triggerNode;
 }
-// 获取assets静态资源
+/**
+ * @description 获取assets静态资源路径，在使用动态路径时很有用
+ * */
 export const getAssetsFile = (url: string) => {
   return new URL(`../assets/${url}`, import.meta.url).href;
 };

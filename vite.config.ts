@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2023-12-06 16:00:30
+ * @LastEditTime: 2024-01-05 16:18:04
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -66,6 +66,7 @@ export default ({ command, mode }) => {
         "@store": resolve(__dirname, "src/store"),
         "@utils": resolve(__dirname, "src/utils"),
         "@assets": resolve(__dirname, "src/assets"),
+        "@router": resolve(__dirname, "src/router"),
       },
     },
     // 在.env.production文件中配置VITE_DROP_CONSOLE = true,

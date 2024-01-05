@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-18 12:30:17
- * @LastEditTime: 2023-12-19 09:40:55
+ * @LastEditTime: 2024-01-02 10:10:14
  * @LastEditors: wangqiaoling
  * @Description: 封装操作本地存储的方法
  */
@@ -13,7 +13,7 @@ import { dataDecrypt, dataEncrypt } from "./crypt";
  * data: 存储的内容
  * time: 存储数据时的时间
  * expire: 数据过期时间，单位分钟
- * isEncrypt: 是否加密
+ * mode: 是否加密
  */
 interface Storage {
   data: any;

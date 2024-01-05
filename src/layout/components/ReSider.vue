@@ -1,14 +1,15 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2023-12-28 14:03:56
+ * @LastEditTime: 2024-01-04 17:50:52
  * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
+import LogoName from "../components/logoName/Index.vue";
 import { borderColorSecondary, colorText } from "../theme/getTokenStore";
-import LogoName from "./LogoName.vue";
+import NavigationMenu from "./navigationMenu/Index.vue"; // 导航菜单
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
@@ -29,10 +30,13 @@ watchEffect(() => {
       layoutName === 'mixinRight' ? 'right-side-bar' : 'left-side-bar',
     ]"
   >
-    <div class="side-bar-logo-container">
-      <span class="side-logo-link" v-if="layoutName === 'custom'">
+    <div class="side-bar-logo-container" v-if="layoutName === 'custom'">
+      <span class="side-logo-link">
         <LogoName />
       </span>
+    </div>
+    <div class="menu-container">
+      <NavigationMenu />
     </div>
   </a-layout-sider>
 </template>

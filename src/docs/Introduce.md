@@ -26,7 +26,7 @@
         - `false`：不展示
 
 2. **/src/layout/components**: 布局结构中用到的所有组件
-    - `LogoName.vue`：在这里修改系统名和logo
+    - `/logoName/Index.vue`：在这里修改系统名和logo
     - `ReFooter.vue`：在这里修改页脚显示的内容
 
 ## step4

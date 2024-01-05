@@ -1,17 +1,17 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2023-12-29 16:49:07
+ * @LastEditTime: 2024-01-04 16:54:06
  * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
 import { theme } from "ant-design-vue";
-import { useDataThemeChange } from "../hooks/useDataThemeChange";
-import { useLayout } from "../hooks/useLayout";
-import { useViewsChange } from "../hooks/useViewsChange";
-import { setToken } from "../theme/getTokenStore"; // 当前存储的主题配置
+import { useDataThemeChange } from "../../hooks/useDataThemeChange";
+import { useLayout } from "../../hooks/useLayout";
+import { useViewsChange } from "../../hooks/useViewsChange";
+import { setToken } from "../../theme/getTokenStore"; // 当前存储的主题配置
 
 const props = defineProps({
   visible: {

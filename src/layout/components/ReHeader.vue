@@ -1,21 +1,22 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2023-12-29 17:59:33
+ * @LastEditTime: 2024-01-04 17:15:47
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
-import { MenuProps, theme } from "ant-design-vue";
+import { theme } from "ant-design-vue";
+import LogoName from "../components/logoName/Index.vue"; // 系统名称和logo
 import { useThemeType } from "../hooks/useThemeType";
 import {
   borderColorSecondary,
   setToken,
   textHoverBgColor,
 } from "../theme/getTokenStore"; // 当前存储的主题配置
-import LogoName from "./LogoName.vue"; // 系统名称和logo
-import SettingDrawer from "./SettingDrawer.vue"; // 主题设置弹窗
+import NavigationMenu from "./navigationMenu/Index.vue"; // 导航菜单
+import SettingDrawer from "./settingDrawer/Index.vue"; // 主题设置弹窗
 
 defineProps({
   set: {
@@ -27,65 +28,6 @@ defineProps({
 // 获取并存储当前主题
 const { useToken } = theme;
 const { token } = useToken();
-
-// 临时菜单
-const current = ref<string[]>(["mail"]);
-const items = ref<MenuProps["items"]>([
-  {
-    key: "mail",
-    label: "Navigation One",
-    title: "Navigation One",
-  },
-  {
-    key: "app",
-    label: "Navigation Two",
-    title: "Navigation Two",
-  },
-  {
-    key: "sub1",
-    label: "Navigation Three - Submenu",
-    title: "Navigation Three - Submenu",
-    children: [
-      {
-        type: "group",
-        label: "Item 1",
-        children: [
-          {
-            label: "Option 1",
-            key: "setting:1",
-          },
-          {
-            label: "Option 2",
-            key: "setting:2",
-          },
-        ],
-      },
-      {
-        type: "group",
-        label: "Item 2",
-        children: [
-          {
-            label: "Option 3",
-            key: "setting:3",
-          },
-          {
-            label: "Option 4",
-            key: "setting:4",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: "alipay",
-    label: h(
-      "a",
-      { href: "https://antdv.com", target: "_blank" },
-      "Navigation Four - Link"
-    ),
-    title: "Navigation Four - Link",
-  },
-]);
 
 // 存储的主题配置
 const themeData = useThemeStore();
@@ -145,12 +87,7 @@ onBeforeMount(() => {
           <LogoName />
         </div>
         <div class="horizontal-header-menu">
-          <a-menu
-            v-if="layoutName === 'noSider'"
-            v-model:selectedKeys="current"
-            mode="horizontal"
-            :items="items"
-          />
+          <NavigationMenu v-if="layoutName === 'noSider'" />
         </div>
         <div class="horizontal-header-right">
           <div class="right-actions user-info">
