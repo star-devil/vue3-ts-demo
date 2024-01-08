@@ -1,20 +1,21 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-01-05 16:15:09
+ * @LastEditTime: 2024-01-08 17:34:07
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
 
+import { isAllEmpty } from "@utils/provideConfig";
 import { buildHierarchyTree } from "@utils/tree";
-import { cloneDeep, filter, forEach, isEmpty } from "lodash";
+import { cloneDeep, filter, forEach } from "lodash";
 import { RouteComponent, RouteRecordRaw } from "vue-router";
 import { router } from "./index";
 
 function handRank(routeInfo: any) {
   const { name, path, parentId, meta } = routeInfo;
-  return isEmpty(parentId)
-    ? isEmpty(meta?.rank) ||
+  return isAllEmpty(parentId)
+    ? isAllEmpty(meta?.rank) ||
       (meta?.rank === 0 && name !== "Home" && path !== "/")
       ? true
       : false
@@ -24,6 +25,7 @@ function handRank(routeInfo: any) {
 /** 按照路由中meta下的rank等级升序来排序路由 */
 function ascending(arr: any[]) {
   arr.forEach((v, index) => {
+    console.log("handRank--", handRank(v));
     // 当rank不存在时，根据顺序自动创建，首页路由永远在第一位
     if (handRank(v)) v.meta.rank = index + 2;
   });

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:45:50
- * @LastEditTime: 2024-01-04 17:16:38
+ * @LastEditTime: 2024-01-08 15:46:06
  * @LastEditors: wangqiaoling
  * @Description: 简单路由配置
  */
