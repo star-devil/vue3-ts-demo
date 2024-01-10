@@ -1,23 +1,37 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-10 11:01:20
+ * @LastEditTime: 2024-01-10 15:14:38
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
 <script setup lang="ts">
-import { constantMenus } from "@router";
-import { filterTree } from "@router/utils";
+import { constantMenus, constantRoutes } from "@router";
+import { filterTree, getParentPaths } from "@router/utils";
 import { useThemeStore } from "@store/modules/setting";
 import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
-import { RouteComponent } from "vue-router";
+import { RouteComponent, RouteLocationRaw } from "vue-router";
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
+const router = useRouter();
+const routeInfo = useRoute();
 
-// 临时菜单
-const current = ref<string[]>(["mail"]);
+/**
+ * 控制菜单选中和展开的一些参数
+ */
+const state = reactive<{
+  current: string[];
+  openKeys: string[];
+}>({
+  current: [],
+  openKeys: [],
+});
+
+/**
+ * 菜单数据
+ */
 let items: ItemType[] = reactive([]);
 
 // 处理菜单成menu需要的格式
@@ -32,7 +46,6 @@ let items: ItemType[] = reactive([]);
 function getItem(
   label: string,
   key: string,
-  path: string,
   icon?: any,
   children?: ItemType[],
   type?: "group"
@@ -43,7 +56,6 @@ function getItem(
     children,
     label,
     type,
-    path,
   } as ItemType;
 }
 /**
@@ -54,7 +66,6 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
   return route.map((item: any) => {
     const menuData: ItemType = getItem(
       item.meta.title,
-      item.name,
       item.path,
       item.meta.icon
     );
@@ -65,22 +76,37 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
   });
 }
 
+/**
+ * 获取当前选中的菜单和父级菜单
+ */
+function getCurrentMenuInfo() {
+  state.current = [routeInfo.path as string];
+  // 去掉‘/’根路径；且当布局为顶部模式时，取消默认展开父级菜单
+  state.openKeys =
+    layoutName === "noSider"
+      ? []
+      : getParentPaths(routeInfo.path, constantRoutes, "path").slice(1);
+}
+
+/**
+ * 点击菜单跳转
+ */
+const selectMenu: MenuProps["onSelect"] = (item) => {
+  router.push(item.key as RouteLocationRaw);
+};
+
 // 生成导航菜单
 onBeforeMount(() => {
   items = transformRouteToMenu(filterTree(constantMenus));
+  getCurrentMenuInfo();
 });
-
-const router = useRouter();
-
-const selectMenu: MenuProps["onSelect"] = ({ item }) => {
-  router.push(item.path);
-};
 </script>
 
 <template>
   <div class="navigation-menu">
     <a-menu
-      v-model:selectedKeys="current"
+      v-model:selectedKeys="state.current"
+      v-model:openKeys="state.openKeys"
       :mode="layoutName === 'noSider' ? 'horizontal' : 'inline'"
       :items="items"
       @select="selectMenu"

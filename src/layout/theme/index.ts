@@ -1,14 +1,17 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-14 10:26:42
- * @LastEditTime: 2023-12-27 16:41:47
+ * @LastEditTime: 2024-01-10 13:58:18
  * @LastEditors: wangqiaoling
  * @Description: 主题色配置文件
  */
 type color = {
   colorPrimary: string;
   colorPrimaryBg?: string;
+  colorPrimaryActive?: string;
   colorInfo?: string;
+  colorInfoText?: string;
+  colorPrimaryTextActive?: string;
   colorSuccess?: string;
   colorBgLayout?: string;
   colorPrimaryBorder?: string;
@@ -31,8 +34,8 @@ export const themeColors: ThemeColors = {
   black: {
     colorPrimary: "#1c1c1c",
     colorPrimaryBg: "#E5ECF6",
-    colorInfo: "#1886fe",
-    colorSuccess: "#34c759",
+    colorInfo: "#5856D6",
+    colorPrimaryTextActive: "#AF52DE",
     colorBgLayout: "#fff",
     wireframe: false,
   },

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-01-09 15:55:48
+ * @LastEditTime: 2024-01-10 14:50:39
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
@@ -99,10 +99,39 @@ function addPathMatch() {
   }
 }
 
+/**
+ * @description 通过指定 `key` 获取父级路径集合，默认 `key` 为 `path`
+ * @param value 当前路径
+ * @param routes 整体路由生成的菜单（静态、动态）
+ * */
+function getParentPaths(value: string, routes: RouteRecordRaw[], key = "path") {
+  // 深度遍历查找
+  function dfs(routes: RouteRecordRaw[], value: string, parents: string[]) {
+    for (let i = 0; i < routes.length; i++) {
+      const item = routes[i];
+      // 返回父级path
+      if (item[key as keyof typeof item] === value) return parents;
+      // children不存在或为空则不递归
+      if (!item.children || !item.children.length) continue;
+      // 往下查找时将当前path入栈
+      parents.push(item.path);
+
+      if (dfs(item.children, value, parents).length) return parents;
+      // 深度遍历查找未找到时当前path 出栈
+      parents.pop();
+    }
+    // 未找到时返回空数组
+    return [];
+  }
+
+  return dfs(routes, value, []);
+}
+
 export {
   addPathMatch,
   ascending,
   filterTree,
   formatFlatteningRoutes,
   formatTwoStageRoutes,
+  getParentPaths,
 };
