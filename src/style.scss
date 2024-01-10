@@ -56,9 +56,30 @@ body {
   }
 }
 
+/** 系统配置抽屉 */
 .custom-class {
   .ant-drawer-body {
     padding: 5px 20px !important;
   }
 }
+
+/** 系统菜单 */
+.navigation-menu {
+  .ant-menu {
+    border-inline-end: unset !important;
+
+    .ant-menu-item-selected {
+      color: #fff;
+    }
+
+    .ant-menu-item:active {
+      color: #fff;
+    }
+
+    .ant-menu-submenu-title:active {
+      background-color: unset;
+    }
+  }
+}
+
 
