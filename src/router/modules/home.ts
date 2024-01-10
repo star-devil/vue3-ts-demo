@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-13 14:19:21
- * @LastEditTime: 2024-01-05 16:37:26
+ * @LastEditTime: 2024-01-10 11:00:30
  * @LastEditors: wangqiaoling
  * @Description: 首页，展示布局结构的入口，且永远排在菜单第一项，不可删除
  */
@@ -13,7 +13,7 @@ export default {
   component: Layout,
   redirect: "/welcome",
   meta: {
-    icon: "homeFilled",
+    icon: () => h(window.IconFont, { type: "home" }),
     title: "首页",
     rank: 0,
   },

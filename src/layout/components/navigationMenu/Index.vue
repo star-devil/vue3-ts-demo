@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-05 16:24:48
+ * @LastEditTime: 2024-01-10 11:01:20
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -9,7 +9,7 @@
 import { constantMenus } from "@router";
 import { filterTree } from "@router/utils";
 import { useThemeStore } from "@store/modules/setting";
-import { ItemType } from "ant-design-vue";
+import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
 import { RouteComponent } from "vue-router";
 
@@ -56,7 +56,7 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
       item.meta.title,
       item.name,
       item.path,
-      ""
+      item.meta.icon
     );
     if (item.children && item.children.length > 0) {
       (menuData as SubMenuType).children = transformRouteToMenu(item.children);
@@ -72,8 +72,8 @@ onBeforeMount(() => {
 
 const router = useRouter();
 
-const selectMenu = (path: string) => {
-  router.push(path);
+const selectMenu: MenuProps["onSelect"] = ({ item }) => {
+  router.push(item.path);
 };
 </script>
 
@@ -83,8 +83,9 @@ const selectMenu = (path: string) => {
       v-model:selectedKeys="current"
       :mode="layoutName === 'noSider' ? 'horizontal' : 'inline'"
       :items="items"
-      @select="({ item }) => selectMenu(item.path)"
-    />
+      @select="selectMenu"
+    >
+    </a-menu>
   </div>
 </template>
 

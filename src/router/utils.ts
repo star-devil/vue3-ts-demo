@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-01-08 17:34:07
+ * @LastEditTime: 2024-01-09 15:55:48
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
@@ -25,7 +25,6 @@ function handRank(routeInfo: any) {
 /** 按照路由中meta下的rank等级升序来排序路由 */
 function ascending(arr: any[]) {
   arr.forEach((v, index) => {
-    console.log("handRank--", handRank(v));
     // 当rank不存在时，根据顺序自动创建，首页路由永远在第一位
     if (handRank(v)) v.meta.rank = index + 2;
   });

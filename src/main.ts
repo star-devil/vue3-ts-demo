@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2023-12-19 17:52:08
+ * @LastEditTime: 2024-01-10 10:41:12
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
@@ -24,6 +24,8 @@ const IconFont = createFromIconfontCN({
   scriptUrl: new URL("./assets/iconfont/index", import.meta.url).href, // 在 iconfont.cn 上生成
 });
 app.component("IconFont", IconFont);
+
+window.IconFont = IconFont;
 
 app.use(router);
 setupStore(app);
