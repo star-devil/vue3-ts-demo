@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-04 16:54:06
+ * @LastEditTime: 2024-01-10 17:35:12
  * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
@@ -78,7 +78,8 @@ watch(currentColor, () => {
   });
 });
 // 界面配置
-const { greyChange, settings, weakChange, footerChange } = useViewsChange();
+const { greyChange, settings, weakChange, headerChange, footerChange } =
+  useViewsChange();
 </script>
 
 <template>
@@ -143,6 +144,15 @@ const { greyChange, settings, weakChange, footerChange } = useViewsChange();
         un-checked-children="关"
         v-model:checked="settings.weakVal"
         @change="(checked) => weakChange(checked)"
+      />
+    </div>
+    <div class="set-box">
+      <a-typography-text class="box-name">混搭模式</a-typography-text>
+      <a-switch
+        checked-children="开"
+        un-checked-children="关"
+        v-model:checked="settings.headerVal"
+        @change="(checked) => headerChange(checked)"
       />
     </div>
     <div class="set-box">

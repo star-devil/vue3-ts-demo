@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-10 15:38:45
+ * @LastEditTime: 2024-01-10 17:47:01
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -109,6 +109,7 @@ onBeforeMount(() => {
       v-model:openKeys="state.openKeys"
       :mode="layoutName === 'noSider' ? 'horizontal' : 'inline'"
       :items="items"
+      :theme="themeData.headColor ? 'dark' : 'light'"
       @select="selectMenu"
     >
     </a-menu>

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2023-12-29 16:34:10
+ * @LastEditTime: 2024-01-10 16:34:23
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -25,10 +25,12 @@ export const useThemeStore = defineStore({
         ? JSON.parse(import.meta.env.VITE_IS_GREY)
         : greyStorage?.isGrey,
     weak: weakStorage?.isWeak,
+    headColor: themesStorage?.headColor,
   }),
   getters: {
     layoutName: (state) => state.name,
     hasFooter: (state) => state.footer,
+    hasHeaderColor: (state) => state.headColor,
     themeType: (state) => state.type,
     themeColor: (state) => {
       const color: string = state.color.split("darkAlgorithm")[1];
@@ -157,6 +159,21 @@ export const useThemeStore = defineStore({
         "weak",
         {
           isWeak: weak,
+        },
+        this.time // 过期时间使用用户初始化时传入的值
+      );
+    },
+    /**
+     * @description 开启导航颜色
+     * @param setColor 是否上色
+     */
+    setHeaderColor(setColor: boolean) {
+      this.headColor = setColor;
+      /** 设置默认主题 */
+      storage.set(
+        "headColor",
+        {
+          headColor: setColor,
         },
         this.time // 过期时间使用用户初始化时传入的值
       );

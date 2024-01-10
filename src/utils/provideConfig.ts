@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-01-08 17:32:05
+ * @LastEditTime: 2024-01-10 17:24:11
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */

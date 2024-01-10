@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-01-04 17:15:47
+ * @LastEditTime: 2024-01-10 18:06:48
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -28,6 +28,7 @@ defineProps({
 // 获取并存储当前主题
 const { useToken } = theme;
 const { token } = useToken();
+console.log("token-", token.value);
 
 // 存储的主题配置
 const themeData = useThemeStore();
@@ -35,7 +36,30 @@ const layoutName = themeData.layoutName;
 
 // 获取当前样式需要的变量
 const borderColor = ref<string>("");
-const backgroundColor = ref<string>("");
+const btnHoverBgColor = ref<string>("");
+
+// 混搭模式下的样式切换
+const headerIconType = computed(() => {
+  if (layoutName !== "custom") {
+    return isLight && !themeData.headColor;
+  } else {
+    return isLight;
+  }
+});
+const changHeaderStyle = computed(() => {
+  let set = {};
+  if (themeData.type === "light" && layoutName !== "custom") {
+    if (themeData.headColor) {
+      set = {
+        backgroundColor: "#001529",
+        color: "#fff",
+      };
+    } else {
+      set = { backgroundColor: "unset" };
+    }
+  }
+  return set;
+});
 
 // 系统配置抽屉
 const showSetting = ref<boolean>(false);
@@ -55,7 +79,7 @@ watch(
     nextTick(() => {
       setToken(token.value);
       borderColor.value = borderColorSecondary();
-      backgroundColor.value = textHoverBgColor();
+      btnHoverBgColor.value = textHoverBgColor();
     });
   },
   {
@@ -78,9 +102,14 @@ onBeforeMount(() => {
   <a-layout-header>
     <div
       :class="[
-        layoutName === 'noSider' ? 'fix-header' : 'right-header',
+        layoutName === 'noSider'
+          ? 'fix-header'
+          : layoutName === 'custom'
+          ? 'right-header'
+          : 'top-header',
         're-header',
       ]"
+      :style="changHeaderStyle"
     >
       <div class="horizontal-header">
         <div class="horizontal-header-left" v-if="layoutName !== 'custom'">
@@ -109,10 +138,10 @@ onBeforeMount(() => {
             </a-dropdown>
           </div>
           <div class="right-actions theme-type" @click="dataThemeChange">
-            <IconFont :type="isLight ? 'light' : 'dark'" />
+            <IconFont :type="headerIconType ? 'light' : 'dark'" />
           </div>
           <div v-if="set" class="right-actions setting" @click="openSetting">
-            <IconFont :type="isLight ? 'lightset' : 'darkset'" />
+            <IconFont :type="headerIconType ? 'lightset' : 'darkset'" />
           </div>
         </div>
       </div>
@@ -174,7 +203,7 @@ onBeforeMount(() => {
         cursor: pointer;
 
         &:hover {
-          background: v-bind(backgroundColor);
+          background: v-bind(btnHoverBgColor);
         }
       }
     }
