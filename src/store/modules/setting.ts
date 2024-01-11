@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2024-01-10 16:34:23
+ * @LastEditTime: 2024-01-11 16:10:04
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -11,6 +11,8 @@ import { defineStore } from "pinia";
 const themesStorage = storage.get("themes");
 const greyStorage = storage.get("grey");
 const weakStorage = storage.get("weak");
+const headColorStorage = storage.get("headColor");
+const lightMenuStorage = storage.get("lightMenu");
 
 export const useThemeStore = defineStore({
   id: "layoutData",
@@ -25,12 +27,14 @@ export const useThemeStore = defineStore({
         ? JSON.parse(import.meta.env.VITE_IS_GREY)
         : greyStorage?.isGrey,
     weak: weakStorage?.isWeak,
-    headColor: themesStorage?.headColor,
+    headColor: headColorStorage?.headColor,
+    lightMenu: lightMenuStorage?.lightMenu,
   }),
   getters: {
     layoutName: (state) => state.name,
     hasFooter: (state) => state.footer,
     hasHeaderColor: (state) => state.headColor,
+    isLightMenu: (state) => state.lightMenu,
     themeType: (state) => state.type,
     themeColor: (state) => {
       const color: string = state.color.split("darkAlgorithm")[1];
@@ -164,7 +168,7 @@ export const useThemeStore = defineStore({
       );
     },
     /**
-     * @description 开启导航颜色
+     * @description 开启混搭模式
      * @param setColor 是否上色
      */
     setHeaderColor(setColor: boolean) {
@@ -174,6 +178,21 @@ export const useThemeStore = defineStore({
         "headColor",
         {
           headColor: setColor,
+        },
+        this.time // 过期时间使用用户初始化时传入的值
+      );
+    },
+    /**
+     * @description 开启浅色菜单
+     * @param lightMenu 是否是浅色菜单
+     */
+    setLightMenu(lightMenu: boolean) {
+      this.lightMenu = lightMenu;
+      /** 设置默认主题 */
+      storage.set(
+        "lightMenu",
+        {
+          lightMenu: lightMenu,
         },
         this.time // 过期时间使用用户初始化时传入的值
       );

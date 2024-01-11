@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-10 17:35:12
+ * @LastEditTime: 2024-01-11 16:08:30
  * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
@@ -78,8 +78,14 @@ watch(currentColor, () => {
   });
 });
 // 界面配置
-const { greyChange, settings, weakChange, headerChange, footerChange } =
-  useViewsChange();
+const {
+  greyChange,
+  settings,
+  weakChange,
+  headerChange,
+  useLightMenu,
+  footerChange,
+} = useViewsChange();
 </script>
 
 <template>
@@ -153,6 +159,17 @@ const { greyChange, settings, weakChange, headerChange, footerChange } =
         un-checked-children="关"
         v-model:checked="settings.headerVal"
         @change="(checked) => headerChange(checked)"
+        :disabled="!isLight"
+      />
+    </div>
+    <div class="set-box" v-if="layoutName.indexOf('mix') > -1">
+      <a-typography-text class="box-name">浅色侧边栏</a-typography-text>
+      <a-switch
+        checked-children="开"
+        un-checked-children="关"
+        v-model:checked="settings.lightMenuVal"
+        @change="(checked) => useLightMenu(checked)"
+        :disabled="!settings.headerVal"
       />
     </div>
     <div class="set-box">

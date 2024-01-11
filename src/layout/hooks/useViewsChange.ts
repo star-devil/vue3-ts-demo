@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 15:57:35
- * @LastEditTime: 2024-01-10 16:35:59
+ * @LastEditTime: 2024-01-11 15:56:45
  * @LastEditors: wangqiaoling
  * @Description: 界面配置，包括灰色模式、色弱模式等
  */
@@ -12,7 +12,8 @@ const settings = reactive({
   greyVal: useThemeStore().grey,
   weakVal: useThemeStore().weak,
   footerVal: useThemeStore().footer,
-  headerVal: useThemeStore().headColor,
+  headerVal: useThemeStore().hasHeaderColor,
+  lightMenuVal: useThemeStore().isLightMenu,
 });
 
 /** 添加全局类名 */
@@ -46,6 +47,10 @@ export const useViewsChange = () => {
   const headerChange = (value: any): void => {
     useThemeStore().setHeaderColor(value);
   };
+  /** 使用浅色菜单 */
+  const useLightMenu = (value: any): void => {
+    useThemeStore().setLightMenu(value);
+  };
   /** 隐藏页脚设置 */
   const footerChange = (value: any): void => {
     useThemeStore().setFooter(value);
@@ -54,6 +59,7 @@ export const useViewsChange = () => {
     greyChange,
     weakChange,
     headerChange,
+    useLightMenu,
     footerChange,
     settings,
   };

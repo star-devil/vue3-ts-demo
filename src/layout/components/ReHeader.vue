@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-01-10 18:06:48
+ * @LastEditTime: 2024-01-11 15:22:29
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -31,34 +31,59 @@ const { token } = useToken();
 console.log("token-", token.value);
 
 // 存储的主题配置
-const themeData = useThemeStore();
-const layoutName = themeData.layoutName;
-
-// 获取当前样式需要的变量
-const borderColor = ref<string>("");
-const btnHoverBgColor = ref<string>("");
+const layoutData = computed(() => {
+  return {
+    name: useThemeStore().layoutName,
+    headColor: useThemeStore().headColor,
+    type: useThemeStore().type,
+  };
+});
 
 // 混搭模式下的样式切换
 const headerIconType = computed(() => {
-  if (layoutName !== "custom") {
-    return isLight && !themeData.headColor;
+  if (layoutData.value.name !== "custom") {
+    return isLight.value && !layoutData.value.headColor;
   } else {
-    return isLight;
+    return isLight.value;
   }
 });
 const changHeaderStyle = computed(() => {
-  let set = {};
-  if (themeData.type === "light" && layoutName !== "custom") {
-    if (themeData.headColor) {
-      set = {
+  let style = {};
+  if (layoutData.value.type === "light" && layoutData.value.name !== "custom") {
+    if (layoutData.value.headColor) {
+      style = {
         backgroundColor: "#001529",
         color: "#fff",
       };
     } else {
-      set = { backgroundColor: "unset" };
+      style = { backgroundColor: "unset" };
     }
   }
-  return set;
+  return style;
+});
+
+// 获取当前样式需要的变量
+const borderColor = computed(() => {
+  if (layoutData.value.type === "light" && layoutData.value.name !== "custom") {
+    if (layoutData.value.headColor) {
+      return "rgb(39,39,39)";
+    } else {
+      return borderColorSecondary();
+    }
+  } else {
+    return borderColorSecondary();
+  }
+});
+const btnHoverBgColor = computed(() => {
+  if (layoutData.value.type === "light" && layoutData.value.name !== "custom") {
+    if (layoutData.value.headColor) {
+      return "rgba(255,255,255,.3)";
+    } else {
+      return textHoverBgColor();
+    }
+  } else {
+    return textHoverBgColor();
+  }
 });
 
 // 系统配置抽屉
@@ -78,8 +103,6 @@ watch(
   () => {
     nextTick(() => {
       setToken(token.value);
-      borderColor.value = borderColorSecondary();
-      btnHoverBgColor.value = textHoverBgColor();
     });
   },
   {
@@ -102,9 +125,9 @@ onBeforeMount(() => {
   <a-layout-header>
     <div
       :class="[
-        layoutName === 'noSider'
+        layoutData.name === 'noSider'
           ? 'fix-header'
-          : layoutName === 'custom'
+          : layoutData.name === 'custom'
           ? 'right-header'
           : 'top-header',
         're-header',
@@ -112,11 +135,11 @@ onBeforeMount(() => {
       :style="changHeaderStyle"
     >
       <div class="horizontal-header">
-        <div class="horizontal-header-left" v-if="layoutName !== 'custom'">
+        <div class="horizontal-header-left" v-if="layoutData.name !== 'custom'">
           <LogoName />
         </div>
         <div class="horizontal-header-menu">
-          <NavigationMenu v-if="layoutName === 'noSider'" />
+          <NavigationMenu v-if="layoutData.name === 'noSider'" />
         </div>
         <div class="horizontal-header-right">
           <div class="right-actions user-info">

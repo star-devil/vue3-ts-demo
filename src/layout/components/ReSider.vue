@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-04 17:50:52
+ * @LastEditTime: 2024-01-11 16:07:01
  * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -20,18 +20,41 @@ watchEffect(() => {
   borderColor.value = borderColorSecondary();
   sideColorText.value = colorText();
 });
+/** 根据配置改变logo样式 */
+const changLogoStyle = computed(() => {
+  let style = {};
+  if (themeData.type === "light" && themeData.name === "custom") {
+    if (themeData.headColor) {
+      style = {
+        backgroundColor: "#001529",
+        color: "#fff",
+      };
+    }
+  }
+  return style;
+});
+/** 侧边栏主题切换 */
+const changeTheme = computed(() => {
+  if (layoutName.indexOf("mix") > -1) {
+    return (
+      themeData.type === "light" && themeData.headColor && !themeData.lightMenu
+    );
+  } else {
+    return themeData.type === "light" && themeData.headColor;
+  }
+});
 </script>
 
 <template>
   <a-layout-sider
-    theme="light"
+    :theme="changeTheme ? 'dark' : 'light'"
     :class="[
       're-side-bar',
       layoutName === 'mixinRight' ? 'right-side-bar' : 'left-side-bar',
     ]"
   >
     <div class="side-bar-logo-container" v-if="layoutName === 'custom'">
-      <span class="side-logo-link">
+      <span class="side-logo-link" :style="changLogoStyle">
         <LogoName />
       </span>
     </div>

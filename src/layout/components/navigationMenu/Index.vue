@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-10 17:47:01
+ * @LastEditTime: 2024-01-11 16:01:44
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -94,6 +94,18 @@ function getCurrentMenuInfo() {
 const selectMenu: MenuProps["onSelect"] = (item) => {
   router.push(item.key as RouteLocationRaw);
 };
+/**
+ * 菜单主题切换
+ */
+const changeTheme = computed(() => {
+  if (layoutName.indexOf("mix") > -1) {
+    return (
+      themeData.type === "light" && themeData.headColor && !themeData.lightMenu
+    );
+  } else {
+    return themeData.type === "light" && themeData.headColor;
+  }
+});
 
 // 生成导航菜单
 onBeforeMount(() => {
@@ -109,7 +121,7 @@ onBeforeMount(() => {
       v-model:openKeys="state.openKeys"
       :mode="layoutName === 'noSider' ? 'horizontal' : 'inline'"
       :items="items"
-      :theme="themeData.headColor ? 'dark' : 'light'"
+      :theme="changeTheme ? 'dark' : 'light'"
       @select="selectMenu"
     >
     </a-menu>
