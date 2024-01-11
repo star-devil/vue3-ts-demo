@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-11 16:08:30
+ * @LastEditTime: 2024-01-11 16:12:08
  * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
@@ -162,7 +162,10 @@ const {
         :disabled="!isLight"
       />
     </div>
-    <div class="set-box" v-if="layoutName.indexOf('mix') > -1">
+    <div
+      class="set-box"
+      v-show="layoutName.indexOf('mix') > -1 && settings.headerVal"
+    >
       <a-typography-text class="box-name">浅色侧边栏</a-typography-text>
       <a-switch
         checked-children="开"
