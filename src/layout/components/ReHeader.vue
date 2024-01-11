@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-01-11 15:22:29
+ * @LastEditTime: 2024-01-11 17:49:40
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -15,6 +15,7 @@ import {
   setToken,
   textHoverBgColor,
 } from "../theme/getTokenStore"; // 当前存储的主题配置
+import ReBreadcrumb from "./breadcrumb/Index.vue"; // 面包屑
 import NavigationMenu from "./navigationMenu/Index.vue"; // 导航菜单
 import SettingDrawer from "./settingDrawer/Index.vue"; // 主题设置弹窗
 
@@ -138,6 +139,7 @@ onBeforeMount(() => {
         <div class="horizontal-header-left" v-if="layoutData.name !== 'custom'">
           <LogoName />
         </div>
+        <ReBreadcrumb v-if="layoutData.name === 'custom'" />
         <div class="horizontal-header-menu">
           <NavigationMenu v-if="layoutData.name === 'noSider'" />
         </div>
@@ -229,6 +231,11 @@ onBeforeMount(() => {
           background: v-bind(btnHoverBgColor);
         }
       }
+    }
+
+    .breadcrumb-comp {
+      padding: 0 $main-gap;
+      margin-bottom: 0;
     }
   }
 }
