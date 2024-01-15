@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext", //用于指定 TS 最后编译出来的 ES 版本
-    "types": ["vite/client"], //要包含的类型声明文件名列表
+    "types": ["node", "vite/client"], //要包含的类型声明文件名列表
     "useDefineForClassFields": true, //将 class 声明中的字段语义从 [[Set]] 变更到 [[Define]]
     "module": "ESNext", // 设置编译后代码使用的模块化系统：commonjs | UMD | AMD | ES2020 | ESNext | System
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -12,7 +12,8 @@
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
     "paths": {
       "@": ["src"],
-      "@*": ["src/*"]
+      "@*": ["src/*"],
+      "@types/*": ["types/*"]
     },
 
     /* Bundler mode */

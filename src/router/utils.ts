@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-01-10 14:50:39
+ * @LastEditTime: 2024-01-15 15:26:42
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
@@ -127,10 +127,32 @@ function getParentPaths(value: string, routes: RouteRecordRaw[], key = "path") {
   return dfs(routes, value, []);
 }
 
+/** 查找对应 `path` 的路由信息 */
+function findRouteByPath(path: string, routes: RouteRecordRaw[]): any {
+  let res = routes.find((item: { path: string }) => item.path == path);
+  if (res) {
+    return isProxy(res) ? toRaw(res) : res;
+  } else {
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        routes[i].children instanceof Array &&
+        (routes[i].children as RouteRecordRaw[]).length > 0
+      ) {
+        res = findRouteByPath(path, routes[i].children as RouteRecordRaw[]);
+        if (res) {
+          return isProxy(res) ? toRaw(res) : res;
+        }
+      }
+    }
+    return null;
+  }
+}
+
 export {
   addPathMatch,
   ascending,
   filterTree,
+  findRouteByPath,
   formatFlatteningRoutes,
   formatTwoStageRoutes,
   getParentPaths,

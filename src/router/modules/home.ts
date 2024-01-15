@@ -23,7 +23,7 @@ export default {
       name: "Welcome",
       component: () => import("@/views/home/HomeView.vue"),
       meta: {
-        title: "欢迎",
+        title: "首页",
         showLink: false,
       },
     },

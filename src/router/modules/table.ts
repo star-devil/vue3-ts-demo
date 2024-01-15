@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-01-10 10:57:46
+ * @LastEditTime: 2024-01-15 15:24:04
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -14,6 +14,7 @@ export default {
   meta: {
     icon: () => h(TableOutlined),
     title: "表格",
+    breadLink: false,
     rank: 1,
   },
   children: [
