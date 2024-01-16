@@ -1,12 +1,13 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-01-10 17:24:11
+ * @LastEditTime: 2024-01-15 16:07:19
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
 
 import { isEmpty } from "lodash";
+import mitt from "mitt";
 
 /**
  * @description 获取悬浮节点
@@ -27,3 +28,5 @@ export const isAllEmpty = (value: any) => {
   if (typeof value === "number") return false;
   else return isEmpty(value);
 };
+/** EventBus */
+export const emitter = mitt();

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2023-12-29 11:21:18
+ * @LastEditTime: 2024-01-16 13:54:40
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -34,6 +34,16 @@ watchEffect(() => {
   color = themes.themeColor;
   themeToken.value = themeColors[color];
 });
+
+// 页面重载
+const isRouterAlive = ref(true);
+const reload = () => {
+  isRouterAlive.value = false;
+  nextTick(() => {
+    isRouterAlive.value = true;
+  });
+};
+provide("reload", reload);
 </script>
 
 <template>
@@ -45,7 +55,7 @@ watchEffect(() => {
         token: themeToken,
       }"
     >
-      <router-view />
+      <router-view v-if="isRouterAlive" />
     </a-config-provider>
   </div>
 </template>

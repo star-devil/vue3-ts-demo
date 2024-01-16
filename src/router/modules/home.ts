@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-13 14:19:21
- * @LastEditTime: 2024-01-10 11:00:30
+ * @LastEditTime: 2024-01-16 11:08:51
  * @LastEditors: wangqiaoling
  * @Description: 首页，展示布局结构的入口，且永远排在菜单第一项，不可删除
  */
@@ -25,6 +25,7 @@ export default {
       meta: {
         title: "首页",
         showLink: false,
+        keepAlive: true,
       },
     },
   ],

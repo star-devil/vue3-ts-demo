@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-01-15 15:24:04
+ * @LastEditTime: 2024-01-16 11:09:01
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -24,6 +24,7 @@ export default {
       component: () => import("@/views/table/base/Index.vue"),
       meta: {
         title: "基础表格",
+        keepAlive: true,
       },
       children: [
         {

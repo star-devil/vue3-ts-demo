@@ -1,12 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-11 16:54:01
- * @LastEditTime: 2024-01-15 15:41:53
+ * @LastEditTime: 2024-01-16 13:55:32
  * @LastEditors: wangqiaoling
  * @Description: 面包屑组件
 -->
 <script setup lang="ts">
+import { colorText, textDescriptionColor } from "@/layout/theme/getTokenStore";
 import { findRouteByPath, getParentPaths } from "@router/utils";
+import { emitter } from "@utils/provideConfig";
 import { RouteComponent } from "vue-router";
 
 declare namespace ANTD {
@@ -24,7 +26,6 @@ const routes: any = router.options.routes;
 const breadList = ref<BreadRoute[]>([]);
 onBeforeMount(() => {
   breadRouteList();
-  console.log(routeInfo);
 });
 
 watch(
@@ -70,6 +71,7 @@ function transformRouteToBread(route: RouteComponent[]): BreadRoute[] {
   });
 }
 
+/** 生成面包屑数组 */
 function breadRouteList() {
   // 当前路由信息
   const currentRoute = findRouteByPath(router.currentRoute.value.path, routes);
@@ -107,36 +109,90 @@ function breadRouteList() {
 
   breadList.value = transformRouteToBread(matchedData);
 }
-/** 返回上一级 */
-function goBack() {
+
+// 提供外界注册其他参数的方法
+/** 需要修改的面包屑的路由path */
+let currentBreadPath = ref("");
+/** 替换当前的面包屑名称 */
+let replaceName = ref("");
+/** 为当前面包屑增加前缀 */
+let prefixName = ref("");
+/** 为当前面包屑增加后缀*/
+let suffixName = ref("");
+// 提供额外的面包屑名称
+emitter.on("extraBreadcrumbName", (data: any) => {
+  currentBreadPath.value = data.path;
+  replaceName.value = data.replace;
+  prefixName.value = data.prefix;
+  suffixName.value = data.suffix;
+});
+
+function getRealBreadName(breadName: string, path: string) {
+  if (path !== currentBreadPath.value) {
+    return breadName;
+  } else if (replaceName.value) {
+    return replaceName.value;
+  } else {
+    return (prefixName.value || "") + breadName + (suffixName.value || "");
+  }
+}
+
+/** 返回上一页 */
+function goBackPage() {
   router.back();
 }
+// 重载
+const onRefresh: any = inject("reload");
+/** 刷新本页 */
+function reloadPage() {
+  onRefresh();
+}
+
+// 样式
+let iconColor = ref<string>("");
+let iconHoverColor = ref<string>("");
+watchEffect(() => {
+  iconColor.value = textDescriptionColor();
+  iconHoverColor.value = colorText();
+});
+
+onBeforeUnmount(() => {
+  emitter.off("extraBreadcrumbName");
+});
 </script>
 
 <template>
   <div class="breadcrumb-comp">
-    <a-breadcrumb class="re-breadcrumb">
-      <a-breadcrumb-item v-for="route in breadList" :key="route.path">
-        <span
-          v-if="
-            breadList.indexOf(route) === breadList.length - 1 ||
-            route.breadLink === false
-          "
-        >
-          {{ route.breadcrumbName }}
-        </span>
-        <router-link v-else :to="route.path">
-          {{ route.breadcrumbName }}
-        </router-link>
-      </a-breadcrumb-item>
-    </a-breadcrumb>
+    <a-space size="middle">
+      <a-tooltip placement="top">
+        <template #title>
+          <span>点击可后退</span>
+        </template>
+        <ArrowLeftOutlined @click="goBackPage" class="handle-icon" />
+      </a-tooltip>
+      <a-tooltip placement="top">
+        <template #title>
+          <span>重新加载此页</span>
+        </template>
+        <ReloadOutlined @click="reloadPage" class="handle-icon" />
+      </a-tooltip>
 
-    <a-page-header
-      v-if="breadList.length > 2"
-      :title="routeInfo.meta.title"
-      sub-title="This is a subtitle"
-      @back="goBack"
-    />
+      <a-breadcrumb class="re-breadcrumb">
+        <a-breadcrumb-item v-for="route in breadList" :key="route.path">
+          <span
+            v-if="
+              breadList.indexOf(route) === breadList.length - 1 ||
+              route.breadLink === false
+            "
+          >
+            {{ getRealBreadName(route.breadcrumbName, route.path) }}
+          </span>
+          <router-link v-else :to="route.path">
+            {{ getRealBreadName(route.breadcrumbName, route.path) }}
+          </router-link>
+        </a-breadcrumb-item>
+      </a-breadcrumb>
+    </a-space>
   </div>
 </template>
 
@@ -144,5 +200,14 @@ function goBack() {
 .breadcrumb-comp {
   width: 100%;
   margin-bottom: $main-gap;
+
+  .handle-icon {
+    color: v-bind(iconColor);
+    cursor: pointer;
+
+    &:hover {
+      color: v-bind(iconHoverColor);
+    }
+  }
 }
 </style>
