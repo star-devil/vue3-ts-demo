@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-01-15 16:55:44
+ * @LastEditTime: 2024-01-16 15:38:01
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -18,6 +18,7 @@ const router = useRouter();
 
 function goDetail() {
   router.push("/table/base-table/detail");
+
   emitter.emit("extraBreadcrumbName", {
     path: "/table/base-table/detail",
     suffix: "这是测试hhh",

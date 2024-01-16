@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-18 12:30:17
- * @LastEditTime: 2024-01-02 10:10:14
+ * @LastEditTime: 2024-01-16 14:59:05
  * @LastEditors: wangqiaoling
  * @Description: 封装操作本地存储的方法
  */
@@ -74,7 +74,11 @@ export const sessionStorage = {
   //存储
   set(key: string, value: any) {
     const name = `${prefix}-${key}`;
-    const data = mode ? dataEncrypt(value) : value;
+    const obj = {
+      data: value,
+      time: Date.now(),
+    };
+    const data = mode ? dataEncrypt(obj) : JSON.stringify(obj);
     window.sessionStorage.setItem(name, data);
   },
   //取出数据
@@ -82,7 +86,7 @@ export const sessionStorage = {
     const name = `${prefix}-${key}`;
     const value = window.sessionStorage.getItem(name);
     if (value && value != "undefined" && value != "null") {
-      return mode ? dataDecrypt(value) : JSON.parse(value);
+      return mode ? dataDecrypt(value).data : JSON.parse(value).data;
     }
     return null;
   },

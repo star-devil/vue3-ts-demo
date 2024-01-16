@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-11 16:54:01
- * @LastEditTime: 2024-01-16 13:55:32
+ * @LastEditTime: 2024-01-16 15:24:50
  * @LastEditors: wangqiaoling
  * @Description: 面包屑组件
 -->
@@ -9,6 +9,7 @@
 import { colorText, textDescriptionColor } from "@/layout/theme/getTokenStore";
 import { findRouteByPath, getParentPaths } from "@router/utils";
 import { emitter } from "@utils/provideConfig";
+import { sessionStorage } from "@utils/reStorage";
 import { RouteComponent } from "vue-router";
 
 declare namespace ANTD {
@@ -110,30 +111,42 @@ function breadRouteList() {
   breadList.value = transformRouteToBread(matchedData);
 }
 
-// 提供外界注册其他参数的方法
-/** 需要修改的面包屑的路由path */
-let currentBreadPath = ref("");
-/** 替换当前的面包屑名称 */
-let replaceName = ref("");
-/** 为当前面包屑增加前缀 */
-let prefixName = ref("");
-/** 为当前面包屑增加后缀*/
-let suffixName = ref("");
+/**
+ * @description 提供外界注册其他参数的方法
+ * @param currentBreadPath 需要修改的面包屑的路由path
+ * @param replaceName 替换当前的面包屑名称
+ * @param prefixName 为当前面包屑增加前缀
+ * @param suffixName 为当前面包屑增加后缀
+ */
+let breadcrumbExtraConfig = reactive({
+  currentBreadPath: "",
+  replaceName: "",
+  prefixName: "",
+  suffixName: "",
+});
 // 提供额外的面包屑名称
 emitter.on("extraBreadcrumbName", (data: any) => {
-  currentBreadPath.value = data.path;
-  replaceName.value = data.replace;
-  prefixName.value = data.prefix;
-  suffixName.value = data.suffix;
+  sessionStorage.set(data.path, data); // 保存参数到缓存中，避免刷新页面丢失
 });
 
 function getRealBreadName(breadName: string, path: string) {
-  if (path !== currentBreadPath.value) {
+  let data = sessionStorage.get(path);
+  if (data) {
+    breadcrumbExtraConfig.currentBreadPath = data.path;
+    breadcrumbExtraConfig.replaceName = data.replace;
+    breadcrumbExtraConfig.prefixName = data.prefix;
+    breadcrumbExtraConfig.suffixName = data.suffix;
+  }
+  if (path !== breadcrumbExtraConfig.currentBreadPath) {
     return breadName;
-  } else if (replaceName.value) {
-    return replaceName.value;
+  } else if (breadcrumbExtraConfig.replaceName) {
+    return breadcrumbExtraConfig.replaceName;
   } else {
-    return (prefixName.value || "") + breadName + (suffixName.value || "");
+    return (
+      (breadcrumbExtraConfig.prefixName || "") +
+      breadName +
+      (breadcrumbExtraConfig.suffixName || "")
+    );
   }
 }
 
