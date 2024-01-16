@@ -79,3 +79,5 @@
 1. 增加了请求重试的处理函数：`axios-retry(#https://github.com/softonic/axios-retry)`
 
 - 重试的参数可以参考文档，部分使用方法也在axios.ts中
+
+## 项目使用方法：请看`/src/docs/Introduce.md`
