@@ -1,17 +1,21 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-12 16:39:02
+ * @LastEditTime: 2024-01-17 13:46:21
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
 <script setup lang="ts">
 import { constantMenus, constantRoutes } from "@router";
-import { filterTree, getParentPaths } from "@router/utils";
+import { filterTree, findRouteByPath, getParentPaths } from "@router/utils";
 import { useThemeStore } from "@store/modules/setting";
 import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
-import { RouteComponent, RouteLocationRaw } from "vue-router";
+import {
+  RouteComponent,
+  RouteLocationNormalizedLoaded,
+  RouteLocationRaw,
+} from "vue-router";
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
@@ -76,11 +80,28 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
   });
 }
 
+/** 获取当前页面应该选中的菜单 */
+function getMenuKey(routeData: RouteLocationNormalizedLoaded) {
+  if (routeData.meta.showLink === false) {
+    const parentsPathList = getParentPaths(
+      routeData.path,
+      constantRoutes,
+      "path"
+    );
+    const parentPath = parentsPathList.at(-1);
+    if (parentPath) {
+      return getMenuKey(findRouteByPath(parentPath, constantRoutes));
+    }
+  } else {
+    return routeData.path;
+  }
+}
+
 /**
  * 获取当前选中的菜单和父级菜单
  */
 function getCurrentMenuInfo() {
-  state.current = [routeInfo.path as string];
+  state.current = [getMenuKey(routeInfo) as string];
   // 去掉‘/’根路径；且当布局为顶部模式时，取消默认展开父级菜单
   state.openKeys =
     layoutName === "noSider"

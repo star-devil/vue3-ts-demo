@@ -22,3 +22,4 @@ dist-ssr
 *.sw?
 .*cache
 .vscode/launch.json
+.vscode/settings.json
