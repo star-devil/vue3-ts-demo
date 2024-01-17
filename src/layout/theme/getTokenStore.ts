@@ -1,18 +1,16 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 10:04:01
- * @LastEditTime: 2024-01-10 17:04:55
+ * @LastEditTime: 2024-01-17 14:09:51
  * @LastEditors: wangqiaoling
  * @Description: 当前存储的主题配置
  */
 import { useThemeToken } from "@store/modules/themeTokenData";
 import type { AliasToken } from "ant-design-vue/es/theme/interface";
 
-const themeToken = useThemeToken();
-
 /** 存储当前主题 */
 export const setToken = (token: AliasToken) => {
-  themeToken.setThemeToken(token);
+  useThemeToken().setThemeToken(token);
 };
 
 // 常用的一些主题配置

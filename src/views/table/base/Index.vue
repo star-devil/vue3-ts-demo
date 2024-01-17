@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-01-16 15:38:01
+ * @LastEditTime: 2024-01-17 13:49:42
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -21,7 +21,7 @@ function goDetail() {
 
   emitter.emit("extraBreadcrumbName", {
     path: "/table/base-table/detail",
-    suffix: "这是测试hhh",
+    suffix: "-这是我的后缀",
   });
 }
 </script>

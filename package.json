@@ -25,7 +25,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@types/crypto-js": "^4.2.1",
-    "ant-design-vue": "4.x",
+    "ant-design-vue": "~4.0.7",
     "axios": "^1.6.1",
     "axios-abort": "^1.0.0",
     "axios-retry": "^4.0.0",
