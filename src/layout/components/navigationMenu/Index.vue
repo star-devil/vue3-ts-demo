@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-18 10:59:27
+ * @LastEditTime: 2024-01-18 14:21:10
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -11,11 +11,7 @@ import { filterTree, findRouteByPath, getParentPaths } from "@router/utils";
 import { useThemeStore } from "@store/modules/setting";
 import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
-import {
-  RouteComponent,
-  RouteLocationNormalizedLoaded,
-  RouteLocationRaw,
-} from "vue-router";
+import { RouteComponent, RouteLocationRaw } from "vue-router";
 
 const themeData = useThemeStore();
 const layoutName = themeData.layoutName;
@@ -81,8 +77,10 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
 }
 
 /** 获取当前页面应该选中的菜单 */
-function getMenuKey(routeData: RouteLocationNormalizedLoaded) {
-  if (routeData.meta.showLink === false) {
+function getMenuKey(routeData: any) {
+  if (routeData.redirect) {
+    return routeData.redirect;
+  } else if (routeData.meta.showLink === false) {
     const parentsPathList = getParentPaths(
       routeData.path,
       constantRoutes,
