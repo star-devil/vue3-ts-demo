@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2023-12-29 16:48:47
+ * @LastEditTime: 2024-01-18 11:09:17
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
@@ -24,12 +24,12 @@ export function useDataThemeChange() {
       if (key.indexOf("dark") > -1) {
         darkThemesColorsList.push({
           name: key,
-          color: value.colorPrimary,
+          color: value.token.colorPrimary,
         });
       } else {
         lightThemesColorsList.push({
           name: key,
-          color: value.colorPrimary,
+          color: value.token.colorPrimary,
         });
       }
     });

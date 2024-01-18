@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-01-17 13:49:42
+ * @LastEditTime: 2024-01-18 10:14:28
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -29,7 +29,7 @@ function goDetail() {
 <template>
   <div class="content-wrap" :style="{ backgroundColor: bgColor }">
     Base Table
-    <h4 @click="goDetail">Go detail</h4>
+    <a-button type="primary" @click="goDetail">Go detail</a-button>
   </div>
 </template>
 

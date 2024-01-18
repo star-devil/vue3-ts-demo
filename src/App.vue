@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2024-01-16 13:54:40
+ * @LastEditTime: 2024-01-18 10:48:42
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -52,7 +52,8 @@ provide("reload", reload);
       :locale="locale"
       :theme="{
         algorithm: themeAlgorithm,
-        token: themeToken,
+        token: themeToken.token,
+        components: themeToken.components,
       }"
     >
       <router-view v-if="isRouterAlive" />

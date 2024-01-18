@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-17 13:46:21
+ * @LastEditTime: 2024-01-18 10:59:27
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -149,4 +149,8 @@ onBeforeMount(() => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.ant-menu-light .ant-menu-item-selected {
+  background-color: red !important;
+}
+</style>
