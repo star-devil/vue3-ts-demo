@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-14 10:26:42
- * @LastEditTime: 2024-01-18 13:42:58
+ * @LastEditTime: 2024-01-18 14:05:32
  * @LastEditors: wangqiaoling
  * @Description: 主题色配置文件
  */
@@ -40,7 +40,7 @@ export const themeColors: ThemeColors = {
   black: {
     components: {
       Menu: {
-        colorItemBgSelected: "#1C1C1C0D",
+        colorItemBgSelected: "#C6C7F8CC",
       },
     },
     token: {

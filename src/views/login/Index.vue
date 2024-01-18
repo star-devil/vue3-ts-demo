@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-17 17:59:34
+ * @LastEditTime: 2024-01-18 13:51:12
  * @LastEditors: wangqiaoling
  * @Description: 登录页
 -->
@@ -13,7 +13,7 @@ const { useToken } = theme;
 const { token } = useToken();
 console.log(token.value);
 const boxBgColor = ref<string>(token.value.colorBgLayout);
-const textColor = ref<string>(token.value.colorPrimaryBg);
+const textColor = ref<string>(token.value.colorLink);
 const descriptionTextColor = ref<string>(token.value.colorTextDescription);
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
