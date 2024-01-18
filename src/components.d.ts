@@ -41,6 +41,7 @@ declare module 'vue' {
     CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
     LockOutlined: typeof import('@ant-design/icons-vue')['LockOutlined']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
+    QuestionCircleOutlined: typeof import('@ant-design/icons-vue')['QuestionCircleOutlined']
     ReloadOutlined: typeof import('@ant-design/icons-vue')['ReloadOutlined']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

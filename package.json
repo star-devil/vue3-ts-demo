@@ -26,6 +26,7 @@
     "@ant-design/icons-vue": "^7.0.1",
     "@types/crypto-js": "^4.2.1",
     "ant-design-vue": "~4.0.7",
+    "autoprefixer": "^10.4.17",
     "axios": "^1.6.1",
     "axios-abort": "^1.0.0",
     "axios-retry": "^4.0.0",
@@ -36,6 +37,7 @@
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "postcss-pxtorem": "^6.0.0",
     "vue": "^3.3.4",
     "vue-router": "4"
   },

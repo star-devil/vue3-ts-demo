@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-01-15 13:53:48
+ * @LastEditTime: 2024-01-18 14:55:45
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -17,6 +17,9 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 // 如果你使用了antdv：antdv自动按需引入组件
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+// 将px转为rem
+import autoprefixer from "autoprefixer";
+import postCssPxToRem from "postcss-pxtorem";
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -57,6 +60,33 @@ export default ({ command, mode }) => {
         scss: {
           additionalData: "@import '@assets/styles/theme.scss';",
         },
+      },
+      postcss: {
+        // 关键代码
+        plugins: [
+          postCssPxToRem({
+            // 自适应，px>rem转换
+            rootValue: 14, // 1rem的大小
+            propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
+            unitPrecision: 4, // 保留到4位小数
+            replace: true,
+            mediaQuery: false,
+            minPixelValue: 0,
+            // exclude: '' // 不转化单位的文件
+          }),
+          autoprefixer({
+            // 自动添加前缀
+            overrideBrowserslist: [
+              "Android 4.1",
+              "iOS 7.1",
+              "Chrome > 31",
+              "ff > 31",
+              "ie >= 8",
+              //'last 2 versions', // 所有主流浏览器最近2个版本
+            ],
+            grid: true,
+          }),
+        ],
       },
     },
     resolve: {

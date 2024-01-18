@@ -1,13 +1,15 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-18 13:51:12
+ * @LastEditTime: 2024-01-18 16:23:09
  * @LastEditors: wangqiaoling
  * @Description: 登录页
 -->
 <script setup lang="ts">
 import LogoName from "@/layout/components/logoName/Index.vue";
 import { theme } from "ant-design-vue";
+import { formState, onLogin } from "./utils/login";
+import { loginRules } from "./utils/rule";
 
 const { useToken } = theme;
 const { token } = useToken();
@@ -18,28 +20,6 @@ const descriptionTextColor = ref<string>(token.value.colorTextDescription);
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
-
-// 登录表单
-interface FormState {
-  username: string;
-  password: string;
-  remember: boolean;
-  vertifyCode: string;
-}
-
-const formState = reactive<FormState>({
-  username: "",
-  password: "",
-  remember: true,
-  vertifyCode: "",
-});
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
 </script>
 
 <template>
@@ -77,13 +57,10 @@ const onFinishFailed = (errorInfo: any) => {
               name="basic"
               :wrapper-col="{ span: 24 }"
               autocomplete="off"
-              @finish="onFinish"
-              @finishFailed="onFinishFailed"
+              :rules="loginRules"
+              @finish="onLogin"
             >
-              <a-form-item
-                name="username"
-                :rules="[{ required: true, message: '请输入账号' }]"
-              >
+              <a-form-item name="username">
                 <a-input placeholder="账号" v-model:value="formState.username">
                   <template #prefix>
                     <UserOutlined />
@@ -91,10 +68,7 @@ const onFinishFailed = (errorInfo: any) => {
                 </a-input>
               </a-form-item>
 
-              <a-form-item
-                name="password"
-                :rules="[{ required: true, message: '请输入密码' }]"
-              >
+              <a-form-item name="password">
                 <a-input-password
                   placeholder="密码"
                   v-model:value="formState.password"
@@ -127,8 +101,16 @@ const onFinishFailed = (errorInfo: any) => {
               <a-form-item name="remember" :wrapper-col="{ span: 24 }">
                 <a-form-item name="remember" no-style>
                   <a-checkbox v-model:checked="formState.remember"
-                    >7天内免登录</a-checkbox
-                  >
+                    >7天内免登录
+                    <a-tooltip placement="right">
+                      <template #title
+                        >勾选并登录后，规定天数内无需输入用户名和密码会自动登入系统</template
+                      >
+                      <a-typography-text type="secondary"
+                        ><QuestionCircleOutlined
+                      /></a-typography-text>
+                    </a-tooltip>
+                  </a-checkbox>
                 </a-form-item>
                 <a class="login-form-forgot" href="">忘记密码？</a>
               </a-form-item>
