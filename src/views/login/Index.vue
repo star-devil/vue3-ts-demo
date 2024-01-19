@@ -1,16 +1,16 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-19 13:43:50
+ * @LastEditTime: 2024-01-19 15:10:11
  * @LastEditors: wangqiaoling
- * @Description: 登录页
+ * @Description: 登录注册页
 -->
 <script setup lang="ts">
 import LogoName from "@/layout/components/logoName/Index.vue";
 import { useThemeType } from "@/layout/hooks/useThemeType";
 import { theme } from "ant-design-vue";
-import { formState, onLogin } from "./utils/login";
-import { loginRules } from "./utils/rule";
+import LoginForm from "./components/LoginForm.vue";
+import RegisterForm from "./components/RegisterForm.vue";
 
 // 主题相关
 const { useToken } = theme;
@@ -23,7 +23,6 @@ const descriptionTextColor = ref<string>(token.value.colorTextDescription);
 // @ts-expect-error
 const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
 watchEffect(() => {
-  console.log("切换", token.value);
   boxBgColor.value = token.value.colorBgLayout;
   textColor.value = token.value.colorLink;
   descriptionTextColor.value = token.value.colorTextDescription;
@@ -33,6 +32,12 @@ watchEffect(() => {
 });
 // 主题模式切换
 const { dataThemeChange, isLight } = useThemeType();
+
+// 登录注册切换
+const currentForm = ref<string>("login");
+const changeForm = (type: string) => {
+  currentForm.value = type;
+};
 </script>
 
 <template>
@@ -47,8 +52,18 @@ const { dataThemeChange, isLight } = useThemeType();
           项目，使用前请认真阅读README.md文件</a-typography-text
         >
         <a-space class="login-btn-box">
-          <a-button size="small">注册</a-button>
-          <a-button size="small" type="primary">登录</a-button>
+          <a-button
+            size="small"
+            :type="currentForm === 'login' ? 'text' : 'primary'"
+            @click="changeForm('register')"
+            >注册</a-button
+          >
+          <a-button
+            size="small"
+            :type="currentForm === 'login' ? 'primary' : 'text'"
+            @click="changeForm('login')"
+            >登录</a-button
+          >
           <a-switch :checked="!isLight" @change="dataThemeChange">
             <template #checkedChildren><IconFont type="dark" /></template>
             <template #unCheckedChildren><IconFont type="light" /></template>
@@ -68,83 +83,13 @@ const { dataThemeChange, isLight } = useThemeType();
               <span>E</span>
             </span>
           </div>
-          <div class="user-form">
-            <a-form
-              :model="formState"
-              name="basic"
-              :wrapper-col="{ span: 24 }"
-              autocomplete="off"
-              :rules="loginRules"
-              @finish="onLogin"
-            >
-              <a-form-item name="username">
-                <a-input placeholder="账号" v-model:value="formState.username">
-                  <template #prefix>
-                    <UserOutlined />
-                  </template>
-                </a-input>
-              </a-form-item>
-
-              <a-form-item name="password">
-                <a-input-password
-                  placeholder="密码"
-                  v-model:value="formState.password"
-                >
-                  <template #prefix>
-                    <LockOutlined />
-                  </template>
-                </a-input-password>
-              </a-form-item>
-
-              <a-form-item name="vertifyCode" :wrapper-col="{ span: 24 }">
-                <a-input-group compact>
-                  <a-input
-                    v-model:value="formState.vertifyCode"
-                    placeholder="验证码"
-                    style="width: calc(100% - 150px)"
-                  >
-                    <template #prefix>
-                      <VerifiedOutlined />
-                    </template>
-                  </a-input>
-                  <a-image
-                    :width="150"
-                    :height="32"
-                    src="/src/assets/images/testCode.png"
-                  />
-                </a-input-group>
-              </a-form-item>
-
-              <a-form-item name="remember" :wrapper-col="{ span: 24 }">
-                <a-form-item name="remember" no-style>
-                  <a-checkbox v-model:checked="formState.remember"
-                    >7天内免登录
-                    <a-tooltip placement="right">
-                      <template #title
-                        >勾选并登录后，规定天数内无需输入用户名和密码会自动登入系统</template
-                      >
-                      <a-typography-text type="secondary"
-                        ><QuestionCircleOutlined
-                      /></a-typography-text>
-                    </a-tooltip>
-                  </a-checkbox>
-                </a-form-item>
-                <a class="login-form-forgot" href="">忘记密码？</a>
-              </a-form-item>
-
-              <a-form-item :wrapper-col="{ span: 24 }">
-                <a-button block type="primary" html-type="submit"
-                  >登录</a-button
-                >
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="register-guide-box">
-            <span class="guide-text">还没有账号？</span>
-            <a-typography-link target="" class="guide-register">
-              去注册
-            </a-typography-link>
-          </div>
+          <transition name="fade-slide" mode="out-in">
+            <component
+              :is="currentForm === 'login' ? LoginForm : RegisterForm"
+              :textColor="descriptionTextColor"
+              @changeForm="changeForm"
+            />
+          </transition>
         </div>
       </div>
     </div>
@@ -204,26 +149,6 @@ const { dataThemeChange, isLight } = useThemeType();
 
           .login-title-img {
             width: 200px;
-          }
-        }
-
-        .user-form {
-          .login-form-forgot {
-            float: right;
-          }
-        }
-
-        .register-guide-box {
-          width: 100%;
-          font-size: 12px;
-          text-align: center;
-
-          .guide-text {
-            color: v-bind(descriptionTextColor);
-          }
-
-          .guide-register {
-            font-size: 12px;
           }
         }
       }

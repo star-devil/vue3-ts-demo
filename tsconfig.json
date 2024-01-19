@@ -5,6 +5,8 @@
     "useDefineForClassFields": true, //将 class 声明中的字段语义从 [[Set]] 变更到 [[Define]]
     "module": "ESNext", // 设置编译后代码使用的模块化系统：commonjs | UMD | AMD | ES2020 | ESNext | System
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "importHelpers": true, // 从 tslib 导入辅助工具函数
+    "experimentalDecorators": true, // 启用实验性的ES装饰器。
     "skipLibCheck": true, //忽略所有的声明文件（ *.d.ts）的类型检查
     "sourceMap": false, // 生成目标文件的sourceMap文件
     "allowJs": true, // 允许编译器编译JS，JSX文件
@@ -26,7 +28,9 @@
     "jsx": "preserve", //在 `.tsx`文件里支持JSX： `"React"`或 `"Preserve"`
 
     /* Linting */
-    "strict": true, // 开启所有的严格检查
+    "strict": true, // 所有的严格检查
+    "forceConsistentCasingInFileNames": true, // 禁止对同一个文件的不一致的引用。
+    "strictFunctionTypes": false, // 禁用函数参数双向协变检查。
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
