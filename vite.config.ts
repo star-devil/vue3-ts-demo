@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-01-18 14:55:45
+ * @LastEditTime: 2024-01-19 10:59:07
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -17,9 +17,12 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 // 如果你使用了antdv：antdv自动按需引入组件
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
-// 将px转为rem
+// 自动添加浏览器前缀
 import autoprefixer from "autoprefixer";
+// 将px转为rem
 import postCssPxToRem from "postcss-pxtorem";
+// tailwindcss
+import tailwindcss from "tailwindcss";
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -58,7 +61,7 @@ export default ({ command, mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: "@import '@assets/styles/theme.scss';",
+          additionalData: "@import '@/styles/theme.scss';",
         },
       },
       postcss: {
@@ -86,6 +89,7 @@ export default ({ command, mode }) => {
             ],
             grid: true,
           }),
+          tailwindcss,
         ],
       },
     },

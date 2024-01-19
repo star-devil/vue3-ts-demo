@@ -1,14 +1,17 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2024-01-18 14:52:37
+ * @LastEditTime: 2024-01-19 10:55:49
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
+// tailwind样式
+import "./styles/tailwind.css";
 // 重置样式
 import "./style.scss";
 // 通用样式
-import "./assets/styles/common.scss";
+import "./styles/common.scss";
+
 // routes
 import router from "./router/index";
 

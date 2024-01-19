@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:31:15
- * @LastEditTime: 2023-12-28 15:34:48
+ * @LastEditTime: 2024-01-19 11:06:25
  * @LastEditors: wangqiaoling
  * @Description: 底部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -15,7 +15,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <a-layout-footer class="footer-container">
+  <a-layout-footer class="footer-container ilflex-bc">
     <span class="left-footer"> ©2024 EGG </span>
     <span class="right-footer">
       <a-space>
@@ -33,8 +33,6 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 .footer-container {
-  display: inline-flex;
-  justify-content: space-between;
   padding: $main-gap;
   font-size: 12px;
   color: v-bind(textColor);

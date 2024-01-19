@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-11 16:12:08
+ * @LastEditTime: 2024-01-19 11:07:00
  * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
@@ -134,7 +134,7 @@ const {
       </span>
     </a-space>
     <a-divider>界面配置</a-divider>
-    <div class="set-box">
+    <div class="set-box ilflex-bc">
       <a-typography-text class="box-name">灰色模式</a-typography-text>
       <a-switch
         checked-children="开"
@@ -143,7 +143,7 @@ const {
         @change="(checked) => greyChange(checked)"
       />
     </div>
-    <div class="set-box">
+    <div class="set-box ilflex-bc">
       <a-typography-text class="box-name">色弱模式</a-typography-text>
       <a-switch
         checked-children="开"
@@ -152,7 +152,7 @@ const {
         @change="(checked) => weakChange(checked)"
       />
     </div>
-    <div class="set-box">
+    <div class="set-box ilflex-bc">
       <a-typography-text class="box-name">混搭模式</a-typography-text>
       <a-switch
         checked-children="开"
@@ -163,7 +163,7 @@ const {
       />
     </div>
     <div
-      class="set-box"
+      class="set-box ilflex-bc"
       v-show="layoutName.indexOf('mix') > -1 && settings.headerVal"
     >
       <a-typography-text class="box-name">浅色侧边栏</a-typography-text>
@@ -175,7 +175,7 @@ const {
         :disabled="!settings.headerVal"
       />
     </div>
-    <div class="set-box">
+    <div class="set-box ilflex-bc">
       <a-typography-text class="box-name">显示页脚</a-typography-text>
       <a-switch
         checked-children="开"
@@ -294,8 +294,6 @@ const {
 
   // 界面
   .set-box {
-    display: inline-flex;
-    justify-content: space-between;
     width: 100%;
     margin-bottom: $main-gap;
   }

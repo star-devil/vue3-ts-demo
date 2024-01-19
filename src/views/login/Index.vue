@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-18 16:23:09
+ * @LastEditTime: 2024-01-19 11:00:07
  * @LastEditors: wangqiaoling
  * @Description: 登录页
 -->
@@ -25,7 +25,7 @@ const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
 <template>
   <div class="login-page">
     <div class="login-wrap">
-      <div class="login-header">
+      <div class="login-header ilflex-bc">
         <div class="logo-box">
           <LogoName />
         </div>
@@ -147,9 +147,6 @@ const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
 
     .login-header {
       box-sizing: border-box;
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
       width: 100%;
       padding: 16px 28px;
 

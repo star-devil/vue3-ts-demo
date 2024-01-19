@@ -59,7 +59,13 @@ module.exports = {
             true, {
                 "ignorePseudoElements": ["v-deep"]
             }
-        ]
+        ],
+        'scss/at-rule-no-unknown': [
+            true,
+            {
+                ignoreAtRules: ['tailwind']
+            }
+        ],
     },
     'order/properties-order': [
         'position',
