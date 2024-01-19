@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-14 10:26:42
- * @LastEditTime: 2024-01-18 14:05:32
+ * @LastEditTime: 2024-01-19 13:54:01
  * @LastEditors: wangqiaoling
  * @Description: 主题色配置文件
  */
@@ -65,7 +65,7 @@ export const themeColors: ThemeColors = {
       colorInfo: "#95a4fc",
       colorPrimaryLight: "rgba(255, 255, 255, 0.05)",
       colorPrimaryBorder: "#6b6fa5",
-      colorPrimaryHover: "#b9b9d4",
+      colorPrimaryHover: "#ababd8",
       colorBgLayout: "#141414",
       wireframe: false,
     },

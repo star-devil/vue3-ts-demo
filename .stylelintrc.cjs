@@ -38,10 +38,14 @@ module.exports = {
         'property-no-unknown': null, // 禁止未知的属性(true 为不允许)
         'value-no-vendor-prefix': null, // 关闭 属性值前缀 --webkit-box
         'property-no-vendor-prefix': null, // 关闭 属性前缀 -webkit-mask
-        'block-no-empty': true, //禁止空块
-        "at-rule-no-unknown": null, //不验证@未知的名字,为了兼容scss的函数
+        'block-no-empty': true, // 禁止空块
+        "at-rule-no-unknown": null, // 不验证@未知的名字,为了兼容scss的函数
         "comment-no-empty": true, // 禁止空注释
-        "shorthand-property-no-redundant-values": true, //禁止简写属性的冗余值
+        "shorthand-property-no-redundant-values": true, // 禁止简写属性的冗余值
+        "color-no-invalid-hex": true, // 禁止无效的hex值
+        "declaration-block-no-duplicate-custom-properties": true, // 不允许在声明块中重复自定义属性
+        "declaration-block-no-duplicate-properties": true, // 禁止声明块中的重复属性
+        "length-zero-no-unit": true, // 不允许使用零长度的单位（可自动修复）
         'selector-pseudo-class-no-unknown': [
             // 不允许未知的选择器
             true, {

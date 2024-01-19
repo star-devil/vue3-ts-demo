@@ -1,16 +1,18 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-19 11:00:07
+ * @LastEditTime: 2024-01-19 13:43:50
  * @LastEditors: wangqiaoling
  * @Description: 登录页
 -->
 <script setup lang="ts">
 import LogoName from "@/layout/components/logoName/Index.vue";
+import { useThemeType } from "@/layout/hooks/useThemeType";
 import { theme } from "ant-design-vue";
 import { formState, onLogin } from "./utils/login";
 import { loginRules } from "./utils/rule";
 
+// 主题相关
 const { useToken } = theme;
 const { token } = useToken();
 console.log(token.value);
@@ -20,6 +22,17 @@ const descriptionTextColor = ref<string>(token.value.colorTextDescription);
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
+watchEffect(() => {
+  console.log("切换", token.value);
+  boxBgColor.value = token.value.colorBgLayout;
+  textColor.value = token.value.colorLink;
+  descriptionTextColor.value = token.value.colorTextDescription;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  wrapBgColor.value = token.value.colorPrimaryLight;
+});
+// 主题模式切换
+const { dataThemeChange, isLight } = useThemeType();
 </script>
 
 <template>
@@ -36,6 +49,10 @@ const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
         <a-space class="login-btn-box">
           <a-button size="small">注册</a-button>
           <a-button size="small" type="primary">登录</a-button>
+          <a-switch :checked="!isLight" @change="dataThemeChange">
+            <template #checkedChildren><IconFont type="dark" /></template>
+            <template #unCheckedChildren><IconFont type="light" /></template>
+          </a-switch>
         </a-space>
       </div>
       <div class="login-form-box">
