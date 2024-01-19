@@ -22,6 +22,22 @@ body {
   margin: 0;
 }
 
+/* fade-slide */
+.fade-slide-leave-active,
+.fade-slide-enter-active {
+  transition: all 0.3s;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
 /* 全局重置浏览器滚动条，不需要可以删除 */
 ::-webkit-scrollbar {
   width: 5px;
