@@ -1,0 +1,73 @@
+@mixin password-meter-text-style {
+  position: absolute;
+  top: -7px;
+  left: 100%;
+  font-size: 12px;
+  word-break: keep-all;
+  transform: translateX(5px);
+}
+
+/** 密码强度组件 */
+.po-password-strength-bar {
+  background-color: rgb(151 151 151 / 10%);
+}
+
+.po-password-strength-bar.risky {
+  position: relative;
+  width: 10%;
+  background-color: #f95e68 !important;
+
+  &::after {
+    color: #f95e68;
+    content: "弱";
+    @include password-meter-text-style;
+  }
+}
+
+.po-password-strength-bar.guessable {
+  position: relative;
+  width: 32.5%;
+  background-color: #fb964d !important;
+
+  &::after {
+    color: #fb964d;
+    content: "较弱";
+    @include password-meter-text-style;
+  }
+}
+
+.po-password-strength-bar.weak {
+  position: relative;
+  width: 55%;
+  background-color: #fdd244 !important;
+
+  &::after {
+    color: #fdd244;
+    content: "中等";
+    @include password-meter-text-style;
+  }
+}
+
+.po-password-strength-bar.safe {
+  position: relative;
+  width: 77.5%;
+  background-color: #b0dc53 !important;
+
+  &::after {
+    color: #b0dc53;
+    content: "较强";
+    @include password-meter-text-style;
+  }
+}
+
+.po-password-strength-bar.secure {
+  position: relative;
+  width: calc(100% - 17px);
+  background-color: #35cc62 !important;
+
+  &::after {
+    color: #35cc62;
+    content: "强";
+    @include password-meter-text-style;
+  }
+}

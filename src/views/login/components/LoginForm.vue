@@ -1,11 +1,12 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-19 14:14:17
- * @LastEditTime: 2024-01-19 15:53:15
+ * @LastEditTime: 2024-01-23 11:05:56
  * @LastEditors: wangqiaoling
  * @Description: 登录表单
 -->
 <script setup lang="ts">
+import { useUserInfo } from "@store/modules/userInfo";
 import { formState, onLogin } from "../utils/login";
 import { loginRules } from "../utils/rule";
 
@@ -17,11 +18,23 @@ const goRegister = () => {
   emit("changeForm", "register");
 };
 
+const goResetPassword = () => {
+  emit("changeForm", "reset");
+};
+
 const props = defineProps({
   textColor: {
     type: String,
     default: "",
   },
+});
+
+watchEffect(() => {
+  if (!formState.username) {
+    useUserInfo().removeUserInfo();
+  } else {
+    useUserInfo().setUserInfo({ name: "搬砖菜鸟", count: formState.username });
+  }
 });
 </script>
 
@@ -36,7 +49,11 @@ const props = defineProps({
       @finish="onLogin"
     >
       <a-form-item name="username">
-        <a-input placeholder="账号" v-model:value="formState.username">
+        <a-input
+          placeholder="账号"
+          v-model:value="formState.username"
+          allow-clear
+        >
           <template #prefix>
             <UserOutlined />
           </template>
@@ -44,7 +61,11 @@ const props = defineProps({
       </a-form-item>
 
       <a-form-item name="password">
-        <a-input-password placeholder="密码" v-model:value="formState.password">
+        <a-input-password
+          placeholder="密码"
+          v-model:value="formState.password"
+          allow-clear
+        >
           <template #prefix>
             <LockOutlined />
           </template>
@@ -57,6 +78,7 @@ const props = defineProps({
             v-model:value="formState.vertifyCode"
             placeholder="验证码"
             style="width: calc(100% - 150px)"
+            allow-clear
           >
             <template #prefix>
               <VerifiedOutlined />
@@ -84,7 +106,9 @@ const props = defineProps({
             </a-tooltip>
           </a-checkbox>
         </a-form-item>
-        <a class="login-form-forgot" href="">忘记密码？</a>
+        <a class="login-form-forgot" target="" @click="goResetPassword"
+          >忘记密码？</a
+        >
       </a-form-item>
 
       <a-form-item :wrapper-col="{ span: 24 }">
