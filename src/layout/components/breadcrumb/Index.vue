@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-11 16:54:01
- * @LastEditTime: 2024-01-16 16:04:51
+ * @LastEditTime: 2024-01-24 10:19:53
  * @LastEditors: wangqiaoling
  * @Description: 面包屑组件
 -->
@@ -61,7 +61,7 @@ function getItem(
 function transformRouteToBread(route: RouteComponent[]): BreadRoute[] {
   return route.map((item: any) => {
     const breadData: BreadRoute = getItem(
-      item.redirect || item.path,
+      item.path === "/" ? item.redirect : item.path,
       item.meta.title,
       item.meta.breadLink
     );

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-18 14:21:10
+ * @LastEditTime: 2024-01-24 10:17:37
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -66,7 +66,7 @@ function transformRouteToMenu(route: RouteComponent[]): ItemType[] {
   return route.map((item: any) => {
     const menuData: ItemType = getItem(
       item.meta.title,
-      item.redirect || item.path,
+      item.path === "/" ? item.redirect : item.path,
       item.meta.icon
     );
     if (item.children && item.children.length > 0) {

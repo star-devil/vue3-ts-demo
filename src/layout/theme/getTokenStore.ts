@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 10:04:01
- * @LastEditTime: 2024-01-22 16:38:46
+ * @LastEditTime: 2024-01-23 15:05:00
  * @LastEditors: wangqiaoling
  * @Description: 当前存储的主题配置
  */
@@ -30,4 +30,5 @@ export const textDescriptionColor = () =>
   useThemeToken().token.colorTextDescription;
 /** content内wrapper背景颜色 */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 export const colorBgWrapper = () => useThemeToken().token.colorPrimaryLight;

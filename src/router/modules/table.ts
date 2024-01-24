@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-01-16 15:37:58
+ * @LastEditTime: 2024-01-23 15:24:47
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -11,6 +11,7 @@ export default {
   path: "/table",
   name: "Table",
   component: () => import("@/views/table/Index.vue"),
+  redirect: "/table/base-table",
   meta: {
     icon: () => h(TableOutlined),
     title: "表格",

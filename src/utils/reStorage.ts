@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-18 12:30:17
- * @LastEditTime: 2024-01-16 14:59:05
+ * @LastEditTime: 2024-01-24 10:48:21
  * @LastEditors: wangqiaoling
  * @Description: 封装操作本地存储的方法
  */
@@ -32,7 +32,7 @@ export const storage = {
     const obj: Storage = {
       data: value,
       time: Date.now(),
-      expire: expire * 60, // 把秒转为分钟
+      expire: expire * 60 * 1000, // 把分钟转为毫秒
     };
     //localStorage 设置的值不能为对象,转为json字符串
     localStorage.setItem(
