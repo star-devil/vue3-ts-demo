@@ -1,12 +1,14 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:45:50
- * @LastEditTime: 2024-01-08 15:46:06
+ * @LastEditTime: 2024-01-23 15:21:42
  * @LastEditors: wangqiaoling
  * @Description: 简单路由配置
  */
 import NProgress from "@/utils/progress";
+import { storage } from "@utils/reStorage";
 import { buildHierarchyTree } from "@utils/tree";
+
 import {
   RouteComponent,
   RouteRecordRaw,
@@ -18,9 +20,11 @@ import {
   ascending,
   formatFlatteningRoutes,
   formatTwoStageRoutes,
+  isOneOfArray,
 } from "./utils";
 
 import remainingRouter from "./modules/remaining";
+
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
@@ -71,6 +75,38 @@ export const router: Router = createRouter({
       }
     });
   },
+});
+
+/** 路由白名单 */
+const whiteList = ["/login"];
+
+router.beforeEach((to: ToRouteType, _from, next) => {
+  const userInfo = storage.get("userInfo");
+  NProgress.start();
+  /** 如果已经登录并存在登录信息后不能跳转到路由白名单，而是继续保持在当前页面 */
+  function toCorrectRoute() {
+    whiteList.includes(to.fullPath) ? next(_from.fullPath) : next();
+  }
+
+  if (userInfo) {
+    // 无权限跳转403页面
+    if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
+      next({ path: "/error/403" });
+    } else {
+      toCorrectRoute();
+    }
+  } else {
+    if (to.path !== "/login") {
+      if (whiteList.indexOf(to.path) !== -1) {
+        next();
+      } else {
+        // TODO: 清除用户信息、全部缓存和token
+        next({ path: "/login" });
+      }
+    } else {
+      next();
+    }
+  }
 });
 
 router.afterEach(() => {

@@ -1,26 +1,24 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-18 12:30:17
- * @LastEditTime: 2024-01-24 10:48:21
+ * @LastEditTime: 2024-01-29 10:50:03
  * @LastEditors: wangqiaoling
  * @Description: 封装操作本地存储的方法
  */
 
 import { dataDecrypt, dataEncrypt } from "./crypt";
 
-/**
- * prefix: storage名称前缀
- * data: 存储的内容
- * time: 存储数据时的时间
- * expire: 数据过期时间，单位分钟
- * mode: 是否加密
- */
 interface Storage {
+  /** 存储的内容 */
   data: any;
+  /** 存储数据时的时间 */
   time: number;
+  /** 数据过期时间，单位分钟 */
   expire: number;
 }
-const prefix = import.meta.env.VITE_SYS_PREFIX; // storage名称前缀,由环境变量决定
+/** storage名称前缀,由环境变量决定 */
+const prefix = import.meta.env.VITE_SYS_PREFIX;
+/** 是否加密: 非开发环境缓存加密 */
 const mode = import.meta.env.MODE === "test" || import.meta.env.MODE === "pro"; // 非开发环境缓存加密
 
 /**

@@ -28,7 +28,7 @@
     "jsx": "preserve", //在 `.tsx`文件里支持JSX： `"React"`或 `"Preserve"`
 
     /* Linting */
-    "strict": true, // 所有的严格检查
+    "strict": false, // 所有的严格检查
     "forceConsistentCasingInFileNames": true, // 禁止对同一个文件的不一致的引用。
     "strictFunctionTypes": false, // 禁用函数参数双向协变检查。
     "noUnusedLocals": true,
@@ -36,6 +36,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
+    "mock/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
     "src/**/*.js",
@@ -43,7 +44,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "types/*.d.ts",
-    "src/auto-import.d.ts"
+    "src/auto-import.d.ts",
+    "vite.config.ts"
   ],
   "exclude": ["vite.config.ts", "dist", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }] //每个引用的`path`属性都可以指向到包含`tsconfig.json`文件的目录，或者直接指向到配置文件本身（名字是任意的）

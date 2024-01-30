@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-18 16:21:26
- * @LastEditTime: 2024-01-23 10:58:13
+ * @LastEditTime: 2024-01-29 10:53:34
  * @LastEditors: wangqiaoling
  * @Description: 注册账号逻辑
  */
@@ -10,8 +10,11 @@ import { validateName, validatePass } from "./rule";
 
 // 登录表单
 interface FormState {
+  /** 用户名 */
   username: string;
+  /** 密码 */
   password: string;
+  /** 确认密码 */
   repeatPassword: string;
 }
 

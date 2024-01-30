@@ -2,9 +2,10 @@
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:13:49
  * @LastEditors: wangqiaoling
- * @LastEditTime: 2023-12-06 16:08:05
+ * @LastEditTime: 2024-01-30 14:13:00
  * @Description: 配置封装axios 请求
  */
+import { message as Message } from "ant-design-vue";
 import type {
   AxiosInstance,
   AxiosResponse,
@@ -24,9 +25,13 @@ export interface Result<T = any> {
 
 /** 自定义封装axios */
 const instance: AxiosInstance = axios.create({
-  baseURL: "/proxy-api",
+  // baseURL: "/proxy-api",
   timeout: 2000 * 60,
-  headers: { "Content-Type": "application/json;charset=utf-8" },
+  headers: {
+    Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json;charset=utf-8",
+    "X-Requested-With": "XMLHttpRequest",
+  },
 });
 /** 取消请求的插件 */
 withAbort(instance);
@@ -70,20 +75,22 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 }, err);
 
 instance.interceptors.response.use((response: AxiosResponse) => {
-  const { code, msg, data } = response.data;
+  const { code, message } = response.data;
   if (code) {
     if (code !== 200) {
       if (code === 500) {
-        console.error(`服务请求出错: ${msg}`); // 如果你使用了ui框架，则可以使用全局提示
+        console.error(`服务请求出错: ${message}`); // 如果你使用了ui框架，则可以使用全局提示
       }
       // TODO: 因为目前不确定接口code规则，暂时不对其他code做处理
-      else {
+      else if (code === 400) {
+        Message.warning(`${message}`);
+      } else {
         // msg && Message.warning(`${msg}`);  // 如果你使用了ui框架，则可以使用全局提示
       }
-      return Promise.reject(msg);
+      return Promise.reject(message);
     } else {
       // 正常返回数据
-      return data;
+      return response.data;
     }
   } else {
     if (response.status === 200) {

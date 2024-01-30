@@ -1,13 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-19 14:14:17
- * @LastEditTime: 2024-01-23 11:05:56
+ * @LastEditTime: 2024-01-30 14:32:22
  * @LastEditors: wangqiaoling
  * @Description: 登录表单
 -->
 <script setup lang="ts">
 import { useUserInfo } from "@store/modules/userInfo";
-import { formState, onLogin } from "../utils/login";
+import type { FormInstance } from "ant-design-vue";
+import { formState, loginLoading, onLogin } from "../utils/login";
 import { loginRules } from "../utils/rule";
 
 const emit = defineEmits<{
@@ -33,8 +34,13 @@ watchEffect(() => {
   if (!formState.username) {
     useUserInfo().removeUserInfo();
   } else {
-    useUserInfo().setUserInfo({ name: "搬砖菜鸟", count: formState.username });
+    useUserInfo().setUserInfo({ name: "", count: formState.username });
   }
+});
+
+const loginFormRef = ref<FormInstance>();
+onBeforeUnmount(() => {
+  loginFormRef.value.resetFields();
 });
 </script>
 
@@ -42,9 +48,10 @@ watchEffect(() => {
   <div class="user-form">
     <a-form
       :model="formState"
-      name="basic"
+      name="loginForm"
       :wrapper-col="{ span: 24 }"
       autocomplete="off"
+      ref="loginFormRef"
       :rules="loginRules"
       @finish="onLogin"
     >
@@ -112,7 +119,13 @@ watchEffect(() => {
       </a-form-item>
 
       <a-form-item :wrapper-col="{ span: 24 }">
-        <a-button block type="primary" html-type="submit">登录</a-button>
+        <a-button
+          block
+          type="primary"
+          html-type="submit"
+          :loading="loginLoading"
+          >登录</a-button
+        >
       </a-form-item>
     </a-form>
     <div class="register-guide-box">

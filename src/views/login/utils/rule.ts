@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-18 15:27:54
- * @LastEditTime: 2024-01-18 16:04:18
+ * @LastEditTime: 2024-01-30 10:58:19
  * @LastEditors: wangqiaoling
  * @Description: 登录校验
  */
@@ -36,8 +36,6 @@ export const validatePass = async (_rule: Rule, value: string) => {
 export const validateCode = async (_rule: Rule, value: string) => {
   if (value.trim() === "") {
     return Promise.reject("请输入验证码");
-  } else if (value.trim() !== "3738") {
-    return Promise.reject("请输入正确的验证码");
   } else {
     return Promise.resolve();
   }
@@ -46,7 +44,7 @@ export const validateCode = async (_rule: Rule, value: string) => {
 /** 登录校验 */
 export const loginRules: Record<string, Rule[]> = {
   username: [{ validator: validateName, trigger: "blur" }],
-  password: [{ validator: validatePass, trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码" }],
   vertifyCode: [
     {
       validator: validateCode,

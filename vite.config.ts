@@ -1,13 +1,13 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-01-19 10:59:07
+ * @LastEditTime: 2024-01-29 17:13:08
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
-import { defineConfig, loadEnv } from "vite";
+import { ConfigEnv, UserConfigExport, defineConfig, loadEnv } from "vite";
 
 // 在启动项目和打包代码时进行代码检查, 如果检查有error类型的问题就启动或打包失败, warn类型的问题不影响启动和打包
 import eslint from "vite-plugin-eslint";
@@ -23,9 +23,11 @@ import autoprefixer from "autoprefixer";
 import postCssPxToRem from "postcss-pxtorem";
 // tailwindcss
 import tailwindcss from "tailwindcss";
+// mockJS
+import { viteMockServe } from "vite-plugin-mock";
 
 // https://vitejs.dev/config/
-export default ({ command, mode }) => {
+export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   const env = loadEnv(mode, process.cwd());
   console.log(command);
 
@@ -57,6 +59,10 @@ export default ({ command, mode }) => {
         ],
       }),
       eslint({ lintOnStart: true, cache: false }),
+      viteMockServe({
+        mockPath: "mock",
+        enable: true,
+      }),
     ],
     css: {
       preprocessorOptions: {
@@ -116,11 +122,11 @@ export default ({ command, mode }) => {
       open: true, // 在服务器启动时自动在浏览器中打开应用程序
       https: false, // 是否开启 https
       proxy: {
-        "/proxy-api": {
-          target: "http://XX.XX.XX.XX:XXXX/",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(RegExp("/proxy-api"), ""),
-        },
+        // "/proxy-api": {
+        //   target: "http://XX.XX.XX.XX:XXXX/",
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(RegExp("/proxy-api"), ""),
+        // },
       },
     },
   });

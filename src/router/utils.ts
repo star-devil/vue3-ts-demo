@@ -1,14 +1,14 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-01-15 15:26:42
+ * @LastEditTime: 2024-01-23 15:10:49
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
 
 import { isAllEmpty } from "@utils/provideConfig";
 import { buildHierarchyTree } from "@utils/tree";
-import { cloneDeep, filter, forEach } from "lodash";
+import { cloneDeep, filter, forEach, intersection } from "lodash";
 import { RouteComponent, RouteRecordRaw } from "vue-router";
 import { router } from "./index";
 
@@ -43,6 +43,15 @@ function filterTree(data: RouteComponent[]) {
   );
   forEach(newTree, (v) => v.children && (v.children = filterTree(v.children)));
   return newTree;
+}
+
+/** 判断两个数组彼此是否存在相同值 */
+function isOneOfArray(a: Array<string>, b: Array<string>) {
+  return Array.isArray(a) && Array.isArray(b)
+    ? intersection(a, b).length > 0
+      ? true
+      : false
+    : true;
 }
 
 /**
@@ -156,4 +165,5 @@ export {
   formatFlatteningRoutes,
   formatTwoStageRoutes,
   getParentPaths,
+  isOneOfArray,
 };

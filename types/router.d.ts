@@ -1,7 +1,10 @@
 // 全局路由类型声明
-import { type RouteComponent } from "vue-router";
+import { type RouteComponent, type RouteLocationNormalized } from "vue-router";
 
 declare global {
+  interface ToRouteType extends RouteLocationNormalized {
+    meta: CustomizeRouteMeta;
+  }
   /**
    * @description 完整子路由的`meta`配置表
    */
