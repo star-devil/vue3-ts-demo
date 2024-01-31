@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:45:50
- * @LastEditTime: 2024-01-23 15:21:42
+ * @LastEditTime: 2024-01-30 17:30:01
  * @LastEditors: wangqiaoling
  * @Description: 简单路由配置
  */
@@ -82,6 +82,7 @@ const whiteList = ["/login"];
 
 router.beforeEach((to: ToRouteType, _from, next) => {
   const userInfo = storage.get("userInfo");
+  const userRoles = storage.get("userRoles");
   NProgress.start();
   /** 如果已经登录并存在登录信息后不能跳转到路由白名单，而是继续保持在当前页面 */
   function toCorrectRoute() {
@@ -90,7 +91,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
 
   if (userInfo) {
     // 无权限跳转403页面
-    if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
+    if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userRoles?.roles)) {
       next({ path: "/error/403" });
     } else {
       toCorrectRoute();

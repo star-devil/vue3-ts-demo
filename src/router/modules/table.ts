@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-01-23 15:24:47
+ * @LastEditTime: 2024-01-30 17:30:37
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -35,6 +35,7 @@ export default {
           meta: {
             title: "详情",
             showLink: false,
+            roles: ["admin"],
           },
         },
       ],

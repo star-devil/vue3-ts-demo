@@ -1,12 +1,14 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-18 16:21:26
- * @LastEditTime: 2024-01-30 14:14:52
+ * @LastEditTime: 2024-01-30 16:19:17
  * @LastEditors: wangqiaoling
  * @Description: 登入系统逻辑
  */
 import router from "@router";
 import { useUserInfo } from "@store/modules/userInfo";
+import { getGreeting } from "@utils/greeting";
+import { notification } from "ant-design-vue";
 
 // 登录表单
 interface FormState {
@@ -29,6 +31,14 @@ export const formState = reactive<FormState>({
 
 export const loginLoading = ref<boolean>(false);
 
+function showNotification(username: string) {
+  notification.success({
+    message: "欢迎登录",
+    description: `${username}，${getGreeting()}`,
+    placement: "topRight",
+  });
+}
+
 export const onLogin = (values: any) => {
   loginLoading.value = true;
   if (!values) return;
@@ -40,6 +50,7 @@ export const onLogin = (values: any) => {
         name: res.data.username,
         count: res.data.usercount,
       });
+      showNotification(res.data.username);
     })
     .catch(() => {
       useUserInfo().removeUserInfo();

@@ -1,12 +1,13 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-01-18 15:24:42
+ * @LastEditTime: 2024-01-30 17:21:24
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
-import { useThemeStore } from "@store/modules/setting";
+import { useThemeStore } from "@store/modules/setting"; // 系统主题
+import { useUserInfo } from "@store/modules/userInfo"; // 登录用户信息
 import { theme } from "ant-design-vue";
 import LogoName from "../components/logoName/Index.vue"; // 系统名称和logo
 import { useThemeType } from "../hooks/useThemeType";
@@ -26,6 +27,9 @@ defineProps({
     default: true,
   },
 });
+
+// 获取当前登录用户名
+const userInfo = useUserInfo();
 
 // 获取并存储当前主题
 const { useToken } = theme;
@@ -149,9 +153,9 @@ onBeforeMount(() => {
             <a-dropdown :trigger="['click']" :arrow="true">
               <a-space>
                 <a-avatar style="color: #f56a00; background-color: #fde3cf"
-                  >N
+                  >{{ userInfo.userName.slice(-1) }}
                 </a-avatar>
-                <span>admin</span>
+                <span>{{ userInfo.userName }}</span>
               </a-space>
               <template #overlay>
                 <a-menu>
@@ -243,4 +247,3 @@ onBeforeMount(() => {
   }
 }
 </style>
-./utils/logInAndOut ../utils/logInAndOut
