@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-01-11 16:07:01
+ * @LastEditTime: 2024-02-02 11:20:01
  * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -43,6 +43,8 @@ const changeTheme = computed(() => {
     return themeData.type === "light" && themeData.headColor;
   }
 });
+/** 收起侧边栏 */
+const collapsed = ref<boolean>(false);
 </script>
 
 <template>
@@ -52,6 +54,8 @@ const changeTheme = computed(() => {
       're-side-bar',
       layoutName === 'mixinRight' ? 'right-side-bar' : 'left-side-bar',
     ]"
+    v-model:collapsed="collapsed"
+    collapsible
   >
     <div class="side-bar-logo-container" v-if="layoutName === 'custom'">
       <span class="side-logo-link" :style="changLogoStyle">

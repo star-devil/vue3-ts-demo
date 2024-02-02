@@ -1,11 +1,12 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-18 16:21:26
- * @LastEditTime: 2024-01-30 16:19:17
+ * @LastEditTime: 2024-02-02 16:57:47
  * @LastEditors: wangqiaoling
  * @Description: 登入系统逻辑
  */
 import router from "@router";
+import { getTopMenu, initRouter } from "@router/utils";
 import { useUserInfo } from "@store/modules/userInfo";
 import { getGreeting } from "@utils/greeting";
 import { notification } from "ant-design-vue";
@@ -45,7 +46,9 @@ export const onLogin = (values: any) => {
   useUserInfo()
     .loginByUserName(values)
     .then((res) => {
-      router.replace("/");
+      initRouter().then(() => {
+        router.replace(getTopMenu().path);
+      });
       useUserInfo().setUserInfo({
         name: res.data.username,
         count: res.data.usercount,

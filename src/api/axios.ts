@@ -3,7 +3,7 @@
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:13:49
  * @LastEditors: wangqiaoling
- * @LastEditTime: 2024-02-02 10:46:38
+ * @LastEditTime: 2024-02-02 10:59:40
  * @Description: 配置封装axios 请求
  */
 import { useUserInfo } from "@store/modules/userInfo";
@@ -117,7 +117,7 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
           const now = new Date().getTime();
           // TODO: 这里应该还有一个判断refreshToken是否过期的逻辑，需要结合服务端的设计进行编码，此处省略
           // TODO: 当refreshToken过期之后，应该清除所有记录并回到登录页
-          // 由前端根据返回的expires判断accessToken是否过期
+          // 由前端根据返回的expires判断accessToken是否过期，这个过期也可以由服务端判断，前端根据返回的code处理即可
           const expired = data.expires - now <= 0;
           if (expired) {
             if (!isRefreshing) {

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-23 10:42:55
- * @LastEditTime: 2024-02-02 10:07:01
+ * @LastEditTime: 2024-02-02 16:59:39
  * @LastEditors: wangqiaoling
  * @Description: 存储用户可用的个人信息
  */
@@ -67,6 +67,7 @@ export const useUserInfo = defineStore({
     /** 登出 */
     userLogOut() {
       this.removeUserInfo();
+      sessionStorage.clear();
       router.replace("/login");
     },
     /** 登入 */
