@@ -1,19 +1,26 @@
+/* eslint-disable indent */
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-13 10:13:49
  * @LastEditors: wangqiaoling
- * @LastEditTime: 2024-01-30 14:13:00
+ * @LastEditTime: 2024-02-02 10:46:38
  * @Description: 配置封装axios 请求
  */
+import { useUserInfo } from "@store/modules/userInfo";
+import { formatToken, getToken } from "@utils/auth";
+import NProgress from "@utils/progress";
 import { message as Message } from "ant-design-vue";
 import type {
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
+  CustomParamsSerializer,
   InternalAxiosRequestConfig,
 } from "axios";
 import axios from "axios";
 import withAbort from "axios-abort"; // 取消请求
 import axiosRetry from "axios-retry"; // 重试
+import { stringify } from "qs"; // 序列化
 import { err } from "./httpHandler"; // 公共的错误处理方法
 
 /* 服务器返回数据的的类型，目前用到的接口是这些格式 */
@@ -22,17 +29,25 @@ export interface Result<T = any> {
   message: string;
   data: T;
 }
-
-/** 自定义封装axios */
-const instance: AxiosInstance = axios.create({
+// 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
+/** axio自定义配置 */
+const defaultConfig: AxiosRequestConfig = {
   // baseURL: "/proxy-api",
   timeout: 2000 * 60,
   headers: {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json;charset=utf-8",
     "X-Requested-With": "XMLHttpRequest",
+    "Access-Control-Allow-Origin": "*",
   },
-});
+  // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
+  paramsSerializer: {
+    serialize: stringify as unknown as CustomParamsSerializer,
+  },
+};
+
+/** 自定义封装axios */
+const instance: AxiosInstance = axios.create(defaultConfig);
 /** 取消请求的插件 */
 withAbort(instance);
 
@@ -58,6 +73,27 @@ axiosRetry(instance, {
   },
 });
 
+/** 防止重复刷新token */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let isRefreshing = false;
+
+// 原始请求队列
+let requests: any = [];
+/**
+ * 原有的请求队列，在重新获取完 Access Token 后继续执行之前未完成的请求
+ * 适用于同时多个请求的情况
+ *  */
+function retryOriginalRequest(
+  config: InternalAxiosRequestConfig
+): Promise<InternalAxiosRequestConfig> {
+  return new Promise((resolve) => {
+    requests.push((token: string) => {
+      config.headers["Authorization"] = formatToken(token);
+      resolve(config);
+    });
+  });
+}
+
 // 1. 新版axios类型AxiosRequestConfig不能赋值给InternalAxiosReqe；
 // 2. CreateAxiosDefaults不能赋值给AxiosRequestConfig
 
@@ -69,23 +105,67 @@ axiosRetry(instance, {
 // 以上两种继承，父类的作用范围是小于子类的
 // 所以，在使用拦截器时，使用InternalAxiosRequestConfig而不使用AxiosRequestConfig
 instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  config.headers.Authorization = "Bearer Token";
-  config.headers["Access-Control-Allow-Origin"] = "*";
-  return config;
+  // 开启进度条动画
+  NProgress.start();
+  /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
+  const whiteList = ["/refreshToken", "/login"];
+  return whiteList.some((v) => config.url.indexOf(v) > -1)
+    ? config
+    : new Promise((resolve) => {
+        const data = getToken();
+        if (data) {
+          const now = new Date().getTime();
+          // TODO: 这里应该还有一个判断refreshToken是否过期的逻辑，需要结合服务端的设计进行编码，此处省略
+          // TODO: 当refreshToken过期之后，应该清除所有记录并回到登录页
+          // 由前端根据返回的expires判断accessToken是否过期
+          const expired = data.expires - now <= 0;
+          if (expired) {
+            if (!isRefreshing) {
+              isRefreshing = true;
+              // token过期刷新
+              useUserInfo()
+                .handRefreshToken({ refreshToken: data.refreshToken })
+                .then((res) => {
+                  const token = res.data.accessToken;
+                  config.headers["Authorization"] = formatToken(token);
+                  requests.forEach((cb: any) => cb(token));
+                  // 执行完成后，清空队列
+                  requests = [];
+                })
+                .catch(() => {
+                  Message.error("登录过期, 请重新登录");
+                  useUserInfo().removeAllInfoAndLogOut();
+                  return config;
+                })
+                .finally(() => {
+                  isRefreshing = false;
+                });
+            }
+            resolve(retryOriginalRequest(config));
+          } else {
+            config.headers["Authorization"] = formatToken(data.accessToken);
+            resolve(config);
+          }
+        } else {
+          resolve(config);
+        }
+      });
 }, err);
 
 instance.interceptors.response.use((response: AxiosResponse) => {
+  // 关闭进度条动画
+  NProgress.done();
   const { code, message } = response.data;
   if (code) {
     if (code !== 200) {
       if (code === 500) {
-        console.error(`服务请求出错: ${message}`); // 如果你使用了ui框架，则可以使用全局提示
+        Message.error(`服务请求出错: ${message}`);
       }
       // TODO: 因为目前不确定接口code规则，暂时不对其他code做处理
       else if (code === 400) {
         Message.warning(`${message}`);
       } else {
-        // msg && Message.warning(`${msg}`);  // 如果你使用了ui框架，则可以使用全局提示
+        Message.warning(`${message}`);
       }
       return Promise.reject(message);
     } else {
@@ -96,7 +176,7 @@ instance.interceptors.response.use((response: AxiosResponse) => {
     if (response.status === 200) {
       return response.data;
     } else {
-      console.error("服务无法响应，请检查网络或联系管理员"); // 如果你使用了ui框架，则可以使用全局提示
+      Message.error("服务无法响应，请检查网络或联系管理员");
       return Promise.reject(response);
     }
   }

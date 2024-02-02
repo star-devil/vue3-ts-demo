@@ -1,14 +1,17 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-21 14:10:49
- * @LastEditTime: 2023-12-06 16:11:18
+ * @LastEditTime: 2024-02-01 15:16:21
  * @LastEditors: wangqiaoling
  * @Description: axios错误处理函数
  */
+import NProgress from "@utils/progress";
 import type { AxiosError } from "axios";
 
 /** 错误处理 */
 export const err = (error: AxiosError) => {
+  // 关闭进度条动画
+  NProgress.done();
   if (error.response) {
     // 如果接口有对应的HTTP 状态码
     // let message = "";

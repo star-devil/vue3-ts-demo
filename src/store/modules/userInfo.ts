@@ -1,13 +1,19 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-23 10:42:55
- * @LastEditTime: 2024-01-30 17:39:53
+ * @LastEditTime: 2024-02-02 10:07:01
  * @LastEditors: wangqiaoling
  * @Description: 存储用户可用的个人信息
  */
-import { UserResult, getLogin } from "@api/mock/user";
+import {
+  RefreshTokenResult,
+  UserResult,
+  getLogin,
+  refreshTokenApi,
+} from "@api/mock/user";
+import router from "@router";
 import { removeToken, setToken } from "@utils/auth";
-import { storage } from "@utils/reStorage";
+import { sessionStorage, storage } from "@utils/reStorage";
 import { defineStore } from "pinia";
 const userInfoStorage = storage.get("userInfo");
 const userRolesStorage = storage.get("userRoles");
@@ -58,7 +64,11 @@ export const useUserInfo = defineStore({
       storage.remove("userRoles");
       removeToken();
     },
-
+    /** 登出 */
+    userLogOut() {
+      this.removeUserInfo();
+      router.replace("/login");
+    },
     /** 登入 */
     async loginByUserName(data: object) {
       return new Promise<UserResult>((resolve, reject) => {
@@ -71,6 +81,26 @@ export const useUserInfo = defineStore({
             reject(error);
           });
       });
+    },
+    /** 刷新token */
+    async handRefreshToken(data: object) {
+      return new Promise<RefreshTokenResult>((resolve, reject) => {
+        refreshTokenApi(data)
+          .then((res) => {
+            setToken(res.data);
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    /** token过期强制退出登录：清空所有缓存 */
+    removeAllInfoAndLogOut() {
+      storage.clear();
+      sessionStorage.clear();
+      removeToken();
+      router.replace("/login");
     },
   },
 });
