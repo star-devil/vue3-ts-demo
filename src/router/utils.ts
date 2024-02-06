@@ -1,16 +1,15 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-02-02 17:36:12
+ * @LastEditTime: 2024-02-06 10:17:51
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
 
 import { getAsyncRoutes } from "@api/mock/routes";
 import { usePermissionStore } from "@store/modules/permission";
-import { sessionKey } from "@utils/auth";
 import { isAllEmpty } from "@utils/provideConfig";
-import { sessionStorage } from "@utils/reStorage";
+import { storage } from "@utils/reStorage";
 import { buildHierarchyTree } from "@utils/tree";
 import { cloneDeep, filter, forEach, intersection } from "lodash";
 import { RouteComponent, RouteRecordRaw } from "vue-router";
@@ -52,14 +51,17 @@ function filterTree(data: RouteComponent[]) {
 }
 
 /** 过滤children长度为0的的目录，当目录下没有菜单时，会过滤此目录，目录没有赋予roles权限，当目录下只要有一个菜单有显示权限，那么此目录就会显示 */
-function filterChildrenTree(data: RouteComponent[]) {
-  const newTree: any = filter(
-    cloneDeep(data),
-    (v: { children: any[] }) => v.children && v.children.length > 0
-  );
-  forEach(newTree, (v) => v.children && (v.children = filterTree(v.children)));
-  return newTree;
-}
+// function filterChildrenTree(data: RouteComponent[]) {
+//   console.log("filterChildrenTree--Data-333", data);
+//   const newTree: any = filter(
+//     cloneDeep(data),
+//     (v: { children: any[] }) => v.children && v.children.length > 0
+//   );
+//   console.log("filterChildrenTree--newTree4444-", newTree);
+
+//   forEach(newTree, (v) => v.children && (v.children = filterTree(v.children)));
+//   return newTree;
+// }
 
 /** 判断两个数组彼此是否存在相同值 */
 function isOneOfArray(a: Array<string>, b: Array<string>) {
@@ -70,16 +72,17 @@ function isOneOfArray(a: Array<string>, b: Array<string>) {
     : true;
 }
 
-/** 从sessionStorage里取出当前登陆用户的角色roles，过滤无权限的菜单 */
+/** 从storage里取出当前登陆用户的角色roles，过滤无权限的菜单 */
 function filterNoPermissionTree(data: RouteComponent[]) {
-  const currentRoles = sessionStorage.get(sessionKey)?.roles ?? [];
+  const currentRoles = storage.get("userRoles")?.roles ?? [];
   const newTree = cloneDeep(data).filter((v: any) =>
     isOneOfArray(v.meta?.roles, currentRoles)
   );
   newTree.forEach(
     (v: any) => v.children && (v.children = filterNoPermissionTree(v.children))
   );
-  return filterChildrenTree(newTree);
+  // return filterChildrenTree(newTree);
+  return newTree;
 }
 
 /**
@@ -177,7 +180,6 @@ function handleAsyncRoutes(routesList) {
 function initRouter() {
   return new Promise((resolve) => {
     getAsyncRoutes().then(({ data }) => {
-      console.log("data-", data);
       handleAsyncRoutes(cloneDeep(data));
       resolve(router);
     });
@@ -260,9 +262,12 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
 
 /** 获取所有菜单中的第一个菜单（顶级菜单）*/
 function getTopMenu() {
-  const topMenu = usePermissionStore().wholeMenus[0]?.children[0];
-  console.log("111-topMenu", usePermissionStore().wholeMenus[0]);
-  return topMenu;
+  const hasChildren = usePermissionStore().wholeMenus[0]?.children[0];
+  if (hasChildren) {
+    return usePermissionStore().wholeMenus[0]?.children[0];
+  } else {
+    return usePermissionStore().wholeMenus[0];
+  }
 }
 
 export {

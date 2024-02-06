@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-24 13:27:15
- * @LastEditTime: 2024-02-02 14:12:48
+ * @LastEditTime: 2024-02-06 10:22:09
  * @LastEditors: wangqiaoling
  * @Description: 模拟服务器返回权限路由表
  */
@@ -11,7 +11,6 @@ const permissionRouter = {
   path: "/permission",
   meta: {
     title: "权限管理",
-    icon: "lock",
     rank: 9,
   },
   children: [
@@ -28,7 +27,7 @@ const permissionRouter = {
       name: "PermissionButton",
       meta: {
         title: "按钮权限",
-        roles: ["admin", "common"],
+        roles: ["admin"],
         auths: ["btn_add", "btn_edit", "btn_delete"],
       },
     },

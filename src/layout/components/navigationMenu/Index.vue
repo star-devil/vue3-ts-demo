@@ -1,13 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-01-24 10:17:37
+ * @LastEditTime: 2024-02-06 10:13:05
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
 <script setup lang="ts">
-import { constantMenus, constantRoutes } from "@router";
+import { constantRoutes } from "@router";
 import { filterTree, findRouteByPath, getParentPaths } from "@router/utils";
+import { usePermissionStore } from "@store/modules/permission";
 import { useThemeStore } from "@store/modules/setting";
 import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
@@ -128,7 +129,8 @@ const changeTheme = computed(() => {
 
 // 生成导航菜单
 onBeforeMount(() => {
-  items = transformRouteToMenu(filterTree(constantMenus));
+  // 如果使用了后端返回的路由，items=usePermissionStore().wholeMenus;否则items=constantMenus
+  items = transformRouteToMenu(filterTree(usePermissionStore().wholeMenus));
   getCurrentMenuInfo();
 });
 </script>
