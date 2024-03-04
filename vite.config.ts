@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-01-29 17:13:08
+ * @LastEditTime: 2024-03-04 09:52:49
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -19,8 +19,6 @@ import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 // 自动添加浏览器前缀
 import autoprefixer from "autoprefixer";
-// 将px转为rem
-import postCssPxToRem from "postcss-pxtorem";
 // tailwindcss
 import tailwindcss from "tailwindcss";
 // mockJS
@@ -73,16 +71,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       postcss: {
         // 关键代码
         plugins: [
-          postCssPxToRem({
-            // 自适应，px>rem转换
-            rootValue: 14, // 1rem的大小
-            propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
-            unitPrecision: 4, // 保留到4位小数
-            replace: true,
-            mediaQuery: false,
-            minPixelValue: 0,
-            // exclude: '' // 不转化单位的文件
-          }),
           autoprefixer({
             // 自动添加前缀
             overrideBrowserslist: [

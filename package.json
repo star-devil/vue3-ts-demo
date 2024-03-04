@@ -38,7 +38,6 @@
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
-    "postcss-pxtorem": "^6.0.0",
     "qs": "^6.11.2",
     "vue": "^3.3.4",
     "vue-router": "4",
