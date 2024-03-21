@@ -1,36 +1,17 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-01-23 10:37:45
+ * @LastEditTime: 2024-03-21 14:48:42
  * @LastEditors: wangqiaoling
  * @Description: 登录注册页
 -->
 <script setup lang="ts">
 import LogoName from "@/layout/components/logoName/Index.vue";
 import { useThemeType } from "@/layout/hooks/useThemeType";
-import { theme } from "ant-design-vue";
 import ForGotPassword from "./components/ForGotPassword.vue";
 import LoginForm from "./components/LoginForm.vue";
 import RegisterForm from "./components/RegisterForm.vue";
 
-// 主题相关
-const { useToken } = theme;
-const { token } = useToken();
-console.log(token.value);
-const boxBgColor = ref<string>(token.value.colorBgLayout);
-const textColor = ref<string>(token.value.colorLink);
-const descriptionTextColor = ref<string>(token.value.colorTextDescription);
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const wrapBgColor = ref<string>(token.value.colorPrimaryLight);
-watchEffect(() => {
-  boxBgColor.value = token.value.colorBgLayout;
-  textColor.value = token.value.colorLink;
-  descriptionTextColor.value = token.value.colorTextDescription;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  wrapBgColor.value = token.value.colorPrimaryLight;
-});
 // 主题模式切换
 const { dataThemeChange, isLight } = useThemeType();
 
@@ -89,10 +70,7 @@ const changeForm = (type: string) => {
                 <span class="black-letter">码</span>
               </span>
             </div>
-            <ForGotPassword
-              :textColor="descriptionTextColor"
-              @changeForm="changeForm"
-            />
+            <ForGotPassword @changeForm="changeForm" />
           </div>
         </div>
         <div class="login-form-box form-box" v-else>
@@ -111,7 +89,6 @@ const changeForm = (type: string) => {
             <transition name="fade-slide" mode="out-in">
               <component
                 :is="currentForm === 'login' ? LoginForm : RegisterForm"
-                :textColor="descriptionTextColor"
                 @changeForm="changeForm"
               />
             </transition>
@@ -126,12 +103,12 @@ const changeForm = (type: string) => {
 .login-page {
   width: 100vw;
   height: 100vh;
-  background-color: v-bind(boxBgColor);
+  background-color: var(--colorBgLayout);
 
   .login-wrap {
     width: 100%;
     height: 100%;
-    background-color: v-bind(wrapBgColor);
+    background-color: var(--colorPrimaryLight);
 
     .login-header {
       box-sizing: border-box;
@@ -148,7 +125,7 @@ const changeForm = (type: string) => {
       height: 600px;
       margin: 0 auto;
       margin-top: calc((100vh / 2) - (600px / 2) - 72px);
-      background-color: v-bind(boxBgColor);
+      background-color: var(--colorBgLayout);
       border-radius: 24px;
 
       .form-item {
@@ -165,7 +142,7 @@ const changeForm = (type: string) => {
             font-family: Arial, Tahoma, Geneva, Verdana, sans-serif;
             font-size: 36px;
             line-height: 36px;
-            color: v-bind(textColor);
+            color: var(--colorLink);
             letter-spacing: 3px;
 
             .black-letter {

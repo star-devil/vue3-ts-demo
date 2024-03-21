@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-19 14:14:17
- * @LastEditTime: 2024-01-30 14:32:22
+ * @LastEditTime: 2024-03-21 14:48:20
  * @LastEditors: wangqiaoling
  * @Description: 登录表单
 -->
@@ -22,13 +22,6 @@ const goRegister = () => {
 const goResetPassword = () => {
   emit("changeForm", "reset");
 };
-
-const props = defineProps({
-  textColor: {
-    type: String,
-    default: "",
-  },
-});
 
 watchEffect(() => {
   if (!formState.username) {
@@ -149,7 +142,7 @@ onBeforeUnmount(() => {
     text-align: center;
 
     .guide-text {
-      color: v-bind("props.textColor");
+      color: var(--colorTextDescription);
     }
 
     .guide-register {

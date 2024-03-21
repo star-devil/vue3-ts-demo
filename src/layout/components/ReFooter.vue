@@ -1,18 +1,11 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-12 11:31:15
- * @LastEditTime: 2024-01-19 11:06:25
+ * @LastEditTime: 2024-03-21 11:19:58
  * @LastEditors: wangqiaoling
  * @Description: 底部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
-<script setup lang="ts">
-import { textDescriptionColor } from "../theme/getTokenStore";
-
-const textColor = ref<string>("");
-watchEffect(() => {
-  textColor.value = textDescriptionColor();
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <a-layout-footer class="footer-container ilflex-bc">
@@ -35,11 +28,11 @@ watchEffect(() => {
 .footer-container {
   padding: $main-gap;
   font-size: 12px;
-  color: v-bind(textColor);
+  color: var(--colorTextDescription);
 
   .link-text {
     font-size: 12px;
-    color: v-bind(textColor);
+    color: var(--colorTextDescription);
     cursor: pointer;
 
     &:hover {

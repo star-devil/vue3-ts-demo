@@ -46,6 +46,7 @@ module.exports = {
         "declaration-block-no-duplicate-custom-properties": true, // 不允许在声明块中重复自定义属性
         "declaration-block-no-duplicate-properties": true, // 禁止声明块中的重复属性
         "length-zero-no-unit": true, // 不允许使用零长度的单位（可自动修复）
+        "custom-property-pattern": [".+"], // 指定自定义属性的模式
         'selector-pseudo-class-no-unknown': [
             // 不允许未知的选择器
             true, {

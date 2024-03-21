@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-01-30 17:21:24
+ * @LastEditTime: 2024-03-21 13:29:10
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -34,7 +34,6 @@ const userInfo = useUserInfo();
 // 获取并存储当前主题
 const { useToken } = theme;
 const { token } = useToken();
-console.log("token-", token.value);
 
 // 存储的主题配置
 const layoutData = computed(() => {

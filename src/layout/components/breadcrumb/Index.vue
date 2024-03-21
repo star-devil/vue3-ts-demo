@@ -1,12 +1,11 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-11 16:54:01
- * @LastEditTime: 2024-01-24 10:19:53
+ * @LastEditTime: 2024-03-21 14:44:01
  * @LastEditors: wangqiaoling
  * @Description: 面包屑组件
 -->
 <script setup lang="ts">
-import { colorText, textDescriptionColor } from "@/layout/theme/getTokenStore";
 import { findRouteByPath, getParentPaths } from "@router/utils";
 import { emitter } from "@utils/provideConfig";
 import { sessionStorage } from "@utils/reStorage";
@@ -161,14 +160,6 @@ function reloadPage() {
   onRefresh();
 }
 
-// 样式
-let iconColor = ref<string>("");
-let iconHoverColor = ref<string>("");
-watchEffect(() => {
-  iconColor.value = textDescriptionColor();
-  iconHoverColor.value = colorText();
-});
-
 onBeforeUnmount(() => {
   emitter.off("extraBreadcrumbName");
 });
@@ -215,11 +206,11 @@ onBeforeUnmount(() => {
   margin-bottom: $main-gap;
 
   .handle-icon {
-    color: v-bind(iconColor);
+    color: var(--colorTextDescription);
     cursor: pointer;
 
     &:hover {
-      color: v-bind(iconHoverColor);
+      color: var(--colorText);
     }
   }
 }

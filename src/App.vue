@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2024-01-18 10:48:42
+ * @LastEditTime: 2024-03-21 15:26:50
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -56,7 +56,9 @@ provide("reload", reload);
         components: themeToken.components,
       }"
     >
-      <router-view v-if="isRouterAlive" />
+      <CssVariableSetter :isGlobal="true">
+        <router-view v-if="isRouterAlive" />
+      </CssVariableSetter>
     </a-config-provider>
   </div>
 </template>

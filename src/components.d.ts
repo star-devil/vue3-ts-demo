@@ -39,6 +39,7 @@ declare module 'vue' {
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
     CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
+    CssVariableSetter: typeof import('./components/CssVariableSetter.vue')['default']
     LockOutlined: typeof import('@ant-design/icons-vue')['LockOutlined']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
     QuestionCircleOutlined: typeof import('@ant-design/icons-vue')['QuestionCircleOutlined']
