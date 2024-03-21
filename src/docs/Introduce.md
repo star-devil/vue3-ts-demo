@@ -65,3 +65,32 @@
      > `suffix`: 可选，为当前面包屑增加后缀
      > 以上几个参数在面包屑组件中已完成逻辑处理
      > `其他`: 可选，你可以将其余必要参数都通过这个方法传入并保存到sessionstorage中，以便在需要时使用
+
+## 关于自定义主题的样式变量获取
+
+1. 使用之前确保你已经了解并会使用antdv4.x提供的【Design Token】主题配色方案！！
+   新版本antv已经提供了很方便的动态主题切换方案，**为保持项目整体样式统一**，请尽量全部**使用框架提供的主题样式变量！！**
+
+2. [主题在线编辑器](https://www.antdv.com/theme-editor-cn)
+
+3. 当前主题所有变量已打印在控制台，标志为：**ccolorTokenArr**，请自行查看取用
+   当前主题配色改动字段文件路径：`src/layout/theme/index.ts`，可自行修改
+   非常用的样式变量可以查看[主题文档api](https://www.antdv.com/docs/vue/customize-theme-cn#api)
+
+### 如何在ts文件中获取自定义主题内的样式变量？
+
+1. 确定你想使用的样式变量名称
+2. 找到`src/layout/theme/getTokenStore.ts`文件
+3. 在文件中按照以下方法将变量导出
+
+   ```javascript
+   /** 文字悬浮背景颜色想要使用变量colorBgTextHover */
+   export const textHoverBgColor = () => useThemeToken().token.colorBgTextHover;
+   ```
+
+4. 在需要使用样式的地方导入第3步定义的方法即可（注意，导入的是字符串）
+
+### 如何在样式文件中获取自定义主题内的样式变量？
+
+1. 确定你想使用的样式变量名称，如`colorBgLayout`。
+2. 在样式文件中直接使用css语法引用变量即可，比如`var(--colorBgLayout)`
