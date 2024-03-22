@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-04 16:59:20
- * @LastEditTime: 2024-03-21 14:42:54
+ * @LastEditTime: 2024-03-22 14:04:08
  * @LastEditors: wangqiaoling
  * @Description: 通过CSS变量同步ant-design组件与自定义组件的样式,包裹所有需要同步样式的DOM元素;核心逻辑：是渲染传入其中的children，并运行一个自定义hook-useCssVariables。
 -->
@@ -51,4 +51,3 @@ onBeforeUnmount(() => {
     <slot></slot>
   </template>
 </template>
-./hook/useCssVariables

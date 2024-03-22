@@ -1,21 +1,21 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-03-21 13:29:10
+ * @LastEditTime: 2024-03-22 17:11:04
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
+import {
+  borderColorSecondary,
+  setToken,
+  textHoverBgColor,
+} from "@/theme/getTokenStore"; // 当前存储的主题配置
 import { useThemeStore } from "@store/modules/setting"; // 系统主题
 import { useUserInfo } from "@store/modules/userInfo"; // 登录用户信息
 import { theme } from "ant-design-vue";
 import LogoName from "../components/logoName/Index.vue"; // 系统名称和logo
 import { useThemeType } from "../hooks/useThemeType";
-import {
-  borderColorSecondary,
-  setToken,
-  textHoverBgColor,
-} from "../theme/getTokenStore"; // 当前存储的主题配置
 import { logoutSystem } from "../utils/logInAndOut";
 import ReBreadcrumb from "./breadcrumb/Index.vue"; // 面包屑
 import NavigationMenu from "./navigationMenu/Index.vue"; // 导航菜单

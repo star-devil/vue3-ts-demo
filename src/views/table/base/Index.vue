@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-03-21 14:50:20
+ * @LastEditTime: 2024-03-22 16:13:30
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -22,8 +22,8 @@ function goDetail() {
 
 <template>
   <div class="content-wrap">
-    Base Table
     <a-button type="primary" @click="goDetail">Go detail</a-button>
+    <base-table></base-table>
   </div>
 </template>
 

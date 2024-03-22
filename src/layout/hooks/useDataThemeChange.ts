@@ -1,13 +1,13 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2024-01-18 11:09:17
+ * @LastEditTime: 2024-03-22 17:11:38
  * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
+import { themeColors } from "@/theme/index";
 import { useThemeStore } from "@store/modules/setting";
 import { forIn } from "lodash";
-import { themeColors } from "../theme/index";
 
 interface colorList {
   name: string;

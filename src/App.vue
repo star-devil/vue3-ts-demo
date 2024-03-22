@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2024-03-21 15:26:50
+ * @LastEditTime: 2024-03-22 17:12:05
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -11,8 +11,8 @@ import { theme } from "ant-design-vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN"; // 使用中文
 import dayjs from "dayjs"; // 日期本地化
 import "dayjs/locale/zh-cn";
-import type { ThemeColors } from "./layout/theme";
-import { themeColors } from "./layout/theme";
+import type { ThemeColors } from "./theme";
+import { themeColors } from "./theme";
 
 dayjs.locale("zh-cn");
 const locale = zhCN;
@@ -62,3 +62,4 @@ provide("reload", reload);
     </a-config-provider>
   </div>
 </template>
+./theme./theme

@@ -73,14 +73,14 @@
 
 2. [主题在线编辑器](https://www.antdv.com/theme-editor-cn)
 
-3. 当前主题所有变量已打印在控制台，标志为：**ccolorTokenArr**，请自行查看取用
-   当前主题配色改动字段文件路径：`src/layout/theme/index.ts`，可自行修改
+3. 当前主题所有变量已打印在控制台，标志为：**colorTokenArr**，请自行查看取用
+   当前主题配色改动字段文件路径：`src/theme/index.ts`，可自行修改
    非常用的样式变量可以查看[主题文档api](https://www.antdv.com/docs/vue/customize-theme-cn#api)
 
 ### 如何在ts文件中获取自定义主题内的样式变量？
 
 1. 确定你想使用的样式变量名称
-2. 找到`src/layout/theme/getTokenStore.ts`文件
+2. 找到`src/theme/getTokenStore.ts`文件
 3. 在文件中按照以下方法将变量导出
 
    ```javascript

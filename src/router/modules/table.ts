@@ -1,14 +1,13 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-03-22 13:20:00
+ * @LastEditTime: 2024-03-22 16:13:34
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
 export default {
   path: "/table",
   name: "Table",
-  component: () => import("@/views/table/Index.vue"),
   redirect: "/table/base-table",
   meta: {
     icon: "table",
