@@ -94,3 +94,12 @@
 
 1. 确定你想使用的样式变量名称，如`colorBgLayout`。
 2. 在样式文件中直接使用css语法引用变量即可，比如`var(--colorBgLayout)`
+
+## 如何使用Iconfont?
+
+1. 依旧是使用[阿里巴巴矢量图标库](https://www.iconfont.cn/?spm=a313x.manage_type_myprojects.i3.2.1bf93a81iCTRD5)作为补充图标。
+2. 和以往相比，本项目的改为使用本地引用了。本地图标存储路径`src/assets/iconfont/index.js`
+3. 本地文件内容：在线图标库项目中选择`symbol`，点击在线链接，会跳转到代码页面。全选复制，全文替换第2点中的文件内容。（注意：**请保留文件注释头**）
+4. 注意：**路由（侧边菜单）**中的icon**只能**使用Iconfont。因为在新版menu兼容动态路由icon渲染的同时，要保证图标够用，这是最简单的方法。
+5. 推荐Iconfont上与antdv官方图标同源图标库（相信在某些情况下你会用到，比如第4点）：
+   - [twotone、outline、fill](https://www.iconfont.cn/user/detail?spm=a313x.collections_detail.i1.d9bd4f23f.40283a81xxiYj4&uid=5295564&nid=U24YmIFfC8lJ)
