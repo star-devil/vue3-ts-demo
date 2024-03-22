@@ -1,19 +1,17 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-01-30 17:30:37
+ * @LastEditTime: 2024-03-22 13:20:00
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
-import { TableOutlined } from "@ant-design/icons-vue";
-
 export default {
   path: "/table",
   name: "Table",
   component: () => import("@/views/table/Index.vue"),
   redirect: "/table/base-table",
   meta: {
-    icon: () => h(TableOutlined),
+    icon: "table",
     title: "表格",
     breadLink: false,
     rank: 1,

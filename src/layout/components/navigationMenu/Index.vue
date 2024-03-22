@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-02-06 10:13:05
+ * @LastEditTime: 2024-03-22 13:21:18
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -10,6 +10,7 @@ import { constantRoutes } from "@router";
 import { filterTree, findRouteByPath, getParentPaths } from "@router/utils";
 import { usePermissionStore } from "@store/modules/permission";
 import { useThemeStore } from "@store/modules/setting";
+import { renderIcon } from "@utils/renderIcon";
 import type { ItemType, MenuProps } from "ant-design-vue";
 import { SubMenuType } from "ant-design-vue/es/menu/src/interface";
 import { RouteComponent, RouteLocationRaw } from "vue-router";
@@ -53,7 +54,7 @@ function getItem(
 ): ItemType {
   return {
     key,
-    icon,
+    icon: icon && renderIcon(icon),
     children,
     label,
     type,

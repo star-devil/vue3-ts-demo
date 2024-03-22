@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-24 13:27:15
- * @LastEditTime: 2024-02-06 10:22:09
+ * @LastEditTime: 2024-03-22 13:19:43
  * @LastEditors: wangqiaoling
  * @Description: 模拟服务器返回权限路由表
  */
@@ -10,6 +10,7 @@ import { MockMethod } from "vite-plugin-mock";
 const permissionRouter = {
   path: "/permission",
   meta: {
+    icon: "safety",
     title: "权限管理",
     rank: 9,
   },
