@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-03-22 14:13:44
+ * @LastEditTime: 2024-03-25 13:36:43
  * @LastEditors: wangqiaoling
  * @Description: 表格扩展type
  */
@@ -10,11 +10,10 @@ import {
   ColumnType,
   TableProps,
 } from "ant-design-vue/es/table";
-import { renderKey } from "./renderComponents";
 
 //为ColumnType 添加扩展
 export interface eColumnType<RecordType> extends ColumnType<RecordType> {
-  type?: renderKey;
+  type?: string;
 }
 
 export type eColumnsType<RecordType = unknown> = (

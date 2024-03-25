@@ -1,55 +1,25 @@
+<!--
+ * @Author: wangqiaoling
+ * @Date: 2024-03-22 16:08:49
+ * @LastEditTime: 2024-03-25 15:35:49
+ * @LastEditors: wangqiaoling
+ * @Description: 
+-->
 <script lang="ts" setup>
-import { DownOutlined, SmileOutlined } from "@ant-design/icons-vue";
-const columns = [
-  {
-    name: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-  },
-  {
-    title: "Action",
-    key: "action",
-  },
-];
+import { SmileOutlined } from "@ant-design/icons-vue";
+import { disposeColumns } from "./renderComponents";
+import type { eColumnsType } from "./type";
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
+defineProps({
+  columns: {
+    type: Array as () => eColumnsType,
+    default: () => [],
   },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
+  data: {
+    type: Array,
+    default: () => [],
   },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
+});
 </script>
 <template>
   <a-table :columns="columns" :data-source="data">
@@ -62,41 +32,12 @@ const data = [
       </template>
     </template>
 
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name'">
-        <a>
-          {{ record.name }}
-        </a>
-      </template>
-      <template v-else-if="column.key === 'tags'">
-        <span>
-          <a-tag
-            v-for="tag in record.tags"
-            :key="tag"
-            :color="
-              tag === 'loser'
-                ? 'volcano'
-                : tag.length > 5
-                ? 'geekblue'
-                : 'green'
-            "
-          >
-            {{ tag.toUpperCase() }}
-          </a-tag>
-        </span>
-      </template>
-      <template v-else-if="column.key === 'action'">
-        <span>
-          <a>Invite 一 {{ record.name }}</a>
-          <a-divider type="vertical" />
-          <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link">
-            More actions
-            <down-outlined />
-          </a>
-        </span>
-      </template>
+    <template #bodyCell="{ column, record, text }">
+      <body-cell
+        :columnType="disposeColumns(column)"
+        :record="record"
+        :text="text"
+      />
     </template>
   </a-table>
 </template>
