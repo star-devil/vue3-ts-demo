@@ -1,14 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-03-26 10:39:11
+ * @LastEditTime: 2024-03-26 11:13:34
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
 <script setup lang="ts">
 import { emitter } from "@utils/provideConfig";
 import { useRouter } from "vue-router";
-import { baseTableColumns, baseTableData } from "./data"; // 表格数据
+import { baseTableColumns, baseTableData, getData } from "./data"; // 表格数据
 
 const router = useRouter();
 
@@ -20,6 +20,9 @@ function goDetail() {
     suffix: "-这是我的后缀",
   });
 }
+onMounted(() => {
+  getData();
+});
 </script>
 
 <template>

@@ -1,40 +1,22 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-26 10:38:51
+ * @LastEditTime: 2024-03-26 11:20:44
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
 import type { eColumnsType } from "@/components/baseTable/type";
+import { getTableData } from "@api/mock/table";
 import { useTableSwitch } from "./switch";
-export const baseTableData = ref([
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    status: "on",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    status: "on",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    status: "off",
-    tags: ["cool", "teacher"],
-  },
-]);
 
-const { changeSwitch, clickSwitch } = useTableSwitch(baseTableData.value);
+export const baseTableData = ref([]);
+export function getData() {
+  getTableData().then((res) => {
+    baseTableData.value = res.data.content;
+  });
+}
+
+const { changeSwitch, clickSwitch } = useTableSwitch(baseTableData);
 
 export const baseTableColumns: eColumnsType = [
   {
