@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-26 11:20:44
+ * @LastEditTime: 2024-03-26 15:59:38
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -10,10 +10,16 @@ import { getTableData } from "@api/mock/table";
 import { useTableSwitch } from "./switch";
 
 export const baseTableData = ref([]);
+export const tableLoading = ref<boolean>(false);
 export function getData() {
-  getTableData().then((res) => {
-    baseTableData.value = res.data.content;
-  });
+  tableLoading.value = true;
+  getTableData()
+    .then((res) => {
+      baseTableData.value = res.data.content;
+    })
+    .finally(() => {
+      tableLoading.value = false;
+    });
 }
 
 const { changeSwitch, clickSwitch } = useTableSwitch(baseTableData);

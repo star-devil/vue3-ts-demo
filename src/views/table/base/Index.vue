@@ -1,14 +1,14 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-03-26 11:13:34
+ * @LastEditTime: 2024-03-26 15:59:51
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
 <script setup lang="ts">
 import { emitter } from "@utils/provideConfig";
 import { useRouter } from "vue-router";
-import { baseTableColumns, baseTableData, getData } from "./data"; // 表格数据
+import { baseTableColumns, baseTableData, getData, tableLoading } from "./data"; // 表格数据
 
 const router = useRouter();
 
@@ -28,7 +28,11 @@ onMounted(() => {
 <template>
   <div class="content-wrap">
     <a-button type="primary" @click="goDetail">Go detail</a-button>
-    <base-table :columns="baseTableColumns" :data="baseTableData"></base-table>
+    <base-table
+      :columns="baseTableColumns"
+      :dataSource="baseTableData"
+      :loading="tableLoading"
+    ></base-table>
   </div>
 </template>
 
