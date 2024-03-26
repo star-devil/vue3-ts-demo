@@ -51,6 +51,7 @@ declare module 'vue' {
     RenderAction: typeof import('./components/baseTable/renderFunction/renderAction.vue')['default']
     RenderDefualt: typeof import('./components/baseTable/renderFunction/renderDefualt.vue')['default']
     RenderLink: typeof import('./components/baseTable/renderFunction/renderLink.vue')['default']
+    RenderSwitch: typeof import('./components/baseTable/renderFunction/renderSwitch.vue')['default']
     RenderTags: typeof import('./components/baseTable/renderFunction/renderTags.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

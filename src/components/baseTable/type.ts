@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-03-25 13:36:43
+ * @LastEditTime: 2024-03-26 10:02:09
  * @LastEditors: wangqiaoling
  * @Description: 表格扩展type
  */
@@ -14,6 +14,7 @@ import {
 //为ColumnType 添加扩展
 export interface eColumnType<RecordType> extends ColumnType<RecordType> {
   type?: string;
+  extraProps?: object;
 }
 
 export type eColumnsType<RecordType = unknown> = (

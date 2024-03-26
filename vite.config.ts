@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-03-25 15:34:51
+ * @LastEditTime: 2024-03-26 09:55:00
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -90,7 +90,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
-        "@c": resolve(__dirname, "src/components"),
         "@api": resolve(__dirname, "src/api"),
         "@store": resolve(__dirname, "src/store"),
         "@utils": resolve(__dirname, "src/utils"),

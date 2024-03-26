@@ -1,10 +1,10 @@
 <script setup lang="ts">
-defineProps(["record", "text"]);
+defineProps(["cellData"]);
 </script>
 
 <template>
   <a>
-    {{ text }}
+    {{ cellData.text }}
   </a>
 </template>
 

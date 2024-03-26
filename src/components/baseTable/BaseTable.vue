@@ -1,9 +1,9 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-22 16:08:49
- * @LastEditTime: 2024-03-25 15:35:49
+ * @LastEditTime: 2024-03-26 10:05:02
  * @LastEditors: wangqiaoling
- * @Description: 
+ * @Description: 基础表格封装
 -->
 <script lang="ts" setup>
 import { SmileOutlined } from "@ant-design/icons-vue";
@@ -35,8 +35,7 @@ defineProps({
     <template #bodyCell="{ column, record, text }">
       <body-cell
         :columnType="disposeColumns(column)"
-        :record="record"
-        :text="text"
+        :data="{ column, record, text }"
       />
     </template>
   </a-table>
