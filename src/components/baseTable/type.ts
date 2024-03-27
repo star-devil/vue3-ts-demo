@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-03-26 10:02:09
+ * @LastEditTime: 2024-03-27 09:48:18
  * @LastEditors: wangqiaoling
  * @Description: 表格扩展type
  */
@@ -26,3 +26,12 @@ export type eColumnsType<RecordType = unknown> = (
 export interface eTableProps<RecordType> extends TableProps<RecordType> {
   columns?: eColumnsType<RecordType>;
 }
+
+/** 表示多个标签，特定值显示指定颜色：
+ *  对象格式：{value: 字段值,color: 显示颜色}
+ *  注意⚠️：字段值只支持字符串/数字/undefined/null类型
+ *  */
+export type ComplexColor = {
+  value: string | number | undefined | null;
+  color: string;
+};

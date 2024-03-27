@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-26 15:59:38
+ * @LastEditTime: 2024-03-27 09:49:48
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -65,6 +65,9 @@ export const baseTableColumns: eColumnsType = [
     key: "tags",
     dataIndex: "tags",
     type: "tags",
+    extraProps: {
+      colors: ["volcano", "green", "pink"],
+    },
   },
   {
     title: "Action",

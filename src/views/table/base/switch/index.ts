@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:35:16
- * @LastEditTime: 2024-03-26 16:07:25
+ * @LastEditTime: 2024-03-26 16:19:43
  * @LastEditors: wangqiaoling
  * @Description: 封装表格内渲染的开关组件
  */
@@ -22,7 +22,7 @@ export function useTableSwitch(data: any) {
         });
     });
   };
-  const clickSwitch = (checked, record) => {
+  const clickSwitch = (checked: boolean, record: any) => {
     console.log("switchClick-", checked, record);
   };
   return {

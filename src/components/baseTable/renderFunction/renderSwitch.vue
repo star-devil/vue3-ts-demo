@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 16:19:29
- * @LastEditTime: 2024-03-26 16:11:27
+ * @LastEditTime: 2024-03-27 09:51:54
  * @LastEditors: wangqiaoling
  * @Description: 单元格开关
 -->
@@ -40,7 +40,9 @@ const switchIsDisabled = (record) => {
 
 <template>
   <a-switch
-    :checked="cellData.record.status === switchSetting.checkedValue"
+    :checked="
+      cellData.record[cellData.column.dataIndex] === switchSetting.checkedValue
+    "
     :checked-children="switchSetting.openText"
     :un-checked-children="switchSetting.closeText"
     :disabled="switchIsDisabled(cellData.record)"
