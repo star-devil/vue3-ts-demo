@@ -1,11 +1,12 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-27 09:49:48
+ * @LastEditTime: 2024-03-27 15:54:13
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
 import type { eColumnsType } from "@/components/baseTable/type";
+import { TwitterOutlined } from "@ant-design/icons-vue";
 import { getTableData } from "@api/mock/table";
 import { useTableSwitch } from "./switch";
 
@@ -47,17 +48,15 @@ export const baseTableColumns: eColumnsType = [
     key: "status",
     type: "switch",
     extraProps: {
-      uniqKey: "key",
-      checkedValue: "on",
-      openText: "在线",
-      unCheckedValue: "off",
-      closeText: "离线",
+      checked: "on",
+      checkedChildren: "在线",
+      unCheckedChildren: "离线",
       disabled: {
-        role: "总经理",
+        age: 42,
       },
       size: "small",
-      change: changeSwitch,
-      click: clickSwitch,
+      changeFun: changeSwitch,
+      clickFun: clickSwitch,
     },
   },
   {
@@ -66,7 +65,25 @@ export const baseTableColumns: eColumnsType = [
     dataIndex: "tags",
     type: "tags",
     extraProps: {
-      colors: ["volcano", "green", "pink"],
+      colors: [
+        {
+          value: "nice",
+          color: "green",
+        },
+        {
+          value: "cool",
+          color: "green",
+        },
+        {
+          value: "developer",
+          color: "volcano",
+        },
+        {
+          value: "teacher",
+          color: "pink",
+        },
+      ],
+      icons: h(TwitterOutlined),
     },
   },
   {

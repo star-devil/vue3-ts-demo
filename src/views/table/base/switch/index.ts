@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:35:16
- * @LastEditTime: 2024-03-26 16:19:43
+ * @LastEditTime: 2024-03-27 15:56:59
  * @LastEditors: wangqiaoling
  * @Description: 封装表格内渲染的开关组件
  */
@@ -10,7 +10,7 @@ import { changeStatus } from "@api/mock/table";
  * switch开关触发回调
  */
 export function useTableSwitch(data: any) {
-  const changeSwitch = (checked: boolean, record: any) => {
+  const changeSwitch = (checked: string | boolean | number, record: any) => {
     return new Promise((resolve, reject) => {
       changeStatus({ id: record.key, isOnline: checked })
         .then((res) => {
@@ -22,8 +22,8 @@ export function useTableSwitch(data: any) {
         });
     });
   };
-  const clickSwitch = (checked: boolean, record: any) => {
-    console.log("switchClick-", checked, record);
+  const clickSwitch = (checked: boolean | string | number, e: Event) => {
+    console.log("switchClick-", checked, e);
   };
   return {
     changeSwitch,

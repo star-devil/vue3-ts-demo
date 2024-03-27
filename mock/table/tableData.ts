@@ -23,7 +23,7 @@ export const baseTableData = [
     age: 32,
     address: "Sidney No. 1 Lake Park",
     status: "off",
-    tags: ["cool", "teacher"],
+    tags: ["cool", "teacher", "nice"],
   },
 ];
 

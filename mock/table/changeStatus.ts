@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:56:06
- * @LastEditTime: 2024-03-26 13:26:02
+ * @LastEditTime: 2024-03-27 16:07:33
  * @LastEditors: wangqiaoling
  * @Description:
  */
@@ -18,7 +18,6 @@ export default [
       const changeItem = find(baseTableData, (n) => n.key === body.id);
       if (changeItem) {
         changeItem.status = body.isOnline ? "on" : "off";
-
         return {
           code: 200,
           message: "操作成功",
