@@ -1,33 +1,28 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 16:19:29
- * @LastEditTime: 2024-03-27 16:07:12
+ * @LastEditTime: 2024-03-28 18:19:57
  * @LastEditors: wangqiaoling
  * @Description: 单元格开关
 -->
 <script setup lang="ts">
+import { covertFunction } from "@utils/provideConfig";
 import { forIn } from "lodash";
 const props = defineProps(["cellData"]);
-const switchProps = reactive(props.cellData.column.extraProps);
-// 表格switch开关
-const loading = ref<boolean>(false);
-const switchChange = async (
-  checked: string | boolean | number,
-  record: any
-) => {
-  loading.value = true;
-  if (switchProps.changeFun) {
-    await switchProps.changeFun(checked, record);
-    loading.value = false;
-  }
-};
-const switchClick = (checked: string | boolean | number, record: any) => {
-  switchProps.clickFun && switchProps.clickFun(checked, record);
-};
-const switchIsDisabled = (record: any) => {
+
+const extraProps = props.cellData.column.extraProps || {};
+let switchProps = ref();
+onBeforeMount(() => {
+  switchProps.value = covertFunction(extraProps, props.cellData.record);
+  console.log("record=----", switchProps.value, props.cellData.record.key);
+});
+
+const switchIsDisabled = () => {
+  console.log("switchIsDisabled-");
+  const record = props.cellData.record;
   let disabled = true;
-  if (switchProps.disabled) {
-    forIn(switchProps.disabled, (value, key) => {
+  if (switchProps.value.disabled) {
+    forIn(switchProps.value.disabled, (value, key) => {
       if (record[key] !== value) {
         disabled = false;
         return;
@@ -42,13 +37,10 @@ const switchIsDisabled = (record: any) => {
 
 <template>
   <a-switch
-    v-bind="switchProps"
+    v-bind.prop="switchProps"
     :checked="
       cellData.record[cellData.column.dataIndex] === switchProps.checked
     "
-    :disabled="switchIsDisabled(cellData.record)"
-    :loading="loading"
-    @change="(checked) => switchChange(checked, cellData.record)"
-    @click="(checked) => switchClick(checked, cellData.record)"
+    :disabled="switchIsDisabled()"
   />
 </template>

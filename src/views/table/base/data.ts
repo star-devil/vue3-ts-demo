@@ -1,11 +1,10 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-27 15:54:13
+ * @LastEditTime: 2024-03-28 18:07:22
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
-import type { eColumnsType } from "@/components/baseTable/type";
 import { TwitterOutlined } from "@ant-design/icons-vue";
 import { getTableData } from "@api/mock/table";
 import { useTableSwitch } from "./switch";
@@ -23,14 +22,22 @@ export function getData() {
     });
 }
 
-const { changeSwitch, clickSwitch } = useTableSwitch(baseTableData);
+const { changeSwitch, clickSwitch, switchLoading } =
+  useTableSwitch(baseTableData);
 
-export const baseTableColumns: eColumnsType = [
+function goDetail(event, record) {
+  console.log("click!!!!", event, record);
+}
+
+export const baseTableColumns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
     type: "link",
+    extraProps: {
+      click: goDetail,
+    },
   },
   {
     title: "Age",
@@ -55,8 +62,9 @@ export const baseTableColumns: eColumnsType = [
         age: 42,
       },
       size: "small",
-      changeFun: changeSwitch,
-      clickFun: clickSwitch,
+      loading: switchLoading,
+      onChange: changeSwitch,
+      onClick: clickSwitch,
     },
   },
   {
@@ -84,6 +92,8 @@ export const baseTableColumns: eColumnsType = [
         },
       ],
       icons: h(TwitterOutlined),
+      closable: true,
+      onClose: goDetail,
     },
   },
   {

@@ -1,12 +1,12 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-03-27 13:53:06
+ * @LastEditTime: 2024-03-28 17:36:59
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
 
-import { isEmpty } from "lodash";
+import { forIn, isEmpty } from "lodash";
 import mitt from "mitt";
 
 /**
@@ -50,3 +50,13 @@ export const isItemArray = (data: any): data is string[] => {
 export const isObjectArray = (data: any) => {
   return Array.isArray(data) && data.every((item) => typeof item === "object");
 };
+
+/** 用于处理v-bind绑定对象时无法对方法传递参数的问题 */
+export function covertFunction(originProps: any, extraCallbackData: any) {
+  forIn(originProps, (value: any, key: string) => {
+    if (typeof value === "function") {
+      originProps[key] = ($event: any) => value($event, extraCallbackData);
+    }
+  });
+  return originProps;
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-03-27 14:02:05
+ * @LastEditTime: 2024-03-28 16:45:14
  * @LastEditors: wangqiaoling
  * @Description: 表格扩展type
  */
@@ -16,7 +16,6 @@ import { VNode } from "vue";
 export interface eColumnType<RecordType> extends ColumnType<RecordType> {
   type?: string;
   extraProps?: object;
-  extraFuncs?: object;
 }
 
 export type eColumnsType<RecordType = unknown> = (

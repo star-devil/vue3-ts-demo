@@ -1,21 +1,29 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:29:47
- * @LastEditTime: 2024-03-27 14:11:48
+ * @LastEditTime: 2024-03-28 17:27:50
  * @LastEditors: wangqiaoling
  * @Description: 单元格内渲染标签（只要数据结构支持，也可以用在任何适当的地方）
 -->
 <script setup lang="ts">
-import { isItemArray, isObjectArray } from "@utils/provideConfig";
+import {
+  covertFunction,
+  isItemArray,
+  isObjectArray,
+} from "@utils/provideConfig";
 import { find, isArray } from "lodash";
 import { VNode } from "vue";
 import { ComplexColor, ComplexIcon } from "../type";
 
 const props = defineProps(["cellData"]);
-const tagProps = reactive(props.cellData.column.extraProps);
-const tagFuns = props.cellData.column.extraFuncs || {};
+const extraProps = reactive(props.cellData.column.extraProps || {});
+let tagProps = undefined;
 const tagIsList = computed(() => {
   return isArray(props.cellData.record[props.cellData.column.dataIndex]);
+});
+
+onBeforeMount(() => {
+  tagProps = covertFunction(extraProps, props.cellData.record);
 });
 
 /** @description 处理标签颜色:
@@ -69,8 +77,7 @@ function convertIcon(targetValue?: any): VNode | null {
 <template>
   <span v-if="tagIsList">
     <a-tag
-      v-bind.attr="tagProps"
-      v-on="tagFuns"
+      v-bind.prop="tagProps"
       v-for="(tag, index) in cellData.record[cellData.column.dataIndex]"
       :key="'tag_' + index"
       :color="convertColor(tag, index)"
