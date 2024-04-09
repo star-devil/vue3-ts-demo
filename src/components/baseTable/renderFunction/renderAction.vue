@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-09 14:50:03
+ * @LastEditTime: 2024-04-09 14:57:08
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -74,7 +74,7 @@ function convertColor(color: string | undefined) {
   color: var(--colorSuccess);
 
   &:hover {
-    color: var(--colorSuccessTextHover);
+    color: var(--colorSuccessBorderHover);
   }
 }
 
@@ -82,7 +82,7 @@ function convertColor(color: string | undefined) {
   color: var(--colorWarning);
 
   &:hover {
-    color: var(--colorWarningTextHover);
+    color: var(--colorWarningBorderHover);
   }
 }
 
@@ -90,7 +90,7 @@ function convertColor(color: string | undefined) {
   color: var(--colorError);
 
   &:hover {
-    color: var(--colorErrorTextHover);
+    color: var(--colorErrorBorderHover);
   }
 }
 
