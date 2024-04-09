@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-09 13:56:56
+ * @LastEditTime: 2024-04-09 14:50:03
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -22,6 +22,13 @@ function isShowDivider(index: number) {
   return index < extraProps.actions.length - 1;
 }
 
+function hexColorStyle(color: string | undefined) {
+  if (color && color.includes("#")) {
+    return {
+      color: color,
+    };
+  }
+}
 /** @description 颜色值转化
  * safe: 系统success颜色
  * warn: 系统warning颜色
@@ -31,15 +38,13 @@ function isShowDivider(index: number) {
 function convertColor(color: string | undefined) {
   switch (color) {
     case "safe":
-      return "#52c41a";
+      return "green-btn-color";
     case "warn":
-      return "#faad14";
+      return "orange-btn-color";
     case "danger":
-      return "#ff4d4f";
-    case undefined:
-      break;
+      return "red-btn-color";
     default:
-      return color;
+      break;
   }
 }
 </script>
@@ -54,8 +59,8 @@ function convertColor(color: string | undefined) {
       v-for="(item, index) in extraProps.actions"
       v-bind.prop="actionsProps[index]"
       :key="index"
-      class="px-0"
-      :style="{ color: convertColor(item.color) }"
+      :style="hexColorStyle(item.color)"
+      :class="['px-0', convertColor(item.color)]"
       :type="extraProps.actionsType"
       :disabled="actionIsDisabled(item.disable, props.cellData.record)"
       v-show="!actionIsDisabled(item.hide, props.cellData.record)"
@@ -64,4 +69,32 @@ function convertColor(color: string | undefined) {
   </span>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.green-btn-color {
+  color: var(--colorSuccess);
+
+  &:hover {
+    color: var(--colorSuccessTextHover);
+  }
+}
+
+.orange-btn-color {
+  color: var(--colorWarning);
+
+  &:hover {
+    color: var(--colorWarningTextHover);
+  }
+}
+
+.red-btn-color {
+  color: var(--colorError);
+
+  &:hover {
+    color: var(--colorErrorTextHover);
+  }
+}
+
+.ant-btn-link:disabled {
+  color: var(--colorTextDisabled);
+}
+</style>
