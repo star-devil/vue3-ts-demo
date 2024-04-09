@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-24 13:27:15
- * @LastEditTime: 2024-03-22 13:19:43
+ * @LastEditTime: 2024-04-08 09:47:43
  * @LastEditors: wangqiaoling
  * @Description: 模拟服务器返回权限路由表
  */
@@ -41,7 +41,8 @@ export default [
     method: "get",
     response: () => {
       return {
-        success: true,
+        code: 200,
+        message: "ok",
         data: [permissionRouter],
       };
     },

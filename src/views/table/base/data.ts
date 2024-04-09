@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-03-28 18:07:22
+ * @LastEditTime: 2024-04-09 13:56:03
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -25,7 +25,8 @@ export function getData() {
 const { changeSwitch, clickSwitch, switchLoading } =
   useTableSwitch(baseTableData);
 
-function goDetail(event, record) {
+// 点击单元格内元素的回调
+function goDetail(event: Event, record: any) {
   console.log("click!!!!", event, record);
 }
 
@@ -36,7 +37,7 @@ export const baseTableColumns = [
     key: "name",
     type: "link",
     extraProps: {
-      click: goDetail,
+      onClick: goDetail,
     },
   },
   {
@@ -58,9 +59,11 @@ export const baseTableColumns = [
       checked: "on",
       checkedChildren: "在线",
       unCheckedChildren: "离线",
-      disabled: {
-        age: 42,
-      },
+      disable: [
+        {
+          age: 42,
+        },
+      ],
       size: "small",
       loading: switchLoading,
       onChange: changeSwitch,
@@ -99,5 +102,56 @@ export const baseTableColumns = [
   {
     title: "Action",
     type: "action",
+    extraProps: {
+      actionsType: "link", // link | text | icon | mixin
+      actions: [
+        {
+          text: "邀请",
+          disable: [
+            {
+              name: "John Brown",
+            },
+            {
+              age: 32,
+            },
+          ],
+          hide: [
+            {
+              status: "off",
+            },
+          ],
+          props: {
+            onClick: goDetail,
+          },
+        },
+        {
+          text: "详情",
+          color: "warn",
+          props: {
+            onClick: goDetail,
+          },
+        },
+        {
+          text: "修改",
+          color: "safe", // safe | warn | danger | hex | undefined
+          disable: [
+            {
+              name: "Jim Green",
+              age: 42,
+            },
+          ],
+          props: {
+            onClick: goDetail,
+          },
+        },
+        {
+          text: "删除",
+          color: "danger",
+          props: {
+            onClick: goDetail,
+          },
+        },
+      ],
+    },
   },
 ];

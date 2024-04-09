@@ -4,7 +4,7 @@ export const baseTableData = [
   {
     key: "1",
     name: "John Brown",
-    age: 32,
+    age: 22,
     address: "New York No. 1 Lake Park",
     status: "on",
     tags: ["nice", "developer"],
