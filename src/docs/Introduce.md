@@ -65,6 +65,20 @@
      > `suffix`: 可选，为当前面包屑增加后缀
      > 以上几个参数在面包屑组件中已完成逻辑处理
      > `其他`: 可选，你可以将其余必要参数都通过这个方法传入并保存到sessionstorage中，以便在需要时使用
+     
+### 表格`/src/components/baseTable`
+
+#### 文件结构说明：
+
+1. `BaseTable.vue`：对a-table的二次封装组件，可继承使用a-table的全部属性和方法，props名称保持不变，请参考官网文档进行使用
+2. `renderFunction`：此文件夹存放的是表格内部需要自定义渲染插入的组件
+    - `renderAction.vue`：渲染为操作按钮组
+    - `renderDefault.vue`：渲染为默认文字
+    - `renderLink.vue`：渲染为链接文字
+    - `renderSwitch.vue`：渲染为Switch开关
+    - `renderTags.vue`：渲染为tag标签
+3. `tableSlots`：此文件夹存放的是a-table的插槽组件
+- `BodyCell.vue`
 
 ## 关于自定义主题的样式变量获取
 
@@ -94,6 +108,11 @@
 
 1. 确定你想使用的样式变量名称，如`colorBgLayout`。
 2. 在样式文件中直接使用css语法引用变量即可，比如`var(--colorBgLayout)`
+
+### 注意
+
+1. 上述逻辑是基于组件`CssVariableSetter.vue`实现的，**请不要删除**
+2. 组件存放路径`/src/components/cssVariableSetter`
 
 ## 如何使用Iconfont?
 
