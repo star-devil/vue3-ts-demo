@@ -31,8 +31,7 @@
 ## 建议使用的编辑器和相关插件
 
 - VS Code
-- Volar(and disable Vetur)
-- TypeScript Vue Plugin (Volar)
+- Vue - Official
 - Eslint
 - ... 以及安装所有推荐插件，在插件库中的漏斗下选择[推荐]全部安装
 
