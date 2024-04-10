@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 10:04:01
- * @LastEditTime: 2024-03-21 14:52:20
+ * @LastEditTime: 2024-04-10 17:11:46
  * @LastEditors: wangqiaoling
  * @Description: 当前存储的主题配置
  */
@@ -19,3 +19,12 @@ export const borderColorSecondary = () =>
   useThemeToken().token.colorBorderSecondary;
 /** 文字悬浮背景颜色 */
 export const textHoverBgColor = () => useThemeToken().token.colorBgTextHover;
+/** 常用颜色 */
+export const commonColor = () => {
+  return {
+    green: useThemeToken().token.colorSuccess,
+    red: useThemeToken().token.colorError,
+    gold: useThemeToken().token.colorWarning,
+    themeColor: useThemeToken().token.colorPrimary,
+  };
+};

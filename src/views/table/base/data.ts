@@ -1,11 +1,17 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-09 16:42:19
+ * @LastEditTime: 2024-04-10 17:32:42
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
-import { TwitterOutlined } from "@ant-design/icons-vue";
+import {
+  // ContactsOutlined,
+  // DeleteOutlined,
+  // EditOutlined,
+  // HeartOutlined,
+  TwitterOutlined,
+} from "@ant-design/icons-vue";
 import { getTableData } from "@api/mock/table";
 import { useTableSwitch } from "./switch";
 
@@ -103,7 +109,7 @@ export const baseTableColumns = [
     title: "Action",
     type: "action",
     extraProps: {
-      actionsType: "link", // link | text | icon | mixin
+      actionsType: "text", // link | text | icon | mixin
       actions: [
         {
           text: "邀请",
@@ -121,6 +127,7 @@ export const baseTableColumns = [
             },
           ],
           props: {
+            // icon: h(HeartOutlined),
             onClick: goDetail,
           },
         },
@@ -128,6 +135,7 @@ export const baseTableColumns = [
           text: "详情",
           color: "warn",
           props: {
+            // icon: h(ContactsOutlined),
             onClick: goDetail,
           },
         },
@@ -141,6 +149,7 @@ export const baseTableColumns = [
             },
           ],
           props: {
+            // icon: h(EditOutlined),
             onClick: goDetail,
           },
         },
@@ -148,6 +157,7 @@ export const baseTableColumns = [
           text: "删除",
           color: "danger",
           props: {
+            // icon: h(DeleteOutlined),
             onClick: goDetail,
           },
         },
