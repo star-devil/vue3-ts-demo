@@ -14,6 +14,7 @@
     "pranaygp.vscode-css-peek",
     "prvest.vs-code-prettier-eslint",
     "stylelint.vscode-stylelint",
-    "sdras.vue-vscode-snippets"
+    "sdras.vue-vscode-snippets",
+    "vue.volar"
   ]
 }

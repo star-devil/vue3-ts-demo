@@ -47,14 +47,9 @@
 
 ## TS 中对 `.vue` 导入的类型支持
 
-默认情况下，TypeScript 无法处理 `.vue` 导入的类型信息，因此我们将 `tsc` CLI 替换为 `vue-tsc` 来进行类型检查。 在编辑器中，我们需要 [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) 来使 TypeScript 语言服务识别 `.vue` 类型。
-
-如果您觉得独立的 TypeScript 插件不够快，Volar 还实现了性能更高的[接管模式](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669)。 您可以通过以下步骤启用它：
-
-1. 禁用内置的TypeScript扩展
-    1. 从 VSCode 的命令面板运行 `扩展：显示内置扩展`
-    2. 找到`TypeScript 和 JavaScript 语言功能`，右键单击并选择`禁用（工作区）`
-2. 通过从命令面板运行`Developer: Reload Window`来重新加载 VSCode 窗口。
+`Vue - Official` (之前是 Volar) 是官方的 VSCode 扩展，提供了 Vue 单文件组件中的 TypeScript 支持，还伴随着一些其他非常棒的特性。
+> TIP
+> `Vue - Official` 扩展取代了我们之前为 Vue 2 提供的官方 VSCode 扩展 Vetur。如果你之前已经安装了 Vetur，请确保在 Vue 3 的项目中禁用它。
 
 ## 开发规范
 
