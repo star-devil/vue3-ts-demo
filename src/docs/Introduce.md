@@ -65,20 +65,172 @@
      > `suffix`: 可选，为当前面包屑增加后缀
      > 以上几个参数在面包屑组件中已完成逻辑处理
      > `其他`: 可选，你可以将其余必要参数都通过这个方法传入并保存到sessionstorage中，以便在需要时使用
-     
+
 ### 表格`/src/components/baseTable`
 
-#### 文件结构说明：
+#### 文件结构说明
 
 1. `BaseTable.vue`：对a-table的二次封装组件，可继承使用a-table的全部属性和方法，props名称保持不变，请参考官网文档进行使用
-2. `renderFunction`：此文件夹存放的是表格内部需要自定义渲染插入的组件
-    - `renderAction.vue`：渲染为操作按钮组
-    - `renderDefault.vue`：渲染为默认文字
-    - `renderLink.vue`：渲染为链接文字
-    - `renderSwitch.vue`：渲染为Switch开关
-    - `renderTags.vue`：渲染为tag标签
+2. `renderFunction`：此文件夹存放的是表格内部需要自定义渲染插入的组件（为了方便后文解释，把这个文件夹下的组件都叫做render组件）
+    > 如果需要优化需求，请联系我
+    - `RenderAction.vue`：渲染为操作按钮组
+    - `RenderDefault.vue`：渲染为默认文字
+    - `RenderLink.vue`：渲染为链接文字
+    - `RenderSwitch.vue`：渲染为Switch开关
+    - `RenderTags.vue`：渲染为tag标签
 3. `tableSlots`：此文件夹存放的是a-table的插槽组件
-- `BodyCell.vue`
+    - `BodyCell.vue`：a-table单元格插槽 #bodyCell
+4. `renderComponents.ts`：根据条件将不同的render组件返回到插槽组件中的处理逻辑
+5. `type.ts`：为了更灵活的扩展a-table，对其本身的类型进行继承和扩展而增加的新的类，或者一些必要的自定义的类。
+
+#### 组件调用逻辑/数据传递顺序
+
+```HTML
+/** START----调用组件的文件，比如用户列表页面：User.vue **/
+<base-table
+    :columns="baseTableColumns"
+    :dataSource="baseTableData"
+    :loading="tableLoading"
+></base-table>
+
+
+/** TO----封装的table组件：BaseTable.vue **/
+<a-table v-bind="$attrs">
+    // 表头插槽
+    <template #headerCell="{ column }">
+    ...
+    </template>
+
+    // 单元格插槽
+    <template #bodyCell="{ column, record, text }">
+      <body-cell
+        :columnType="disposeColumns(column)"
+        :data="{ column, record, text }"
+      />
+    </template>
+</a-table>
+
+
+/** THEN TO----插槽组件：BodyCell.vue **/
+<template>
+    <component
+        class="userDefinedCell"
+        :is="renderMap.get(columnType)"
+        :cellData="data"
+    ></component>
+</template>
+
+
+/** END----render组件：Render***.vue，例RenderLink.vue **/
+<template>
+    <a-button class="px-0" type="link" v-bind.prop="aProps">
+        {{cellData.text}}
+    </a-button>
+</template>
+```
+
+#### BaseTable 使用说明/参数说明
+
+1. 参数和a-table官方文档一致，使用方法也一致。接下来将对特殊（扩展）字段进行说明
+2. columns扩展字段：
+
+| 属性名     | 属性值                                            | 值类型             | 是否可以不定义或者为空                                            | 说明                                                                     |
+|------------|---------------------------------------------------|--------------------|:------------------------------------------------------------------|:-------------------------------------------------------------------------|
+| type       | link / tags / action / switch /undefined | string/undefined | 是                                                                | 该列值渲染为：“链接”/“标签”/“操作按钮组”/“开关”/“默认文本”。不传则不做处理 |
+| extraProps | 对应不同type类型组件的参数；**除特殊属性外**其余参数使用方法和对应组件一致                        | object             | 是（如果你要将单元格渲染为指定组件，就必须传这个值。不传你怎么用呢？） | 渲染为action时和其他略有不同                                            |
+
+<u>**extraProps特殊属性说明： 通用属性**</u>
+
+1. 在传递所有方法类的参数时请使用props名称，比如@click方法，需要传递为`onClick`,@change为`onChange`。
+
+2. 所有回调方法都返回了两个参数，第一个参数为组件文档里说明的回返回的所有值，第二个为事件作用的行的数据。
+
+   ```js
+   示例：
+   // colomns定义将单元格渲染为switch，并传递点击的回调函数为clickSwitch
+   const colomns = [
+   {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      type: "switch",
+      extraProps: {
+         onClick: clickSwitch,
+      }
+   }]
+   // clickSwitch可以得到当前点击选中状态和当前行数据
+   const clickSwitch = (checked: boolean | string | number, cbData: any) => {
+      console.log("switchClick-", checked, "cbData---", cbData);
+   };
+   ```
+
+3. 含有禁用属性的组件拥有特殊的`disable`属性（注意不是原生属性disabled），比如link、switch、action。
+
+   | 属性名  | 属性值         | 值类型   | 说明                                                                                                                                |
+   |---------|----------------|----------|:------------------------------------------------------------------------------------------------------------------------------------|
+   | disable | [{key: value}] | object[] | 控制组件是否禁用：数组内各item之间存在或关系，即当满足其中一个item的条件即可禁用。item内部存在且关系，即当item内部条件全部满足时才会禁用。|
+
+   ```js
+   示例：
+   disable: [{name: "Jim Green",age: 42,},{status: "on"}]
+   // 当前行数据（name==="Jim Green"且age===42）或status==="on"时组件被禁用
+   ```
+
+<u>**extraProps特殊属性说明： 专属属性** </u>
+
+1. 单元格渲染为`tag`时的特殊属性：`colors`、`icons`。注意不是color和icon
+
+   | 属性名  | 属性值         | 值类型   | 说明                                                                                                                                |
+   |---------|----------------|----------|:------------------------------------------------------------------------------------------------------------------------------------|
+   | colors | 单个颜色 / 颜色数据 / [{value: any,color: string}] | string / string[] / object[] | 非必传。用于控制标签按条件显示不同颜色
+   | icons | h(图标) / [{value: any,icon: h(图标)}] | VNode / object[] | 非必传。用于控制标签按条件显示不同图标
+
+   ```js
+   示例：
+   // columns定义数据description渲染为标签
+   const columns = [
+   {
+      title: "Tags",
+      key: "description",
+      dataIndex: "description",
+      type: "tags",
+      extraProps: {
+         colors: [
+         {
+            value: "nice", // 表示当description的值=nice时，标签颜色为green
+            color: "green",
+         },
+         {
+            value: "cool", // 表示当description的值=cool时，标签颜色为green
+            color: "green",
+         },
+         {
+            value: "developer", // 表示当description的值=developer时，标签颜色为volcano
+            color: "volcano",
+         },
+         {
+            value: "teacher", // 表示当description的值=teacher时，标签颜色为pink
+            color: "pink",
+         },
+         ],
+         icons: h(TwitterOutlined) // 表示所有的标签都显示icon，icon是TwitterOutlined。如果你想指定某个值现在某个标签，也可以写成数组对象，类似colors。
+      },
+   ]
+   ```
+
+2. 单元格渲染为`switch`时特殊的属性
+
+   | 属性名  | 属性值         | 值类型   | 说明                                                                                                                                |
+   |---------|----------------|----------|:------------------------------------------------------------------------------------------------------------------------------------|
+   | checked | 当前列数据的某个值 | any | 必传！否则没办法控制开与关。当前单元格的数值与你设定的值相等时开会就会打开
+
+3. 单元格渲染为`action`时特殊的属性
+
+   | 属性名      | 属性值                                                                                                                                        | 值类型             | 是否可以为空或者不传           | 说明                                                                                                                                                                                            |
+   |-------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------|:-------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+   | actionsType | link / text / icon / mixin                                                                                                                    | string             | 是。不传默认显示为text          | 文字链接按钮 / 纯文字按钮 / 图标按钮 / 混合（图标+文字）按钮                                                                                                                                      |
+   | color       | safe / warn / danger / hex / undefined                                                                                                        | string / undefined | 是。不传和undefined表示不做处理 | 框架中的success绿色 / warning橙色 / error红色 / 自定义十六进制颜色值 / 不做处理。**注意**：如果传入自定义的十六进制颜色，鼠标悬浮到按钮上，文字不会有hover颜色变化，所以请尽量使用已配置好的框架颜色 |
+   | actions     | [{text: 按钮文字（图标按钮的tooltip文字）, disable: 禁用条件（参考通用属性disable说明）,hide:隐藏条件（与disable用法相同）,props:{button自身参数}}] | object[]           | 否。不传你用什么渲染按钮呢？     | 将按照这个配置渲染出一组按钮                                                                                                                                                                     |
 
 ## 关于自定义主题的样式变量获取
 
