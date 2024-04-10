@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-10 17:35:40
+ * @LastEditTime: 2024-04-10 17:42:01
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -74,7 +74,9 @@ function coverToolTipColor(color: string | undefined): string {
     v-if="
       extraProps.actionsType === 'link' ||
       extraProps.actionsType === 'text' ||
-      extraProps.actionsType === 'mixin'
+      extraProps.actionsType === 'mixin' ||
+      extraProps.actionsType === '' ||
+      extraProps.actionsType === undefined
     "
   >
     <span
@@ -90,7 +92,7 @@ function coverToolTipColor(color: string | undefined): string {
           extraProps.actionsType === 'text' ? 'px-0.5' : 'px-0',
           convertColor(item.color),
         ]"
-        :type="extraProps.actionsType"
+        :type="extraProps.actionsType || 'link'"
         :disabled="actionIsDisabled(item.disable, props.cellData.record)"
         >{{ item.text }}
       </a-button>

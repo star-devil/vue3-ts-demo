@@ -137,7 +137,7 @@
 | 属性名     | 属性值                                            | 值类型             | 是否可以不定义或者为空                                            | 说明                                                                     |
 |------------|---------------------------------------------------|--------------------|:------------------------------------------------------------------|:-------------------------------------------------------------------------|
 | type       | link / tags / action / switch /undefined | string/undefined | 是                                                                | 该列值渲染为：“链接”/“标签”/“操作按钮组”/“开关”/“默认文本”。不传则不做处理 |
-| extraProps | 对应不同type类型组件的参数；**除特殊属性外**其余参数使用方法和对应组件一致                        | object             | 是（如果你要将单元格渲染为指定组件，就必须传这个值。不传你怎么用呢？） | 渲染为action时和其他略有不同                                            |
+| extraProps | 对应不同type类型组件的参数；**除特殊属性外**其余参数使用方法和对应组件一致                        | object             | 是（如果你要将单元格渲染为指定组件，就必须传这个值。不传你怎么用呢？） | 渲染为action时和其他略有不同                                   |
 
 <u>**extraProps特殊属性说明： 通用属性**</u>
 
@@ -228,9 +228,79 @@
 
    | 属性名      | 属性值                                                                                                                                        | 值类型             | 是否可以为空或者不传           | 说明                                                                                                                                                                                            |
    |-------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------|:-------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-   | actionsType | link / text / icon / mixin                                                                                                                    | string             | 是。不传默认显示为text          | 文字链接按钮 / 纯文字按钮 / 图标按钮 / 混合（图标+文字）按钮                                                                                                                                      |
-   | color       | safe / warn / danger / hex / undefined                                                                                                        | string / undefined | 是。不传和undefined表示不做处理 | 框架中的success绿色 / warning橙色 / error红色 / 自定义十六进制颜色值 / 不做处理。**注意**：如果传入自定义的十六进制颜色，鼠标悬浮到按钮上，文字不会有hover颜色变化，所以请尽量使用已配置好的框架颜色 |
-   | actions     | [{text: 按钮文字（图标按钮的tooltip文字）, disable: 禁用条件（参考通用属性disable说明）,hide:隐藏条件（与disable用法相同）,props:{button自身参数}}] | object[]           | 否。不传你用什么渲染按钮呢？     | 将按照这个配置渲染出一组按钮                                                                                                                                                                     |
+   | actionsType | link / text / icon / mixin                                                                                                                    | string             | 是。**不传默认显示为link类型按钮**          | 所有类型都是**渲染为button**，不同值对应button的不同类型：链接按钮 / 文字按钮 / 图标按钮 / 混合（图标+文字）按钮。icon自带tooltip。                                                                                                                                      |
+   | color       | safe / warn / danger / hex / undefined                                                                                                        | string / undefined | 是。不传和undefined表示不做处理 | 按钮文字图标颜色：success绿色 / warning金色 / error红色 / 自定义十六进制颜色值 / 不做处理。**注意**：如果传入自定义的十六进制颜色，鼠标悬浮到按钮上，文字不会有hover颜色变化，所以请尽量使用已配置好的框架颜色。tooltip气泡也会使用这个颜色。 |
+   | actions     | [{text: 按钮文字（**图标按钮的tooltip文字**）, disable: 禁用条件（参考通用属性disable说明）,hide:隐藏条件（与disable用法相同）,props:{button自身参数}}] | object[]           | 否。不传你用什么渲染按钮呢？     | 将按照这个配置渲染出一组按钮                                                                                                                                                                     |
+
+    ```js
+    示例：主要注意actionsType 、text 、color的解释
+      {
+        title: "Action",         type: "action", // 此单元格渲染为button组
+        extraProps: {
+          actionsType: "mixin", // link | text | icon | mixin
+          actions: [
+            {
+              // link\text\mixin按钮显示的文字，icon按钮的tooltip标题
+              text: "邀请", 
+              // 按钮禁用条件，请看上面解释
+              disable: [
+                {
+                  name: "John Brown",
+                },
+                {
+                  age: 32,
+                },
+              ],
+              // 按钮隐藏条件
+              hide: [
+                {
+                  status: "off",
+                },
+              ],
+              // 按钮button本身的参数
+              props: {
+                // 如果按钮要显示图标，请传这个。所以icon、mixin类型必传icon
+                icon: h(HeartOutlined),
+                onClick: goDetail,
+              },
+            },
+            {
+              text: "详情",
+              // 按钮显示为金色
+              color: "warn", // safe | warn | danger | hex | undefined
+              props: {
+                icon: h(ContactsOutlined),
+                onClick: goDetail,
+              },
+            },
+            {
+              text: "修改",
+              // 按钮显示为绿色
+              color: "safe", 
+              disable: [
+                {
+                  name: "Jim Green",
+                  age: 42,
+                },
+              ],
+              props: {
+                icon: h(EditOutlined),
+                onClick: goDetail,
+              },
+            },
+            {
+              text: "删除",
+              // 按钮显示为红色
+              color: "danger",
+              props: {
+                icon: h(DeleteOutlined),
+                onClick: goDetail,
+              },
+            },
+          ],
+        },
+      }  
+    ```
 
 ## 关于自定义主题的样式变量获取
 
