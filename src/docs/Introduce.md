@@ -260,7 +260,7 @@
               ],
               // 按钮button本身的参数
               props: {
-                // 如果按钮要显示图标，请传这个。所以icon、mixin类型必传icon
+                // 如果按钮要显示图标，请传这个。所以icon、mixin类型必传icon。link类型icon不生效，text会生效
                 icon: h(HeartOutlined),
                 onClick: goDetail,
               },

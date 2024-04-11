@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-11 10:56:42
+ * @LastEditTime: 2024-04-11 15:07:46
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -89,7 +89,7 @@ function coverToolTipColor(color: string | undefined): string {
         v-bind.prop="actionsProps[index]"
         :style="hexColorStyle(item.color)"
         :class="[
-          extraProps.actionsType === 'text' ? 'px-0.5' : 'px-0',
+          extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
           convertColor(item.color),
         ]"
         :type="extraProps.actionsType || 'link'"
@@ -145,7 +145,10 @@ function coverToolTipColor(color: string | undefined): string {
   }
 }
 
-.ant-btn-link:disabled {
+.ant-btn-link:disabled,
+.ant-btn-text:disabled,
+.ant-btn-icon:disabled,
+.ant-btn-mixin:disabled {
   color: var(--colorTextDisabled);
 }
 </style>
