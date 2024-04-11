@@ -114,7 +114,7 @@
 /** THEN TO----插槽组件：BodyCell.vue **/
 <template>
     <component
-        class="userDefinedCell"
+        class="user-defined-cell"
         :is="renderMap.get(columnType)"
         :cellData="data"
     ></component>
@@ -134,12 +134,12 @@
 1. 参数和a-table官方文档一致，使用方法也一致。接下来将对特殊（扩展）字段进行说明
 2. columns扩展字段：
 
-| 属性名     | 属性值                                            | 值类型             | 是否可以不定义或者为空                                            | 说明                                                                     |
-|------------|---------------------------------------------------|--------------------|:------------------------------------------------------------------|:-------------------------------------------------------------------------|
-| type       | link / tags / action / switch /undefined | string/undefined | 是                                                                | 该列值渲染为：“链接”/“标签”/“操作按钮组”/“开关”/“默认文本”。不传则不做处理 |
-| extraProps | 对应不同type类型组件的参数；**除特殊属性外**其余参数使用方法和对应组件一致                        | object             | 是（如果你要将单元格渲染为指定组件，就必须传这个值。不传你怎么用呢？） | 渲染为action时和其他略有不同                                   |
+  | 属性名     | 属性值                                            | 值类型             | 是否可以不定义或者为空                                            | 说明                                                                     |
+  |------------|---------------------------------------------------|--------------------|:------------------------------------------------------------------|:-------------------------------------------------------------------------|
+  | type       | link / tags / action / switch /undefined | string/undefined | 是                                                                | 该列值渲染为：“链接”/“标签”/“操作按钮组”/“开关”/“默认文本”。不传则不做处理 |
+  | extraProps | 对应不同type类型组件的参数；**除特殊属性外**其余参数使用方法和对应组件一致                        | object             | 是（如果你要将单元格渲染为指定组件，就必须传这个值。不传你怎么用呢？） | 渲染为action时和其他略有不同                                   |
 
-<u>**extraProps特殊属性说明： 通用属性**</u>
+- <u>**extraProps特殊属性说明： 通用属性**</u>
 
 1. 在传递所有方法类的参数时请使用props名称，比如@click方法，需要传递为`onClick`,@change为`onChange`。
 
@@ -176,7 +176,7 @@
    // 当前行数据（name==="Jim Green"且age===42）或status==="on"时组件被禁用
    ```
 
-<u>**extraProps特殊属性说明： 专属属性** </u>
+- <u>**extraProps特殊属性说明： 专属属性** </u>
 
 1. 单元格渲染为`tag`时的特殊属性：`colors`、`icons`。注意不是color和icon
 
@@ -229,13 +229,14 @@
    | 属性名      | 属性值                                                                                                                                        | 值类型             | 是否可以为空或者不传           | 说明                                                                                                                                                                                            |
    |-------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------|:-------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
    | actionsType | link / text / icon / mixin                                                                                                                    | string             | 是。**不传默认显示为link类型按钮**          | 所有类型都是**渲染为button**，不同值对应button的不同类型：链接按钮 / 文字按钮 / 图标按钮 / 混合（图标+文字）按钮。icon自带tooltip。                                                                                                                                      |
-   | color       | safe / warn / danger / hex / undefined                                                                                                        | string / undefined | 是。不传和undefined表示不做处理 | 按钮文字图标颜色：success绿色 / warning金色 / error红色 / 自定义十六进制颜色值 / 不做处理。**注意**：如果传入自定义的十六进制颜色，鼠标悬浮到按钮上，文字不会有hover颜色变化，所以请尽量使用已配置好的框架颜色。tooltip气泡也会使用这个颜色。 |
+   | color       | success / warning / danger / hex / undefined                                                                                                        | string / undefined | 是。不传和undefined表示不做处理 | 按钮文字图标颜色：success绿色 / warning金色 / error红色 / 自定义十六进制颜色值 / 不做处理。**注意**：如果传入自定义的十六进制颜色，鼠标悬浮到按钮上，文字不会有hover颜色变化，所以请尽量使用已配置好的框架颜色。tooltip气泡也会使用这个颜色。 |
    | actions     | [{text: 按钮文字（**图标按钮的tooltip文字**）, disable: 禁用条件（参考通用属性disable说明）,hide:隐藏条件（与disable用法相同）,props:{button自身参数}}] | object[]           | 否。不传你用什么渲染按钮呢？     | 将按照这个配置渲染出一组按钮                                                                                                                                                                     |
 
     ```js
     示例：主要注意actionsType 、text 、color的解释
       {
-        title: "Action",         type: "action", // 此单元格渲染为button组
+        title: "Action",         
+        type: "action", // 此单元格渲染为button组
         extraProps: {
           actionsType: "mixin", // link | text | icon | mixin
           actions: [
@@ -267,7 +268,7 @@
             {
               text: "详情",
               // 按钮显示为金色
-              color: "warn", // safe | warn | danger | hex | undefined
+              color: "warning", // success | warning | danger | hex | undefined
               props: {
                 icon: h(ContactsOutlined),
                 onClick: goDetail,
@@ -276,7 +277,7 @@
             {
               text: "修改",
               // 按钮显示为绿色
-              color: "safe", 
+              color: "success", 
               disable: [
                 {
                   name: "Jim Green",

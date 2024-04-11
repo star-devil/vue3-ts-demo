@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-10 17:42:01
+ * @LastEditTime: 2024-04-11 10:56:42
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -33,16 +33,16 @@ function hexColorStyle(color: string | undefined) {
   }
 }
 /** @description 颜色值转化
- * safe: 系统success颜色
- * warn: 系统warning颜色
+ * success: 系统success颜色
+ * warning: 系统warning颜色
  * danger: 系统error颜色
  * undefined: 当前默认颜色
  */
 function convertColor(color: string | undefined) {
   switch (color) {
-    case "safe":
+    case "success":
       return "green-btn-color";
-    case "warn":
+    case "warning":
       return "orange-btn-color";
     case "danger":
       return "red-btn-color";
@@ -57,9 +57,9 @@ function coverToolTipColor(color: string | undefined): string {
   }
 
   switch (color) {
-    case "safe":
+    case "success":
       return commonColor().green;
-    case "warn":
+    case "warning":
       return commonColor().gold;
     case "danger":
       return commonColor().red;

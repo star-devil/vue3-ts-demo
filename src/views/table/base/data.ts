@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-10 17:48:34
+ * @LastEditTime: 2024-04-11 14:25:49
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -55,6 +55,20 @@ export const baseTableColumns = [
     title: "Address",
     dataIndex: "address",
     key: "address",
+  },
+  {
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+    type: "paragraph",
+    width: 300,
+    extraProps: {
+      ellipsis: {
+        rows: 2,
+        expandable: true,
+        symbol: "more",
+      },
+    },
   },
   {
     title: "Status",
@@ -133,7 +147,7 @@ export const baseTableColumns = [
         },
         {
           text: "详情",
-          color: "warn",
+          color: "warning",
           props: {
             icon: h(ContactsOutlined),
             onClick: goDetail,
@@ -141,7 +155,7 @@ export const baseTableColumns = [
         },
         {
           text: "修改",
-          color: "safe", // safe | warn | danger | hex | undefined
+          color: "success", // success | warning | danger | hex | undefined
           disable: [
             {
               name: "Jim Green",
