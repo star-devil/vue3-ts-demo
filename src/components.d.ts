@@ -46,6 +46,7 @@ declare module 'vue' {
     CaretUpOutlined: typeof import('@ant-design/icons-vue')['CaretUpOutlined']
     CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
     CssVariableSetter: typeof import('./components/cssVariableSetter/CssVariableSetter.vue')['default']
+    FoldTypograpghy: typeof import('./components/foldTypograpghy/FoldTypograpghy.vue')['default']
     LockOutlined: typeof import('@ant-design/icons-vue')['LockOutlined']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
     QuestionCircleOutlined: typeof import('@ant-design/icons-vue')['QuestionCircleOutlined']

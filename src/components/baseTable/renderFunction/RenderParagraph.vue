@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-04-11 10:58:39
- * @LastEditTime: 2024-04-11 14:55:29
+ * @LastEditTime: 2024-04-16 14:02:47
  * @LastEditors: wangqiaoling
  * @Description: 单元格内渲染长文本（段落）。两种方式：大量文本推荐优先使用 expandable，少量文本推荐使用 tooltip
 -->
@@ -14,10 +14,10 @@ let witchType = computed(() => {
 </script>
 
 <template>
-  <a-typography-paragraph
+  <fold-typograpghy
     v-if="witchType"
-    v-bind.prop="extraProps"
-    :content="cellData.text"
+    v-bind.prop="extraProps.ellipsis"
+    :text="cellData.text"
   />
 
   <a-typography-text

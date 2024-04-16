@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-11 15:05:22
+ * @LastEditTime: 2024-04-16 14:01:32
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -64,9 +64,8 @@ export const baseTableColumns = [
     width: 300,
     extraProps: {
       ellipsis: {
-        rows: 2,
+        maxLines: 2,
         expandable: true,
-        symbol: "more",
       },
     },
   },
