@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-03-26 09:55:00
+ * @LastEditTime: 2024-04-28 13:47:54
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -58,8 +58,12 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       }),
       eslint({ lintOnStart: true, cache: false }),
       viteMockServe({
-        mockPath: "mock",
-        enable: true,
+        mockPath: "./mock",
+        localEnabled: command === "serve",
+        prodEnabled: true,
+        injectCode:
+          "import { setupProdMockServer } from '/mockProdServer.ts'; setupProdMockServer();",
+        supportTs: true,
       }),
     ],
     css: {

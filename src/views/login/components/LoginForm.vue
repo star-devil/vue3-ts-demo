@@ -1,12 +1,13 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-19 14:14:17
- * @LastEditTime: 2024-03-21 14:48:20
+ * @LastEditTime: 2024-04-28 11:04:53
  * @LastEditors: wangqiaoling
  * @Description: 登录表单
 -->
 <script setup lang="ts">
 import { useUserInfo } from "@store/modules/userInfo";
+import { getAssetsFile } from "@utils/provideConfig";
 import type { FormInstance } from "ant-design-vue";
 import { formState, loginLoading, onLogin } from "../utils/login";
 import { loginRules } from "../utils/rule";
@@ -87,7 +88,7 @@ onBeforeUnmount(() => {
           <a-image
             :width="150"
             :height="32"
-            src="/src/assets/images/testCode.png"
+            :src="getAssetsFile('images/testCode.png')"
           />
         </a-input-group>
       </a-form-item>

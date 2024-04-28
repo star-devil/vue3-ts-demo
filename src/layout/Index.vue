@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-13 14:29:26
- * @LastEditTime: 2023-12-29 16:26:21
+ * @LastEditTime: 2024-04-28 14:14:42
  * @LastEditors: wangqiaoling
  * @Description: 布局入口文件
 -->
@@ -13,7 +13,7 @@ const waterMarkConfig = {
     fontSize: 14,
   },
 };
-const showSet = JSON.parse(import.meta.env.VITE_SHOW_SET);
+const showSet = import.meta.env.VITE_SHOW_SET === "true";
 </script>
 
 <template>

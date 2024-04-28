@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-24 14:01:26
- * @LastEditTime: 2024-04-10 16:16:09
+ * @LastEditTime: 2024-04-28 10:57:42
  * @LastEditors: wangqiaoling
  * @Description: mock登录接口
  */
@@ -37,7 +37,7 @@ export default [
                 roles: ["admin"],
                 accessToken: "eyJhbGciOiJIUzUxMiJ9.admin",
                 refreshToken: "eyJhbGciOiJIUzUxMiJ9.adminRefresh",
-                expires: "2024/04/20 00:00:00",
+                expires: "2025/04/20 00:00:00",
               },
               code: 200,
             };
@@ -66,7 +66,7 @@ export default [
                 roles: ["common"],
                 accessToken: "eyJhbGciOiJIUzUxMiJ9.common",
                 refreshToken: "eyJhbGciOiJIUzUxMiJ9.commonRefresh",
-                expires: "2024/04/20 00:00:00",
+                expires: "2025/04/20 00:00:00",
               },
               code: 200,
             };

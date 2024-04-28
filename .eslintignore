@@ -3,6 +3,7 @@
 *.woff
 *.ttf
 *.yaml
+*.js
 .vscode
 .idea
 node_modules

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2024-01-11 16:10:04
+ * @LastEditTime: 2024-04-28 14:14:59
  * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
@@ -24,7 +24,7 @@ export const useThemeStore = defineStore({
     time: themesStorage?.expireTime,
     grey:
       greyStorage?.isGrey === undefined
-        ? JSON.parse(import.meta.env.VITE_IS_GREY)
+        ? import.meta.env.VITE_IS_GREY === "true"
         : greyStorage?.isGrey,
     weak: weakStorage?.isWeak,
     headColor: headColorStorage?.headColor,
