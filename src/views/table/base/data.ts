@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-17 09:34:32
+ * @LastEditTime: 2024-04-29 10:00:57
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -122,7 +122,7 @@ export const baseTableColumns = [
     title: "Action",
     type: "action",
     extraProps: {
-      actionsType: "mixin", // link | text | icon | mixin
+      actionsType: "link", // link | text | icon | mixin
       actions: [
         {
           text: "邀请",
