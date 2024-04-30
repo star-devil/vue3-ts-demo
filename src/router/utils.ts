@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-03 14:50:55
- * @LastEditTime: 2024-02-06 10:17:51
+ * @LastEditTime: 2024-04-30 09:31:12
  * @LastEditors: wangqiaoling
  * @Description: 处理动态路由的工具方法
  */
@@ -115,7 +115,16 @@ function getParentPaths(value: string, routes: RouteRecordRaw[], key = "path") {
 
 /** 查找对应 `path` 的路由信息 */
 function findRouteByPath(path: string, routes: RouteRecordRaw[]): any {
-  let res = routes.find((item: { path: string }) => item.path == path);
+  let res = routes.find((item: { path: string }) => {
+    // 处理路由动态参数的情况：path 包含动态参数时
+    if (item.path.indexOf(":") > -1) {
+      const routePattern = item.path.replace(/:[^/]+/g, "[^/]+"); // 将:XX替换为正则表达式匹配任意值的模式
+      const regex = new RegExp(`^${routePattern}$`);
+      return regex.test(path);
+    } else {
+      return item.path == path;
+    }
+  });
   if (res) {
     return isProxy(res) ? toRaw(res) : res;
   } else {
@@ -145,6 +154,7 @@ function addPathMatch() {
   }
 }
 
+/** 处理动态路由（后端返回的路由） */
 function handleAsyncRoutes(routesList) {
   if (routesList.length === 0) {
     usePermissionStore().handleWholeMenus(routesList);
