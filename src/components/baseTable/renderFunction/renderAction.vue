@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-29 10:00:44
+ * @LastEditTime: 2024-04-30 15:04:53
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -11,11 +11,10 @@ import { actionIsDisabled, covertFunction } from "@utils/provideConfig";
 
 const props = defineProps(["cellData"]);
 const extraProps = props.cellData.column.extraProps || {};
-let actionsProps = ref([]);
+let actionsPropsMap = reactive({});
 onBeforeMount(() => {
-  actionsProps.value = [];
-  extraProps.actions.map((item: any) => {
-    actionsProps.value.push(covertFunction(item.props, props.cellData.record));
+  extraProps.actions.map((item: any, index: number) => {
+    actionsPropsMap[index] = covertFunction(item.props, props.cellData.record);
   });
 });
 
@@ -86,7 +85,7 @@ function coverToolTipColor(color: string | undefined): string {
       v-show="!actionIsDisabled(item.hide, props.cellData.record)"
     >
       <a-button
-        v-bind.prop="actionsProps[index]"
+        v-bind.prop="actionsPropsMap[index]"
         :style="hexColorStyle(item.color)"
         :class="[
           extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
@@ -109,7 +108,7 @@ function coverToolTipColor(color: string | undefined): string {
       placement="topLeft"
     >
       <a-button
-        v-bind.prop="actionsProps[index]"
+        v-bind.prop="actionsPropsMap[index]"
         :style="hexColorStyle(item.color)"
         :class="['px-0', convertColor(item.color)]"
         :type="extraProps.actionsType"

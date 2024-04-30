@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-29 10:00:57
+ * @LastEditTime: 2024-04-30 14:40:29
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -34,6 +34,10 @@ const { changeSwitch, clickSwitch, switchLoading } =
 // 点击单元格内元素的回调
 function goDetail(event: Event, record: any) {
   console.log("click!!!!", event, record);
+}
+
+function clickTest(event: Event, record: any) {
+  console.log("clickTest!!!!", event, record);
 }
 
 export const baseTableColumns = [
@@ -141,7 +145,7 @@ export const baseTableColumns = [
           ],
           props: {
             icon: h(HeartOutlined),
-            onClick: goDetail,
+            onClick: clickTest,
           },
         },
         {
@@ -149,7 +153,7 @@ export const baseTableColumns = [
           color: "warning",
           props: {
             icon: h(ContactsOutlined),
-            onClick: goDetail,
+            onClick: clickTest,
           },
         },
         {
@@ -163,7 +167,7 @@ export const baseTableColumns = [
           ],
           props: {
             icon: h(EditOutlined),
-            onClick: goDetail,
+            onClick: clickTest,
           },
         },
         {
@@ -171,7 +175,7 @@ export const baseTableColumns = [
           color: "danger",
           props: {
             icon: h(DeleteOutlined),
-            onClick: goDetail,
+            onClick: clickTest,
           },
         },
       ],

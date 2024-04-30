@@ -1,12 +1,12 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-04-09 14:02:03
+ * @LastEditTime: 2024-04-30 15:11:58
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
 
-import { forIn, isEmpty } from "lodash";
+import { cloneDeep, forIn, isEmpty } from "lodash";
 import mitt from "mitt";
 
 /**
@@ -58,12 +58,13 @@ export const isObjectArray = (data: any) => {
  * @returns 附带了额外参数的props
  */
 export function covertFunction(originProps: any, extraCallbackData: any) {
-  forIn(originProps, (value: any, key: string) => {
+  const newProps = cloneDeep(originProps);
+  forIn(newProps, (value: any, key: string) => {
     if (typeof value === "function") {
-      originProps[key] = ($event: any) => value($event, extraCallbackData);
+      newProps[key] = ($event: any) => value($event, extraCallbackData);
     }
   });
-  return originProps;
+  return newProps;
 }
 
 /**
