@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 11:06:44
- * @LastEditTime: 2024-03-26 11:11:14
+ * @LastEditTime: 2024-05-06 17:34:46
  * @LastEditors: wangqiaoling
  * @Description: 模拟获取表格数据
  */
@@ -11,7 +11,11 @@ export type BaseTableData = {
   message: string;
   data: {
     content: Array<any>;
-    pageInfo: object;
+    pageInfo: {
+      page: number;
+      size: number;
+      totalElements: number;
+    };
   };
   code: number;
 };

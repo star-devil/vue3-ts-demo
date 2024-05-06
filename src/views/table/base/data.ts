@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-04-30 14:40:29
+ * @LastEditTime: 2024-05-06 17:54:10
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -17,11 +17,24 @@ import { useTableSwitch } from "./switch";
 
 export const baseTableData = ref([]);
 export const tableLoading = ref<boolean>(false);
+export const searchParams = reactive({
+  page: 0,
+  size: 5,
+});
+export const paginationInfo = reactive({
+  total: 0,
+  change: (page: number, pageSize: number) => {
+    searchParams.page = page - 1;
+    searchParams.size = pageSize;
+    getData();
+  },
+});
 export function getData() {
   tableLoading.value = true;
-  getTableData()
+  getTableData(searchParams)
     .then((res) => {
       baseTableData.value = res.data.content;
+      paginationInfo.total = res.data.pageInfo.totalElements;
     })
     .finally(() => {
       tableLoading.value = false;
