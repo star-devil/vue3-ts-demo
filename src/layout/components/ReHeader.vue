@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-03-22 17:11:04
+ * @LastEditTime: 2024-05-07 09:58:31
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -204,6 +204,7 @@ onBeforeMount(() => {
     justify-content: space-around;
     width: 100%;
     height: 48px;
+    background-color: var(--colorBgLayout);
     border-bottom: 1px solid v-bind(borderColor);
 
     .horizontal-header-left {
