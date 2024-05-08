@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-22 16:08:49
- * @LastEditTime: 2024-05-08 09:52:43
+ * @LastEditTime: 2024-05-08 14:30:27
  * @LastEditors: wangqiaoling
  * @Description: 基础表格封装
 -->
@@ -28,6 +28,10 @@ const paginationObj = reactive({
   },
 });
 
+const hasPagination = computed(() => {
+  return !!paginationProps.pagination;
+});
+
 watchEffect(() => {
   if (paginationProps.pagination) {
     Object.assign(paginationObj, paginationProps.pagination);
@@ -35,7 +39,7 @@ watchEffect(() => {
 });
 </script>
 <template>
-  <a-table v-bind="$attrs" :pagination="paginationObj">
+  <a-table v-bind="$attrs" :pagination="hasPagination && paginationObj">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
         <span>
