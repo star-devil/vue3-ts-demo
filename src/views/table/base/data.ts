@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-05-08 09:34:23
+ * @LastEditTime: 2024-05-08 14:25:00
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -188,9 +188,14 @@ export const baseTableColumns = [
         {
           text: "删除",
           color: "danger",
+          popConfirm: {
+            title: "确定要删除吗？",
+            okText: "删除",
+            cancelText: "取消",
+            onConfirm: clickTest,
+          },
           props: {
             icon: h(DeleteOutlined),
-            onClick: clickTest,
           },
         },
       ],

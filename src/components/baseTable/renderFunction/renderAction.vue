@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-04-30 15:04:53
+ * @LastEditTime: 2024-05-08 14:21:44
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -12,9 +12,16 @@ import { actionIsDisabled, covertFunction } from "@utils/provideConfig";
 const props = defineProps(["cellData"]);
 const extraProps = props.cellData.column.extraProps || {};
 let actionsPropsMap = reactive({});
+let popConfirmPropsMap = reactive({});
 onBeforeMount(() => {
   extraProps.actions.map((item: any, index: number) => {
-    actionsPropsMap[index] = covertFunction(item.props, props.cellData.record);
+    actionsPropsMap[index] = covertFunction(item.props, props.cellData.record); // 为点击按钮绑定当前点击行数据
+
+    item.popConfirm &&
+      (popConfirmPropsMap[index] = covertFunction(
+        item.popConfirm,
+        props.cellData.record
+      )); // 为popconfirm绑定当前点击行数据
   });
 });
 
@@ -84,7 +91,24 @@ function coverToolTipColor(color: string | undefined): string {
       class="px-"
       v-show="!actionIsDisabled(item.hide, props.cellData.record)"
     >
+      <a-popconfirm
+        v-if="item.popConfirm"
+        v-bind.prop="popConfirmPropsMap[index]"
+      >
+        <a-button
+          v-bind.prop="actionsPropsMap[index]"
+          :style="hexColorStyle(item.color)"
+          :class="[
+            extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
+            convertColor(item.color),
+          ]"
+          :type="extraProps.actionsType || 'link'"
+          :disabled="actionIsDisabled(item.disable, props.cellData.record)"
+          >{{ item.text }}
+        </a-button>
+      </a-popconfirm>
       <a-button
+        v-else
         v-bind.prop="actionsPropsMap[index]"
         :style="hexColorStyle(item.color)"
         :class="[
@@ -107,7 +131,21 @@ function coverToolTipColor(color: string | undefined): string {
       v-show="!actionIsDisabled(item.hide, props.cellData.record)"
       placement="topLeft"
     >
+      <a-popconfirm
+        v-if="item.popConfirm"
+        v-bind.prop="popConfirmPropsMap[index]"
+        placement="bottom"
+      >
+        <a-button
+          v-bind.prop="actionsPropsMap[index]"
+          :style="hexColorStyle(item.color)"
+          :class="['px-0', convertColor(item.color)]"
+          :type="extraProps.actionsType"
+          :disabled="actionIsDisabled(item.disable, props.cellData.record)"
+        ></a-button>
+      </a-popconfirm>
       <a-button
+        v-else
         v-bind.prop="actionsPropsMap[index]"
         :style="hexColorStyle(item.color)"
         :class="['px-0', convertColor(item.color)]"

@@ -29,6 +29,7 @@ declare module 'vue' {
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
+    APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     AResult: typeof import('ant-design-vue/es')['Result']
     ArrowLeftOutlined: typeof import('@ant-design/icons-vue')['ArrowLeftOutlined']
     ASpace: typeof import('ant-design-vue/es')['Space']
