@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-22 16:08:49
- * @LastEditTime: 2024-05-08 09:33:44
+ * @LastEditTime: 2024-05-08 09:52:43
  * @LastEditors: wangqiaoling
  * @Description: 基础表格封装
 -->
@@ -30,7 +30,6 @@ const paginationObj = reactive({
 
 watchEffect(() => {
   if (paginationProps.pagination) {
-    console.log(paginationProps.pagination, "---paginationProps.pagination");
     Object.assign(paginationObj, paginationProps.pagination);
   }
 });

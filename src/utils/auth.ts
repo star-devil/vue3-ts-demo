@@ -1,11 +1,12 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-29 10:21:57
- * @LastEditTime: 2024-02-01 17:52:41
+ * @LastEditTime: 2024-05-08 11:07:32
  * @LastEditors: wangqiaoling
  * @Description: 登入后信息存取操作
  */
 import { useUserInfo } from "@store/modules/userInfo";
+import dayjs from "dayjs";
 import { Cookies } from "./reCookies";
 import { sessionStorage, storage } from "./reStorage";
 
@@ -43,7 +44,15 @@ export function getToken(): DataInfo<number> {
 export function setToken(data: DataInfo<Date>) {
   let expires = 0;
   const { accessToken, refreshToken } = data;
-  expires = new Date(data.expires).getTime(); // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
+  // expires = new Date(data.expires).getTime(); // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
+
+  // 使用mock接口时不好处理过期，这里默认为明天0点过期
+  const tomorrowTime = dayjs()
+    .startOf("day")
+    .add(1, "day")
+    .format("YYYY/MM/DD HH:mm:ss");
+  expires = new Date(tomorrowTime).getTime();
+
   const cookieString = JSON.stringify({ accessToken, expires });
 
   Cookies.set(TokenKey, cookieString, {
