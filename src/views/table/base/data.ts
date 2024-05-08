@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-05-06 17:54:10
+ * @LastEditTime: 2024-05-08 09:34:23
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -22,6 +22,8 @@ export const searchParams = reactive({
   size: 5,
 });
 export const paginationInfo = reactive({
+  pageSize: 5,
+  pageSizeOptions: ["5", "10", "20", "50"],
   total: 0,
   change: (page: number, pageSize: number) => {
     searchParams.page = page - 1;

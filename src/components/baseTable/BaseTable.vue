@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-22 16:08:49
- * @LastEditTime: 2024-05-06 17:54:08
+ * @LastEditTime: 2024-05-08 09:33:44
  * @LastEditors: wangqiaoling
  * @Description: 基础表格封装
 -->
@@ -13,9 +13,9 @@ const paginationProps = defineProps(["pagination"]);
 
 const paginationObj = reactive({
   current: 1,
-  pageSize: 5,
+  pageSize: 10,
   total: 0,
-  pageSizeOptions: ["5", "10", "20", "50", "100"],
+  pageSizeOptions: ["10", "20", "50", "100"],
   responsive: true,
   showSizeChanger: true,
   showLessItems: true,

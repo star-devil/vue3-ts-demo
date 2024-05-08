@@ -79,7 +79,7 @@
     - `RenderSwitch.vue`：渲染为Switch开关
     - `RenderTags.vue`：渲染为tag标签
 3. `tableSlots`：此文件夹存放的是a-table的插槽组件
-    - `BodyCell.vue`：a-table单元格插槽 #bodyCell
+    - `BodyCell.vue`：a-table单元格插槽 #bodyCell，可以插入Render组件
 4. `renderComponents.ts`：根据条件将不同的render组件返回到插槽组件中的处理逻辑
 5. `type.ts`：为了更灵活的扩展a-table，对其本身的类型进行继承和扩展而增加的新的类，或者一些必要的自定义的类。
 
@@ -131,8 +131,67 @@
 
 #### BaseTable 使用说明/参数说明
 
-1. 参数和a-table官方文档一致，使用方法也一致。接下来将对特殊（扩展）字段进行说明
-2. columns扩展字段：
+1. 参数和a-table官方文档一致，使用方法也一致。
+
+   - **特别说明**：分页器的使用：同pagination。：
+
+     - 组件已封装了一个通用分页器，可翻页。配置如下
+
+       ```js
+       const paginationObj = reactive({
+         current: 1, // 默认展示第一页数据
+         pageSize: 10, // 默认10条/页
+         total: 0, // 初始数据总量为0
+         pageSizeOptions: ["10", "20", "50", "100"], // 默认每页展示条数选项
+         responsive: true, // 当 size 未指定时，根据屏幕宽度自动调整尺寸
+         showSizeChanger: true, // 展示 pageSize 切换器
+         showLessItems: true, // 显示较少页面内容
+         showTotal: (total: number, range: number[]) =>
+           `第${range[0]}~${range[1]}项，共${total} 条数据`, // 用于显示数据总量和当前数据顺序
+         onChange: (page: number, pageSize: number) => {
+           paginationObj.current = page;
+           paginationObj.pageSize = pageSize;
+           paginationProps.pagination.change(page, pageSize);
+         }, // 页码或 pageSize 改变的回调,改变当前选中页码
+       });
+       
+       ```
+
+     - 如果是从服务端获取数据，那么可以只传入实际的总数据量（因为使用了分页，组件无法得知实际的总数据量）和页码改变时需要执行方法即可生成上述通用分页器，如果有特殊需求也可以传入对应的参数进行自定义。示例代码如下：
+
+       ```js
+       export const paginationInfo = reactive({
+         pageSize: 5, // 将size指定为5
+         pageSizeOptions: ["5", "10", "20", "50"], // 修改size选项
+         total: 0, // 将实际total传入
+         change: (page: number, pageSize: number) => { // 页码或pagesize改变的回调
+           searchParams.page = page - 1; // 修改搜索参数
+           searchParams.size = pageSize; // 修改搜索参数
+           getData(); // 回调中执行获取数据的方法
+         },
+       });
+       
+       /* 获取表格数据的方法 */
+       export function getData() {
+         tableLoading.value = true;
+         getTableData(searchParams)
+           .then((res) => {
+             baseTableData.value = res.data.content;
+             paginationInfo.total = res.data.pageInfo.totalElements;// 获取数据后改变total，这个值会传入分页组件中
+           })
+           .finally(() => {
+             tableLoading.value = false;
+           });
+       }
+       ```
+
+       
+
+     - 如果表格数据不是从服务端获取，那么无需编写代码，表格会自动生成上述通用分页器，同理，若有特殊需求也支持自定义
+
+2. 接下来将对**特殊（扩展）字段**进行说明：
+
+   - columns扩展字段：
 
 | 属性名     | 属性值                                            | 值类型             | 是否可以不定义或者为空                                            | 说明                                                                     |
 |------------|---------------------------------------------------|--------------------|:------------------------------------------------------------------|:-------------------------------------------------------------------------|
