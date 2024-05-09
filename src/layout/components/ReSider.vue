@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-03-21 14:44:06
+ * @LastEditTime: 2024-05-08 15:18:25
  * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -78,6 +78,7 @@ const collapsed = ref<boolean>(false);
 }
 
 .re-side-bar {
+  box-sizing: content-box;
   color: var(--colorText);
 }
 

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-28 10:04:01
- * @LastEditTime: 2024-04-10 17:11:46
+ * @LastEditTime: 2024-05-08 15:05:40
  * @LastEditors: wangqiaoling
  * @Description: 当前存储的主题配置
  */
@@ -28,3 +28,5 @@ export const commonColor = () => {
     themeColor: useThemeToken().token.colorPrimary,
   };
 };
+/** 背景色 */
+export const BgLayoutColor = () => useThemeToken().token.colorBgLayout;

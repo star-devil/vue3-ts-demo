@@ -1,12 +1,13 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-05-07 09:58:31
+ * @LastEditTime: 2024-05-09 14:52:05
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">
 import {
+  BgLayoutColor,
   borderColorSecondary,
   setToken,
   textHoverBgColor,
@@ -47,9 +48,13 @@ const layoutData = computed(() => {
 // 混搭模式下的样式切换
 const headerIconType = computed(() => {
   if (layoutData.value.name !== "custom") {
-    return isLight.value && !layoutData.value.headColor;
+    if (isLight.value && layoutData.value.headColor) {
+      return "light-mixin";
+    } else {
+      return isLight.value && !layoutData.value.headColor ? "light" : "dark";
+    }
   } else {
-    return isLight.value;
+    return isLight.value ? "light" : "dark";
   }
 });
 const changHeaderStyle = computed(() => {
@@ -61,8 +66,10 @@ const changHeaderStyle = computed(() => {
         color: "#fff",
       };
     } else {
-      style = { backgroundColor: "unset" };
+      style = { backgroundColor: BgLayoutColor() };
     }
+  } else if (layoutData.value.type === "dark") {
+    style = { backgroundColor: BgLayoutColor() };
   }
   return style;
 });
@@ -169,10 +176,10 @@ onBeforeMount(() => {
             </a-dropdown>
           </div>
           <div class="right-actions theme-type" @click="dataThemeChange">
-            <IconFont :type="headerIconType ? 'light' : 'dark'" />
+            <IconFont :type="headerIconType" />
           </div>
           <div v-if="set" class="right-actions setting" @click="openSetting">
-            <IconFont :type="headerIconType ? 'lightset' : 'darkset'" />
+            <IconFont :type="headerIconType + 'set'" />
           </div>
         </div>
       </div>
@@ -204,7 +211,6 @@ onBeforeMount(() => {
     justify-content: space-around;
     width: 100%;
     height: 48px;
-    background-color: var(--colorBgLayout);
     border-bottom: 1px solid v-bind(borderColor);
 
     .horizontal-header-left {
