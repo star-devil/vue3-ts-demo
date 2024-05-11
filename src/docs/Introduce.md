@@ -185,8 +185,6 @@
        }
        ```
 
-       
-
      - 如果表格数据不是从服务端获取或者**一次性得到了全部数据**，那么无需编写代码，表格会自动生成上述通用分页器，同理，若有特殊需求也支持自定义
 
 2. 接下来将对**特殊（扩展）字段**进行说明：
@@ -241,8 +239,8 @@
 
    | 属性名  | 属性值         | 值类型   | 说明                                                                                                                                |
    |---------|----------------|----------|:------------------------------------------------------------------------------------------------------------------------------------|
-   | colors | 单个颜色 / 颜色数据 / [{value: any,color: string}] | string / string[] / object[] | 非必传。用于控制标签按条件显示不同颜色
-   | icons | h(图标) / [{value: any,icon: h(图标)}] | VNode / object[] | 非必传。用于控制标签按条件显示不同图标
+   | colors | 单个颜色 / 颜色数组 / [{value: any,color: string}] | string / string[] / object[] | 非必传。用于控制标签按条件显示不同颜色|
+   | icons | h(图标) / [{value: any,icon: h(图标)}] | VNode / object[] | 非必传。用于控制标签按条件显示不同图标|
 
    ```js
    示例：
@@ -374,6 +372,43 @@
    | ellipsis       | {}     | object  | 是                   | 不传则处理为tooltip      |
    | \|- maxLines   | 1-10   | number  | 否                   | 显示的最大行数           |
    | \|- expandable | true   | boolean | 是                   | 为true才会处理为折叠文字 |
+
+5. 单元格内渲染徽标`badge`时（type=badge）特殊的属性：`colors`。注意不是color<!--（color是badge自带api，可以直接使用，无需特别处理）-->
+
+   | 属性名 | 属性值                       | 值类型   | 说明                                   |
+   | ------ | ---------------------------- | -------- | :------------------------------------- |
+   | colors | [{value: any,color: string}] | object[] | 非必传。用于控制标签按条件显示不同颜色 |
+
+   ```ts
+   示例：
+   {
+       title: "年龄",
+       dataIndex: "age",
+       key: "age",
+       type: "badge",
+       extraProps: {
+         color: "pink", // 使用badge自带的属性，表示所有年龄单元格都显示为粉色
+         status: "processing", // color和processing同时存在，可以改变processing的颜色，保留动效
+         colors: [
+           {
+             value: 22, // 年龄=22岁时，徽标显示粉色
+             color: "pink",
+           },
+           {
+             value: 32, // 年龄=22岁时，徽标显示为状态processing样式
+             // color: "cyan", // 也支持和status同时存在
+             status: "processing",
+           },
+           {
+             value: 42,// 年龄=22岁时，徽标显示为状态success样式
+             status: "success",
+           },
+         ],
+       },
+     },
+   ```
+
+   
 
 ## 关于自定义主题的样式变量获取
 
