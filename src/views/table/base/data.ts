@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-26 10:32:10
- * @LastEditTime: 2024-05-08 14:25:00
+ * @LastEditTime: 2024-05-11 10:47:53
  * @LastEditors: wangqiaoling
  * @Description: 基础表格数据
  */
@@ -69,6 +69,26 @@ export const baseTableColumns = [
     title: "Age",
     dataIndex: "age",
     key: "age",
+    type: "badge",
+    extraProps: {
+      color: "pink", // color和processing同时存在，可以改变processing的颜色，保留动效
+      status: "processing",
+      colors: [
+        {
+          value: 22,
+          color: "pink",
+        },
+        {
+          value: 32,
+          // color: "cyan",
+          status: "processing",
+        },
+        {
+          value: 42,
+          status: "success",
+        },
+      ],
+    },
   },
   {
     title: "Address",

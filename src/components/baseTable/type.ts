@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-03-28 16:45:14
+ * @LastEditTime: 2024-05-11 10:49:09
  * @LastEditors: wangqiaoling
  * @Description: 表格扩展type
  */
@@ -44,4 +44,14 @@ export type ComplexColor = {
 export type ComplexIcon = {
   value: string | number | undefined | null;
   icon: VNode;
+};
+
+/** 表示多个徽标status，特定值显示指定颜色：
+ *  对象格式：{value: 字段值,status: 显示颜色}
+ *  注意⚠️：字段值只支持字符串/数字/undefined/null类型
+ *  */
+export type ComplexBadgeColor = {
+  value: string | number | undefined | null;
+  status?: string;
+  color?: string;
 };

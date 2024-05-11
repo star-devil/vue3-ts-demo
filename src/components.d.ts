@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    ABadge: typeof import('ant-design-vue/es')['Badge']
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb']
     ABreadcrumbItem: typeof import('ant-design-vue/es')['BreadcrumbItem']
     AButton: typeof import('ant-design-vue/es')['Button']
@@ -51,6 +52,7 @@ declare module 'vue' {
     QuestionCircleOutlined: typeof import('@ant-design/icons-vue')['QuestionCircleOutlined']
     ReloadOutlined: typeof import('@ant-design/icons-vue')['ReloadOutlined']
     RenderAction: typeof import('./components/baseTable/renderFunction/RenderAction.vue')['default']
+    RenderBadge: typeof import('./components/baseTable/renderFunction/RenderBadge.vue')['default']
     RenderDefualt: typeof import('./components/baseTable/renderFunction/RenderDefualt.vue')['default']
     RenderLink: typeof import('./components/baseTable/renderFunction/RenderLink.vue')['default']
     RenderParagraph: typeof import('./components/baseTable/renderFunction/RenderParagraph.vue')['default']
