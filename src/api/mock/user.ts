@@ -1,4 +1,4 @@
-import { http } from "@api/axios";
+import { http } from "@api/request/axios";
 
 export type UserResult = {
   message: string;

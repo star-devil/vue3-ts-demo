@@ -5,7 +5,7 @@
  * @LastEditors: wangqiaoling
  * @Description: 模拟获取表格数据
  */
-import { http } from "@api/axios";
+import { http } from "@api/request/axios";
 
 export type BaseTableData = {
   message: string;

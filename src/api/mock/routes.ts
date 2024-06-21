@@ -5,7 +5,7 @@
  * @LastEditors: wangqiaoling
  * @Description:
  */
-import { http } from "@api/axios";
+import { http } from "@api/request/axios";
 
 type Result = {
   message: string;
