@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 13:34:21
- * @LastEditTime: 2024-05-09 14:52:05
+ * @LastEditTime: 2024-07-08 10:45:57
  * @LastEditors: wangqiaoling
  * @Description: Header：顶部布局，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
@@ -153,6 +153,7 @@ onBeforeMount(() => {
         <ReBreadcrumb v-if="layoutData.name === 'custom'" />
         <div class="horizontal-header-menu">
           <NavigationMenu v-if="layoutData.name === 'noSider'" />
+          <NavigationMenu v-else-if="layoutData.name.includes('mixin')" />
         </div>
         <div class="horizontal-header-right">
           <div class="right-actions user-info">

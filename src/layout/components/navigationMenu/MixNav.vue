@@ -1,9 +1,9 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-07-09 11:13:23
+ * @LastEditTime: 2024-07-09 11:08:59
  * @LastEditors: wangqiaoling
- * @Description: layout导航菜单组件，根据路由动态生成
+ * @Description: layout混合导航模式菜单组件，一级菜单在顶部显示，二级菜单在侧边栏显示
 -->
 <script setup lang="ts">
 import { constantRoutes } from "@router";
@@ -13,7 +13,6 @@ import { usePermissionStore } from "@store/modules/permission";
 import { useThemeStore } from "@store/modules/setting";
 import type { MenuProps } from "ant-design-vue";
 import { RouteLocationRaw } from "vue-router";
-
 import { getMenuKey, transformRouteToMenu } from "./index";
 
 const routeInfo = useRoute();
@@ -38,7 +37,7 @@ const changeTheme = computed(() => {
 /**
  * 菜单数据
  */
-let items = ref([]);
+const items = ref([]);
 
 /**
  * 控制菜单选中和展开的一些参数
@@ -51,68 +50,37 @@ const state = reactive<{
   openKeys: [],
 });
 
+const currentParentKey = ref("");
+
 /**
  * 获取当前选中的菜单和父级菜单
  */
 function getCurrentMenuInfo() {
-  // 如果使用了后端返回的路由，items=usePermissionStore().wholeMenus;否则items=constantMenus
-  items.value = transformRouteToMenu(
-    filterTree(usePermissionStore().wholeMenus)
+  state.current = [getMenuKey(routeInfo) as string];
+  // 去掉‘/’根路径；且当布局为顶部模式时，取消默认展开父级菜单
+  state.openKeys = getParentPaths(routeInfo.path, constantRoutes, "path").slice(
+    1
   );
 
-  state.current = [getMenuKey(routeInfo) as string];
-  console.log("state.current", state.current);
-  // 去掉‘/’根路径；且当布局为顶部模式时，取消默认展开父级菜单
-  state.openKeys =
-    layoutName === "noSider"
-      ? []
-      : getParentPaths(routeInfo.path, constantRoutes, "path").slice(1);
-
-  if (layoutName.indexOf("mix") > -1) {
-    hasChildrenMenu(state.openKeys[0]);
-    items.value = flatten(items.value);
-  }
-}
-
-/** 混合模式下判断当前点击菜单有无子菜单 */
-function hasChildrenMenu(key: string) {
-  // 判断有无子菜单
-  const childrenMenu = findRouteByPath(
-    key,
-    filterTree(usePermissionStore().wholeMenus)
-  )?.children;
-  if (childrenMenu) {
-    state.current = state.openKeys;
-    useMixNavStore().showSiderMenu(true);
-    useMixNavStore().getChildrenMenuByParentKey(key);
-  } else {
-    useMixNavStore().showSiderMenu(false);
-  }
+  // 如果使用了后端返回的路由，items=usePermissionStore().wholeMenus;否则items=constantMenus
+  items.value = transformRouteToMenu(
+    findRouteByPath(
+      currentParentKey.value,
+      filterTree(usePermissionStore().wholeMenus)
+    )?.children
+  );
 }
 
 /**
  * 点击菜单跳转
  */
 const selectMenu: MenuProps["onSelect"] = (item) => {
-  console.log("item-", item);
-  if (layoutName.indexOf("mix") > -1) {
-    hasChildrenMenu(item.key as string);
-  }
   router.push(item.key as RouteLocationRaw);
 };
 
-/** 去掉菜单子节点，用于混合模式下的顶部菜单显示 */
-function flatten(arr: any[]) {
-  return arr.reduce((result, item) => {
-    return result.concat(
-      item,
-      Array.isArray(item.children) ? (item.children = undefined) : undefined
-    );
-  }, []);
-}
-
-// 生成导航菜单
-onBeforeMount(() => {
+watchEffect(() => {
+  currentParentKey.value = useMixNavStore().getCurrentParentMenuKey;
+  // 生成导航菜单
   getCurrentMenuInfo();
 });
 </script>
@@ -122,11 +90,7 @@ onBeforeMount(() => {
     <a-menu
       v-model:selectedKeys="state.current"
       v-model:openKeys="state.openKeys"
-      :mode="
-        layoutName === 'noSider' || layoutName.indexOf('mix') > -1
-          ? 'horizontal'
-          : 'inline'
-      "
+      mode="inline"
       :items="items"
       :theme="changeTheme ? 'dark' : 'light'"
       @select="selectMenu"

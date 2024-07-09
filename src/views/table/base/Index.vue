@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-05-06 17:35:21
+ * @LastEditTime: 2024-07-08 13:42:49
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -32,14 +32,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="content-wrap">
-    <a-button type="primary" @click="goDetail">Go detail</a-button>
-    <base-table
-      :columns="baseTableColumns"
-      :dataSource="baseTableData"
-      :loading="tableLoading"
-      :pagination="paginationInfo"
-    ></base-table>
+  <div>
+    <div class="content-wrap">
+      <table-render-tool />
+    </div>
+    <div class="content-wrap">
+      <a-button type="primary" @click="goDetail">Go detail</a-button>
+      <base-table
+        :columns="baseTableColumns"
+        :dataSource="baseTableData"
+        :loading="tableLoading"
+        :pagination="paginationInfo"
+      ></base-table>
+    </div>
   </div>
 </template>
 

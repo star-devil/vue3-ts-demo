@@ -1,17 +1,19 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2024-04-28 14:19:56
+ * @LastEditTime: 2024-07-09 11:07:26
  * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
 <script setup lang="ts">
+import { useMixNavStore } from "@store/modules/mixNav";
 import { useThemeStore } from "@store/modules/setting";
 import { assign } from "lodash";
 import ReContent from "./ReContent.vue";
 import ReFooter from "./ReFooter.vue";
 import ReHeader from "./ReHeader.vue";
 import ReSider from "./ReSider.vue";
+
 const props = defineProps({
   waterMarkModel: {
     type: Object,
@@ -65,6 +67,12 @@ const setDefaultWatermarkConfig = () => {
 nextTick(() => {
   setDefaultWatermarkConfig();
 });
+
+/** 隐藏混合模式下侧边菜单栏 */
+const showMixNav = ref(true);
+watchEffect(() => {
+  showMixNav.value = useMixNavStore().getShowSider;
+});
 </script>
 
 <template>
@@ -87,7 +95,7 @@ nextTick(() => {
     <a-layout v-if="layoutData.name === 'mixinLeft'">
       <ReHeader :set="needSet" />
       <a-layout>
-        <ReSider />
+        <ReSider v-if="showMixNav" />
         <a-layout>
           <ReContent />
           <ReFooter v-if="layoutData.footer" />
@@ -107,7 +115,7 @@ nextTick(() => {
           <ReContent />
           <ReFooter v-if="layoutData.footer" />
         </a-layout>
-        <ReSider />
+        <ReSider v-if="showMixNav" />
       </a-layout>
     </a-layout>
     <!-- #endIf -->

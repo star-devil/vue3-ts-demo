@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-04-29 11:22:49
+ * @LastEditTime: 2024-07-08 13:47:02
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -31,7 +31,7 @@ export default {
           component: () => import("@/views/table/base/Detail.vue"),
           meta: {
             title: "详情",
-            showLink: false,
+            showLink: true,
             roles: ["admin"],
           },
         },

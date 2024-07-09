@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-23 10:42:55
- * @LastEditTime: 2024-02-02 16:59:39
+ * @LastEditTime: 2024-07-09 09:52:49
  * @LastEditors: wangqiaoling
  * @Description: 存储用户可用的个人信息
  */
@@ -13,6 +13,7 @@ import {
 } from "@api/mock/user";
 import router from "@router";
 import { removeToken, setToken } from "@utils/auth";
+import { emitter } from "@utils/provideConfig";
 import { sessionStorage, storage } from "@utils/reStorage";
 import { defineStore } from "pinia";
 const userInfoStorage = storage.get("userInfo");
@@ -68,6 +69,7 @@ export const useUserInfo = defineStore({
     userLogOut() {
       this.removeUserInfo();
       sessionStorage.clear();
+      emitter.all.clear();
       router.replace("/login");
     },
     /** 登入 */
@@ -101,6 +103,7 @@ export const useUserInfo = defineStore({
       storage.clear();
       sessionStorage.clear();
       removeToken();
+      emitter.all.clear();
       router.replace("/login");
     },
   },
