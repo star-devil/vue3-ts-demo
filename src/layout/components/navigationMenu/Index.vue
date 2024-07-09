@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-07-09 11:13:23
+ * @LastEditTime: 2024-07-09 11:16:28
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -61,7 +61,6 @@ function getCurrentMenuInfo() {
   );
 
   state.current = [getMenuKey(routeInfo) as string];
-  console.log("state.current", state.current);
   // 去掉‘/’根路径；且当布局为顶部模式时，取消默认展开父级菜单
   state.openKeys =
     layoutName === "noSider"
@@ -94,7 +93,6 @@ function hasChildrenMenu(key: string) {
  * 点击菜单跳转
  */
 const selectMenu: MenuProps["onSelect"] = (item) => {
-  console.log("item-", item);
   if (layoutName.indexOf("mix") > -1) {
     hasChildrenMenu(item.key as string);
   }
