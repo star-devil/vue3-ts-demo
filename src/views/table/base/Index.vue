@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-07-08 13:42:49
+ * @LastEditTime: 2024-07-10 16:37:44
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -33,9 +33,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="content-wrap">
-      <table-render-tool />
-    </div>
     <div class="content-wrap">
       <a-button type="primary" @click="goDetail">Go detail</a-button>
       <base-table
