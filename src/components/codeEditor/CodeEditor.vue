@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:15:33
- * @LastEditTime: 2024-07-12 17:12:39
+ * @LastEditTime: 2024-07-12 17:22:45
  * @LastEditors: wangqiaoling
  * @Description: 代码编辑器
 -->
@@ -268,10 +268,19 @@ onMounted(() => {
   cminstance.value = codemirrorRef.value?.cminstance;
   cminstance.value?.focus();
 });
+
+watch(
+  themeData,
+  (newVal) => {
+    newVal.type === "light"
+      ? (theme.value = "default")
+      : (theme.value = "darcula");
+  },
+  {
+    immediate: true,
+  }
+);
 watchEffect(() => {
-  themeData.type === "light"
-    ? (theme.value = "default")
-    : (theme.value = "darcula");
   cmOptions.mode = defalutLanguage.value;
   cmOptions.theme = theme.value;
   cmOptions.readOnly = readOnly.value;
