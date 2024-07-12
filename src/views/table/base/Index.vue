@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-07-10 16:37:44
+ * @LastEditTime: 2024-07-11 13:21:55
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -44,9 +44,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.content-wrap {
-  background-color: var(--colorPrimaryLight);
-}
-</style>

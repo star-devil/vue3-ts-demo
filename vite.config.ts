@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-04-28 13:47:54
+ * @LastEditTime: 2024-07-11 13:29:09
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -23,6 +23,8 @@ import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 // mockJS
 import { viteMockServe } from "vite-plugin-mock";
+// vite对commonjs兼容性太差
+import { viteCommonjs } from "@originjs/vite-plugin-commonjs";
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
@@ -65,6 +67,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
           "import { setupProdMockServer } from '/mockProdServer.ts'; setupProdMockServer();",
         supportTs: true,
       }),
+      viteCommonjs(),
     ],
     css: {
       preprocessorOptions: {

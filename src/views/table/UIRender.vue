@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-07-10 16:30:37
+ * @LastEditTime: 2024-07-11 13:21:48
  * @LastEditors: wangqiaoling
  * @Description: 界面上配置生成表格
 -->
@@ -14,9 +14,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.content-wrap {
-  background-color: var(--colorPrimaryLight);
-}
-</style>
