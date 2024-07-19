@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-02 10:20:38
- * @LastEditTime: 2024-07-10 16:30:56
+ * @LastEditTime: 2024-07-19 09:37:20
  * @LastEditors: wangqiaoling
  * @Description: 表格菜单
  */
@@ -37,14 +37,15 @@ export default {
         },
       ],
     },
-    {
-      path: "/table/render-table",
-      name: "RenderTable",
-      component: () => import("@/views/table/UIRender.vue"),
-      meta: {
-        title: "UI配置",
-        keepAlive: true,
-      },
-    },
+    // TODO: 还没开发完
+    // {
+    //   path: "/table/render-table",
+    //   name: "RenderTable",
+    //   component: () => import("@/views/table/UIRender.vue"),
+    //   meta: {
+    //     title: "UI配置",
+    //     keepAlive: true,
+    //   },
+    // },
   ],
 } as RouteConfigsTable;
