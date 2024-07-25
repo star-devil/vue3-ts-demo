@@ -55,6 +55,7 @@ declare module 'vue' {
     BodyCell: typeof import('./components/baseTable/tableSolts/BodyCell.vue')['default']
     CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
     CodeEditor: typeof import('./components/codeEditor/CodeEditor.vue')['default']
+    CopyButton: typeof import('./components/copyTextButton/CopyButton.vue')['default']
     CssVariableSetter: typeof import('./components/cssVariableSetter/CssVariableSetter.vue')['default']
     FoldTypograpghy: typeof import('./components/foldTypograpghy/FoldTypograpghy.vue')['default']
     Index: typeof import('./components/baseTable/renderTable/Index.vue')['default']

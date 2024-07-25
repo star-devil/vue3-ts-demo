@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-01-29 10:30:02
- * @LastEditTime: 2024-07-22 10:00:01
+ * @LastEditTime: 2024-07-22 10:02:04
  * @LastEditors: wangqiaoling
  * @Description:: 封装存储cookies的方法，在不支持storage的环境或者其他需求情况下使用
  */
@@ -27,7 +27,7 @@ export const Cookies = {
     const defaultOptions = {
       path: "/",
       secure: false,
-      sameSite: "strict",
+      sameSite: "none",
       expires: 7 * 24 * 60 * 60,
     };
     options = assign(defaultOptions, options);

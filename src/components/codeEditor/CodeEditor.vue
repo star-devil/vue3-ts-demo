@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:15:33
- * @LastEditTime: 2024-07-12 17:22:45
+ * @LastEditTime: 2024-07-25 15:12:39
  * @LastEditors: wangqiaoling
  * @Description: 代码编辑器
 -->
@@ -241,8 +241,6 @@ const defaultFontSize = ref(14);
 const defaultLineHeight = ref(20);
 const hasBorder = ref(true);
 const readOnly = ref(props.readOnly);
-const copyTextRef = ref(null);
-const copyText = ref("复制");
 
 const cmOptions: EditorConfiguration = reactive({
   mode: defalutLanguage.value,
@@ -286,18 +284,6 @@ watchEffect(() => {
   cmOptions.readOnly = readOnly.value;
   cmOptions.lint = defalutLanguage.value === "javascript";
 });
-
-/** 点击button触发a-typography-paragraph内部的复制方法 */
-function emitCopyFun() {
-  copyTextRef.value.children[0].click();
-}
-function copyCode() {
-  copyText.value = "成功";
-  const timer = setTimeout(() => {
-    copyText.value = "复制";
-    timer && clearTimeout(timer);
-  }, 3000);
-}
 
 function saveCode() {
   if (cminstance.value) {
@@ -401,15 +387,7 @@ function saveCode() {
         />
       </a-space>
 
-      <a-button @click="emitCopyFun">
-        <a-space>
-          <a-typography-paragraph
-            ref="copyTextRef"
-            :copyable="{ text: code, tooltip: false, onCopy: copyCode }"
-          />
-          {{ copyText }}
-        </a-space>
-      </a-button>
+      <CopyButton :code="props.code" />
 
       <a-button @click="saveCode" type="primary"> 保存 </a-button>
     </a-space>
@@ -440,10 +418,6 @@ function saveCode() {
 
   .large-width {
     width: 140px;
-  }
-
-  .ant-typography {
-    margin-bottom: 0;
   }
 }
 </style>
