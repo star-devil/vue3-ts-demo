@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:12:58
- * @LastEditTime: 2024-07-12 15:25:18
+ * @LastEditTime: 2024-07-25 16:15:36
  * @LastEditors: wangqiaoling
  * @Description: 组件示例菜单
  */
@@ -22,6 +22,15 @@ export default {
       component: () => import("@/views/componentsDemo/CodeEditorDemo.vue"),
       meta: {
         title: "代码编辑器",
+        keepAlive: true,
+      },
+    },
+    {
+      path: "/components/copy-button",
+      name: "CopyButton",
+      component: () => import("@/views/componentsDemo/CopyButtonDemo.vue"),
+      meta: {
+        title: "复制按钮",
         keepAlive: true,
       },
     },
