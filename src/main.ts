@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2024-04-28 14:05:29
+ * @LastEditTime: 2024-07-26 15:39:22
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
@@ -22,6 +22,9 @@ import App from "./App.vue";
 import { createFromIconfontCN } from "@ant-design/icons-vue";
 // 像素自适应
 import "./utils/rem.ts";
+// 文件上传plus版本，好像必须全局引用QAQ
+import uploader from "vue-simple-uploader";
+import "vue-simple-uploader/dist/style.css";
 
 const app = createApp(App);
 
@@ -32,7 +35,7 @@ app.component("IconFont", IconFont);
 
 window.IconFont = IconFont;
 
-app.use(router);
+app.use(router).use(uploader);
 setupStore(app);
 
 app.mount("#app");

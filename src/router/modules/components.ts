@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:12:58
- * @LastEditTime: 2024-07-25 16:15:36
+ * @LastEditTime: 2024-07-26 15:10:35
  * @LastEditors: wangqiaoling
  * @Description: 组件示例菜单
  */
@@ -31,6 +31,15 @@ export default {
       component: () => import("@/views/componentsDemo/CopyButtonDemo.vue"),
       meta: {
         title: "复制按钮",
+        keepAlive: true,
+      },
+    },
+    {
+      path: "/components/simple-upload",
+      name: "CopyButton",
+      component: () => import("@/components/simpleUpload/SimpleUpload.vue"),
+      meta: {
+        title: "文件上传Plus",
         keepAlive: true,
       },
     },
