@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-07-09 11:16:28
+ * @LastEditTime: 2024-07-26 10:04:00
  * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
@@ -66,7 +66,6 @@ function getCurrentMenuInfo() {
     layoutName === "noSider"
       ? []
       : getParentPaths(routeInfo.path, constantRoutes, "path").slice(1);
-
   if (layoutName.indexOf("mix") > -1) {
     hasChildrenMenu(state.openKeys[0]);
     items.value = flatten(items.value);
@@ -94,7 +93,7 @@ function hasChildrenMenu(key: string) {
  */
 const selectMenu: MenuProps["onSelect"] = (item) => {
   if (layoutName.indexOf("mix") > -1) {
-    hasChildrenMenu(item.key as string);
+    state.openKeys[0] = item.key as string;
   }
   router.push(item.key as RouteLocationRaw);
 };
@@ -108,6 +107,14 @@ function flatten(arr: any[]) {
     );
   }, []);
 }
+
+// 监听路由变化后再生成导航菜单
+watch(
+  () => routeInfo.path,
+  () => {
+    getCurrentMenuInfo();
+  }
+);
 
 // 生成导航菜单
 onBeforeMount(() => {
@@ -132,9 +139,3 @@ onBeforeMount(() => {
     </a-menu>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.ant-menu-light .ant-menu-item-selected {
-  background-color: red !important;
-}
-</style>
