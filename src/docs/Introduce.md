@@ -408,7 +408,35 @@
      },
    ```
 
-   
+### 代码编辑器`/src/components/codeEditor`
+
+#### 组件介绍
+
+1. 在线代码编辑器，基于`[codemirror](https://rennzhang.github.io/codemirror-editor-vue3/guide/getting-started)`封装。
+2. 封装的语言有：javascript、html、xml、css、json、vue、markdown、php、python、sql、go、yaml、c、c++、java，若想支持更多语言，请参考官网。
+3. 封装的功能有：代码折叠、自动提示、代码校验（目前只支持js和json）、自定义宽高、切换只读、边框展示
+4. 封装的主题有8种，4种暗色、4种亮色，可以根据系统暗亮主题切换自动更换：base16-dark、base16-light、blackboard、darcula、duotone-dark、duotone-light、elegant、juejin。若想支持更多主题，请参考官网。
+5. 新增的功能：调整行距、字体大小调整、复制代码
+
+#### 使用说明
+
+1. 在需要的地方直接使用`<CodeEditor />`即可
+2. 参数
+
+   | 属性名   | 默认值                | 值类型  | 是否可以为空或者不传 | 说明                                     |
+   | -------- | --------------------- | ------- | -------------------- | ---------------------------------------- |
+   | code     | 一串JSON              | String  | 否                   | 不传的话使用的是示例代码                 |
+   | language | javascript            | String  | 是                   | 编辑器当前语法                           |
+   | height   | {number:100,unix:"%"} | Object  | 是                   | 高度可以配置单位：%、px、rem、em、vw、vh |
+   | width    | {number:100,unix:"%"} | Object  | 是                   | 宽度可以配置单位：%、px、rem、em、vw、vh |
+   | readOnly | false                 | Boolean | 是                   | 编辑器只读，不可编辑                     |
+   | needCopy | true                  | Boolean | 是                   | 默认提供代码复制功能                     |
+
+3. 方法
+
+   | 方法名     | 参数    | 参数类型 | 说明                                          |
+   | ---------- | ------- | -------- | --------------------------------------------- |
+   | getNewCode | newCode | String   | 点击保存按钮，获取编辑框当前的代码（newCode） |
 
 ## 关于自定义主题的样式变量获取
 

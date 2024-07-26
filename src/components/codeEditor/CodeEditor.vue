@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:15:33
- * @LastEditTime: 2024-07-25 15:12:39
+ * @LastEditTime: 2024-07-26 11:16:20
  * @LastEditors: wangqiaoling
  * @Description: 代码编辑器
 -->
@@ -56,6 +56,10 @@ import "codemirror/theme/juejin.css";
 (window as any).JSHINT = JSHINT;
 
 const themeData = useThemeStore();
+
+const emit = defineEmits<{
+  getNewCode: [type: string];
+}>();
 
 const props = defineProps({
   code: {
@@ -116,6 +120,10 @@ const props = defineProps({
   readOnly: {
     type: Boolean,
     default: false,
+  },
+  needCopy: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -215,7 +223,9 @@ const themeList = ref<SelectProps["options"]>([
 ]);
 
 // 交互配置
-const defalutLanguage = computed(() => {
+// 转换语言
+const defalutLanguage = ref("");
+function converLanguage() {
   const jsLanguages = ["javascript", "typescript", "json"];
 
   if (jsLanguages.includes(props.language)) {
@@ -226,8 +236,16 @@ const defalutLanguage = computed(() => {
     }).value;
     return language as string;
   }
+}
+
+onMounted(() => {
+  defalutLanguage.value = converLanguage();
 });
 
+// 转换代码
+const defaultCode = ref(props.code);
+
+// 转换宽高
 const defaultWidth = reactive({
   number: props.width.number,
   unix: props.width.unix,
@@ -243,7 +261,7 @@ const hasBorder = ref(true);
 const readOnly = ref(props.readOnly);
 
 const cmOptions: EditorConfiguration = reactive({
-  mode: defalutLanguage.value,
+  mode: defalutLanguage.value, // 语言
   theme: theme.value, // 主题
   readOnly: readOnly.value, // 只读
   matchBrackets: true, //括号匹配
@@ -288,7 +306,7 @@ watchEffect(() => {
 function saveCode() {
   if (cminstance.value) {
     const newCode = cminstance.value.getValue();
-    console.info("保存成功：", newCode);
+    emit("getNewCode", newCode);
   }
 }
 </script>
@@ -387,14 +405,14 @@ function saveCode() {
         />
       </a-space>
 
-      <CopyButton :code="props.code" />
+      <CopyButton v-if="needCopy" :code="props.code" />
 
       <a-button @click="saveCode" type="primary"> 保存 </a-button>
     </a-space>
   </div>
 
   <VueCodemirror
-    v-model:value="props.code"
+    v-model:value="defaultCode"
     ref="codemirrorRef"
     :options="cmOptions"
     :placeholder="props.placeholder"
