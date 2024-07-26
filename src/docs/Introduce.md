@@ -365,7 +365,7 @@
    - 长文本单元格最好有固定width，这样能达到更好的显示效果。
    - 渲染长文本有两种选择，大量文本推荐优先使用 expandable（折叠文字），少量文本推荐使用 tooltip（悬浮展示）。注意渲染的文字是column.text，如有特殊需求，请使用`customRender`自行处理。
    - 处理为`tooltip`展示时使用的是antdv的`Typography.Text`组件，继承了组件所有参数。**注意：如果设置ellipsis.expandable=true，则会处理为折叠文字，Text的所有参数将不起作用**，所以如果想处理为tooltip最好是**不要设置ellipsis.expandable字段**。
-   - 处理为`expandable`展示时，使用的是`src/components/foldTypograpghy/FoldTypograpghy.vue`组件，（为什么不用`Typography.Paragraph`？因为它只能展开不能折叠）。折叠操作默认渲染为按钮，文字是【更多】和【收起】，不支持修改。主要常用参数如下，全部参数请看[text-clamp](https://sherwinshen.github.io/vue3-text-clamp/)：
+   - 处理为`expandable`展示时，使用的是`src/components/foldTypography/FoldTypography.vue`组件，（为什么不用`Typography.Paragraph`？因为它只能展开不能折叠）。折叠操作默认渲染为按钮，文字是【更多】和【收起】，不支持修改。主要常用参数如下，全部参数请看[text-clamp](https://sherwinshen.github.io/vue3-text-clamp/)：
 
    | 属性名         | 属性值 | 值类型  | 是否可以为空或者不传 | 说明                     |
    | -------------- | ------ | ------- | -------------------- | ------------------------ |
@@ -437,6 +437,41 @@
    | 方法名     | 参数    | 参数类型 | 说明                                          |
    | ---------- | ------- | -------- | --------------------------------------------- |
    | getNewCode | newCode | String   | 点击保存按钮，获取编辑框当前的代码（newCode） |
+
+### 复制按钮`/src/components/copyTextButton
+
+#### 组件介绍
+
+1. 这是基于`antdv: a-typography-paragraph`封装的组件。因为`a-typography-paragraph`这个组件在使用时时一串文字后面跟着复制文字按钮，即文字和复制是组合出现的，所以当需要复制的内容和按钮需要分开时就不适用了。
+2. 利用`a-typography-paragraph`自带的文本复制功能，封装了一个复制按钮，无需下载别的插件。
+
+#### 使用方法
+
+1. 在需要的地方直接使用`<CopyButton :code="text" />`即可，`code`是等待复制的文本内容
+
+
+
+### 超长文本折叠展开/src/components/foldTypography`
+
+#### 组件介绍
+
+1. 针对超长文本实现溢出展示...并提供展开全文和收起超出部分的功能。
+2. （为什么不用`Typography.Paragraph`？因为它只能展开不能折叠）。折叠操作默认渲染为按钮，文字是【更多】和【收起】，不支持修改。主要常用参数如下，全部参数请看[text-clamp](https://sherwinshen.github.io/vue3-text-clamp/)
+
+#### 使用说明
+
+1. 在需要使用的地方引用`<fold-typography/>`即可
+
+2. 参数
+
+   | 属性名         | 属性值 | 值类型  | 是否可以为空或者不传 | 说明                               |
+   | -------------- | ------ | ------- | -------------------- | ---------------------------------- |
+   | ellipsis       | {}     | object  | 否                   | 文字溢出的处理配置                 |
+   | \|- maxLines   | 1-10   | number  | 否                   | 显示的最大行数，会根据宽度自动计算 |
+   | \|- expandable | true   | boolean | 否                   | 为true才会处理为折叠文字           |
+   | text           | ""     | string  | 否                   | 需要处理的文字                     |
+
+
 
 ## 关于自定义主题的样式变量获取
 
