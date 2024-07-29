@@ -89,3 +89,36 @@ body {
     }
   }
 }
+
+/** 上传组件样式重置 */
+.uploader-list {
+  .uploader-file {
+    height: 40px;
+    line-height: 40px;
+    border-bottom-color: var(--colorBorder);
+
+    .uploader-file-progress {
+      background-color: var(--colorPrimaryBg);
+    }
+
+    .uploader-file-icon {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
+
+      &::before {
+        font-size: 20px;
+        content: "📑";
+      }
+    }
+  }
+
+  .uploader-file[status=error] {
+    color: var(--colorError);
+
+    .uploader-file-progress {
+      background-color: var(--colorErrorBg);
+     
+    }
+  }
+}
