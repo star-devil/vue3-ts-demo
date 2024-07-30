@@ -1,17 +1,28 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-26 14:50:19
- * @LastEditTime: 2024-07-29 17:16:03
+ * @LastEditTime: 2024-07-30 14:50:14
  * @LastEditors: wangqiaoling
  * @Description: 文件上传plus,支持分块、断点等功能，但是必须在mian.ts中进行全局引用。
  * @Description: 文档地址：https://github.com/simple-uploader/vue-uploader/blob/vue3/README_zh-CN.md
 -->
 <script setup lang="ts">
-import { union } from "lodash";
+import { assign, union } from "lodash";
 import { ACCEPT_CONFIG } from "./acceptFile";
 // import SparkMD5 from 'spark-md5';
 
 const props = defineProps({
+  /**是否上传文件夹 */
+  directory: {
+    type: Boolean,
+    default: true,
+  },
+  /**是否一次只能选择一个文件 */
+  single: {
+    type: Boolean,
+    default: false,
+  },
+  /**接收的文件类型 */
   acceptType: {
     type: Object,
     default: () => ({
@@ -19,6 +30,7 @@ const props = defineProps({
       value: [".md"],
     }),
   },
+  /** 上传参数配置 */
   options: {
     type: Object,
     default: () => ({
@@ -31,24 +43,37 @@ const props = defineProps({
       chunkSize: "2048000", //分块大小(单位:字节)
       fileParameterName: "upfile", //上传文件时文件内容的参数名,对应chunk里的Multipart对象名名,默认对象名为file
       maxChunkRetries: 3, //失败后最多自动重试上传次数
-      // 服务器分片校验函数
-      checkChunkUploadedByResponse: function (
-        chunk: { offset: number },
-        response_msg: string
-      ) {
-        let objMessage = JSON.parse(response_msg);
-        console.log(response_msg, "response_msg");
-        if (objMessage.skipUpload) return true;
-        return (objMessage.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0;
-      },
     }),
   },
 });
 
 const uploaderRef = ref(null);
-const options = {
-  ...props.options,
+const defalutOptions = {
+  // 服务器分片校验函数
+  checkChunkUploadedByResponse: function (
+    chunk: { offset: number },
+    response_msg: string
+  ) {
+    let objMessage = JSON.parse(response_msg);
+    console.log(response_msg, "response_msg");
+    if (objMessage.skipUpload) return true;
+    return (objMessage.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0;
+  },
+  // 格式化剩余时间
+  parseTimeRemaining: function (
+    timeRemaining: number,
+    parsedTimeRemaining: string
+  ) {
+    if (timeRemaining)
+      return parsedTimeRemaining
+        .replace(/\syears?/, "年")
+        .replace(/\days?/, "天")
+        .replace(/\shours?/, "小时")
+        .replace(/\sminutes?/, "分钟")
+        .replace(/\sseconds?/, "秒");
+  },
 };
+const options = assign(defalutOptions, props.options);
 
 const attrs = {
   accept:
@@ -58,8 +83,8 @@ const attrs = {
 };
 
 const statusText = {
-  success: "成功了",
-  error: "出错了",
+  success: "上传成功",
+  error: "上传失败",
   uploading: "上传中",
   paused: "暂停中",
   waiting: "等待中",
@@ -152,12 +177,13 @@ onMounted(() => {
 //     console.log("计算第" + currentChunk + "块");
 //   }
 // }
+
+// @file-added="onFileAdded"
+//     @file-success="onFileSuccess"
+//     @file-error="onFileError"
 </script>
 
 <template>
-  <!-- @file-added="onFileAdded"
-    @file-success="onFileSuccess"
-    @file-error="onFileError" -->
   <uploader
     :options="options"
     :file-status-text="statusText"
@@ -169,7 +195,7 @@ onMounted(() => {
       <p class="uploader-drop-text">+ 拖动文件到这里自动上传，或者</p>
     </uploader-drop>
     <uploader-btn :attrs="attrs">选择文件</uploader-btn>
-    <uploader-btn :directory="true">选择文件夹</uploader-btn>
+    <uploader-btn :directory="props.directory">选择文件夹</uploader-btn>
     <uploader-list></uploader-list>
   </uploader>
 </template>
