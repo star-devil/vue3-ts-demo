@@ -11,6 +11,9 @@ dependencies:
   '@kangc/v-md-editor':
     specifier: ^2.3.18
     version: 2.3.18(@vue/compiler-sfc@3.4.31)(vue@3.3.8)
+  '@kyvg/vue3-notification':
+    specifier: ^3.2.1
+    version: 3.2.1(vue@3.3.8)
   '@types/crypto-js':
     specifier: ^4.2.1
     version: registry.npmmirror.com/@types/crypto-js@4.2.1
@@ -830,6 +833,14 @@ packages:
       xss: 1.0.15
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@kyvg/vue3-notification@3.2.1(vue@3.3.8):
+    resolution: {integrity: sha512-qn4bCBBCxW0Ya+RmHXu2SYBVwGXWsAGdlDKqCqyLryaZTbtFXi32iSSLnuKjSUVxFqQRToFc6g1zp1XLTyHrvw==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.3.8(typescript@5.2.2)
     dev: false
 
   /@mrmlnc/readdir-enhanced@2.2.1:

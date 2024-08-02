@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-26 14:50:19
- * @LastEditTime: 2024-07-30 14:50:14
+ * @LastEditTime: 2024-08-01 17:45:58
  * @LastEditors: wangqiaoling
  * @Description: 文件上传plus,支持分块、断点等功能，但是必须在mian.ts中进行全局引用。
  * @Description: 文档地址：https://github.com/simple-uploader/vue-uploader/blob/vue3/README_zh-CN.md
@@ -10,8 +10,26 @@
 import { assign, union } from "lodash";
 import { ACCEPT_CONFIG } from "./acceptFile";
 // import SparkMD5 from 'spark-md5';
+import { useNotification } from "@kyvg/vue3-notification";
+
+const { notify } = useNotification();
+const uploaderRef = ref(null);
+const uploaderInstance = ref(null);
+onMounted(() => {
+  uploaderInstance.value = uploaderRef.value.uploader;
+  notify({
+    group: "foo-css",
+    text: "测试",
+    duration: -1,
+  });
+});
 
 const props = defineProps({
+  /** 是否需要拖动上传区域 */
+  needDrop: {
+    type: Boolean,
+    default: false,
+  },
   /**是否上传文件夹 */
   directory: {
     type: Boolean,
@@ -47,7 +65,6 @@ const props = defineProps({
   },
 });
 
-const uploaderRef = ref(null);
 const defalutOptions = {
   // 服务器分片校验函数
   checkChunkUploadedByResponse: function (
@@ -55,7 +72,7 @@ const defalutOptions = {
     response_msg: string
   ) {
     let objMessage = JSON.parse(response_msg);
-    console.log(response_msg, "response_msg");
+    // console.log(response_msg, "response_msg");
     if (objMessage.skipUpload) return true;
     return (objMessage.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0;
   },
@@ -90,13 +107,25 @@ const statusText = {
   waiting: "等待中",
 };
 
-onMounted(() => {
-  console.log("uploaderRef--", uploaderRef.value.uploader);
+/** 成功上传的文件总大小 */
+const successFileSizeText = computed(() => {
+  return uploaderInstance.value.sizeUploaded();
 });
+/** 文件是否上传完成(包含上传中、上传完成和失败) */
+const isUploading = ref<boolean | string>(false);
 
-// function onFileAdded(file) {
-//   computeMD5(file);
-// }
+function onComplete() {
+  console.log("是否上传完成", uploaderInstance.value.isUploading());
+  // isUploading.value = true;
+}
+
+function onFileError() {
+  isUploading.value = "error";
+}
+
+function onFileProgress() {
+  isUploading.value = uploaderInstance.value.isUploading();
+}
 
 // function onFileSuccess(rootFile, file, response, chunk) {
 //   //refProjectId为预留字段，可关联附件所属目标，例如所属档案，所属工程等
@@ -184,20 +213,77 @@ onMounted(() => {
 </script>
 
 <template>
-  <uploader
-    :options="options"
-    :file-status-text="statusText"
-    class="uploader-ui"
-    ref="uploaderRef"
-  >
-    <uploader-unsupport></uploader-unsupport>
-    <uploader-drop>
-      <p class="uploader-drop-text">+ 拖动文件到这里自动上传，或者</p>
-    </uploader-drop>
-    <uploader-btn :attrs="attrs">选择文件</uploader-btn>
-    <uploader-btn :directory="props.directory">选择文件夹</uploader-btn>
-    <uploader-list></uploader-list>
-  </uploader>
+  <div>
+    <uploader
+      :options="options"
+      :file-status-text="statusText"
+      class="uploader-ui"
+      ref="uploaderRef"
+      @complete="onComplete"
+      @file-error="onFileError"
+      @file-progress="onFileProgress"
+    >
+      <uploader-unsupport></uploader-unsupport>
+      <uploader-drop v-if="props.needDrop">
+        <p class="uploader-drop-text">+ 拖动文件到这里自动上传，或者</p>
+      </uploader-drop>
+      <uploader-btn :attrs="attrs">选择文件</uploader-btn>
+      <uploader-btn :directory="props.directory">选择文件夹</uploader-btn>
+      <Notifications
+        group="foo-css"
+        title="Authorization"
+        :width="600"
+        animation-name="v-fade-left"
+        position="bottom right"
+        class="uploader-list-notification"
+      >
+        <template #body="{ item }">
+          <div class="custom-template">
+            <div
+              class="custom-template-title inline-flex justify-between items-center w-full"
+            >
+              <div class="custom-template-status">
+                <a-space>
+                  <CloseCircleOutlined
+                    class="status-icon error-icon"
+                    v-if="isUploading === 'error'"
+                  />
+                  <SyncOutlined
+                    class="status-icon loading-icon"
+                    spin
+                    v-else-if="isUploading"
+                  />
+                  <CheckCircleOutlined
+                    v-else
+                    class="status-icon completed-icon"
+                  />
+                  <span class="upload-status-title">{{
+                    isUploading === "error"
+                      ? "有文件上传出错"
+                      : isUploading
+                      ? "文件上传中"
+                      : "全部上传完成"
+                  }}</span>
+                </a-space>
+              </div>
+              <div class="custom-template-close-icon">
+                <CloseOutlined class="close-icon cursor-pointer" />
+              </div>
+            </div>
+
+            <div class="custom-template-count">
+              <span>已上传 1 个任务，共 {{ successFileSizeText }} KB</span>
+            </div>
+
+            <div class="custom-template-content">
+              <uploader-list></uploader-list>
+              <span>{{ item.title }}</span>
+            </div>
+          </div>
+        </template>
+      </Notifications>
+    </uploader>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -242,6 +328,64 @@ onMounted(() => {
     margin-top: 8px;
     overflow: hidden auto;
     color: var(--colorPrimaryText);
+  }
+
+  .uploader-list-notification {
+    right: 24px !important;
+    bottom: 24px !important;
+    background-color: var(--colorBgContainer);
+    border: 1px solid var(--colorBorderSecondary);
+    border-radius: 6px;
+    box-shadow: var(--boxShadowSecondary);
+
+    .custom-template {
+      .custom-template-title {
+        padding: 16px 16px 8px;
+
+        .status-icon {
+          font-size: 22px;
+        }
+
+        .error-icon {
+          color: var(--colorError);
+        }
+
+        .completed-icon {
+          color: var(--colorSuccess);
+        }
+
+        .loading-icon {
+          color: var(--colorPrimary);
+        }
+
+        .upload-status-title {
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .close-icon {
+          font-size: 18px;
+
+          // color: var(--colorSuccess);
+        }
+      }
+
+      .custom-template-count {
+        width: 100%;
+        padding: 0 16px;
+        margin: 8px 0;
+        background-color: var(--colorPrimaryLight);
+
+        span {
+          line-height: 40px;
+          color: var(--colorTextSecondary);
+        }
+      }
+
+      .custom-template-content {
+        padding-bottom: 16px;
+      }
+    }
   }
 }
 </style>
