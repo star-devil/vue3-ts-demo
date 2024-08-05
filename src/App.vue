@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2024-03-22 17:12:05
+ * @LastEditTime: 2024-08-02 16:36:19
  * @LastEditors: wangqiaoling
  * @Description: 
 -->
@@ -58,8 +58,8 @@ provide("reload", reload);
     >
       <CssVariableSetter :isGlobal="true">
         <router-view v-if="isRouterAlive" />
+        <global-upload />
       </CssVariableSetter>
     </a-config-provider>
   </div>
 </template>
-./theme./theme

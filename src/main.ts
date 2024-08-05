@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2024-07-31 16:59:05
+ * @LastEditTime: 2024-08-02 16:18:05
  * @LastEditors: wangqiaoling
  * @Description: 全局配置
  */
@@ -25,8 +25,6 @@ import "./utils/rem.ts";
 // 文件上传plus版本，好像必须全局引用QAQ
 import uploader from "vue-simple-uploader";
 import "vue-simple-uploader/dist/style.css";
-// 文件上传notification
-import Notifications from "@kyvg/vue3-notification";
 
 const app = createApp(App);
 
@@ -37,7 +35,7 @@ app.component("IconFont", IconFont);
 
 window.IconFont = IconFont;
 
-app.use(router).use(uploader).use(Notifications);
+app.use(router).use(uploader);
 setupStore(app);
 
 app.mount("#app");
