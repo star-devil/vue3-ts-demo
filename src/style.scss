@@ -102,14 +102,43 @@ body {
       background-color: var(--colorPrimaryBg);
     }
 
-    .uploader-file-icon {
-      width: 20px;
-      height: 20px;
-      margin-top: 10px;
+    
 
-      &::before {
-        font-size: 20px;
-        content: "📑";
+    .uploader-file-info {
+      .uploader-file-name {
+        width: 43%;
+
+        .uploader-file-icon {
+          width: 20px;
+          height: 20px;
+          margin-top: 10px;
+    
+          &::before {
+            font-size: 20px;
+          }
+        }
+
+        .uploader-file-icon[icon=image] {
+          &::before {
+            content: "🖼";
+          }
+        }
+      }
+
+      .uploader-file-size {
+        width: 13%;
+      }
+      
+      .uploader-file-meta{
+        width: 0;
+      }
+
+      .uploader-file-status {
+        width: 32%;
+      }
+
+      .uploader-file-actions {
+        width: 12%;
       }
     }
   }
@@ -125,5 +154,11 @@ body {
 
   .uploader-file-actions > span {
     margin-top: 12px;
+  }
+}
+
+.uploader-ui {
+  .ant-collapse-content-box {
+    padding: 0 !important;
   }
 }

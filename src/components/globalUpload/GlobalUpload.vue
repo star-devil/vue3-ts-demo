@@ -1,16 +1,15 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-26 14:50:19
- * @LastEditTime: 2024-08-02 17:34:55
+ * @LastEditTime: 2024-08-05 16:56:50
  * @LastEditors: wangqiaoling
  * @Description: 文件上传plus,支持分块、断点等功能，但是必须在mian.ts中进行全局引用。
  * @Description: 文档地址：https://github.com/simple-uploader/vue-uploader/blob/vue3/README_zh-CN.md
 -->
 <script setup lang="ts">
-import { emitter } from "@utils/provideConfig";
+import { emitter, formatBytes } from "@utils/provideConfig";
 import { assign, union } from "lodash";
 import { ACCEPT_CONFIG } from "./acceptFile";
-// import SparkMD5 from 'spark-md5';
 
 // 文件上传
 const showList = ref<boolean>(false);
@@ -19,11 +18,21 @@ const uploaderInstance = ref(null);
 
 // 文件列表通知框
 const uploaderStatusTitle = ref<string>("请上传文件");
-
+const collapseList = ref(["open"]);
+const uploadedFilesCount = ref<number>(0);
 // 上传文件按钮
 const uploadFileButtonRef = ref(null);
 // 上传文件夹按钮
 const uploadFilesButtonRef = ref(null);
+
+onMounted(() => {
+  /** 触发上传文件按钮方法 */
+  emitter.on("globalUploaderSelect", (flag: string) => {
+    uploaderInstance.value = uploaderRef.value?.uploader;
+    if (flag === "File") uploadFileButtonRef.value.$el.click();
+    else uploadFilesButtonRef.value.$el.click();
+  });
+});
 
 onUnmounted(() => {
   emitter.off("globalUploaderSelect");
@@ -48,20 +57,15 @@ const props = defineProps({
       value: [".md"],
     }),
   },
+  /** 是否自动上传 */
+  autoStart: {
+    type: Boolean,
+    default: true,
+  },
   /** 上传参数配置 */
   options: {
     type: Object,
-    default: () => ({
-      target: "//jsonplaceholder.typicode.com/posts/",
-      query: {},
-      headers: {
-        token: "", // 需要携带token信息,看各情况具体定义
-      },
-      testChunks: true, //是否开启服务器分片校验,对应GET类型同名的target URL
-      chunkSize: "2048000", //分块大小(单位:字节)
-      fileParameterName: "upfile", //上传文件时文件内容的参数名,对应chunk里的Multipart对象名名,默认对象名为file
-      maxChunkRetries: 3, //失败后最多自动重试上传次数
-    }),
+    default: () => ({}),
   },
 });
 
@@ -71,10 +75,12 @@ const defalutOptions = {
     chunk: { offset: number },
     response_msg: string
   ) {
-    let objMessage = JSON.parse(response_msg);
-    // console.log(response_msg, "response_msg");
-    if (objMessage.skipUpload) return true;
-    return (objMessage.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0;
+    try {
+      let objMessage = JSON.parse(response_msg);
+      // console.log(response_msg, "response_msg");
+      if (objMessage.skipUpload) return true;
+      return (objMessage.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0;
+    } catch (e) {}
   },
   // 格式化剩余时间
   parseTimeRemaining: function (
@@ -89,6 +95,15 @@ const defalutOptions = {
         .replace(/\sminutes?/, "分钟")
         .replace(/\sseconds?/, "秒");
   },
+  target: "//jsonplaceholder.typicode.com/posts/",
+  query: {},
+  headers: {
+    token: "", // 需要携带token信息,看各情况具体定义
+  },
+  testChunks: true, //是否开启服务器分片校验,对应GET类型同名的target URL
+  chunkSize: "2048000", //分块大小(单位:字节)
+  fileParameterName: "upfile", //上传文件时文件内容的参数名,对应chunk里的Multipart对象名名,默认对象名为file
+  maxChunkRetries: 3, //失败后最多自动重试上传次数
 };
 const options = assign(defalutOptions, props.options);
 
@@ -107,30 +122,24 @@ const statusText = {
   waiting: "等待中",
 };
 
-/** 触发上传文件按钮方法 */
-emitter.on("globalUploaderSelect", (flag: string) => {
-  uploaderInstance.value = uploaderRef.value?.uploader;
-  if (flag === "File") uploadFileButtonRef.value.$el.click();
-  else uploadFilesButtonRef.value.$el.click();
-});
+/** 成功上传的文件总大小 */
+const successFileSizeText = ref<string>("");
+/** 文件是否上传完成(包含上传中、上传完成和失败) */
+const isUploading = ref<boolean | string>("");
 
 /** 选择文件后 */
 function onFileAdded() {
   showList.value = true;
 }
 
-/** 成功上传的文件总大小 */
-const successFileSizeText = computed(() => {
-  return uploaderInstance.value?.sizeUploaded();
-});
-/** 文件是否上传完成(包含上传中、上传完成和失败) */
-const isUploading = ref<boolean | string>("");
-
 /** 文件开始上传 */
 function onUploadStart() {}
 
 function onComplete() {
   console.log("是否上传完成", uploaderInstance.value.isUploading());
+  successFileSizeText.value = formatBytes(
+    uploaderInstance.value?.sizeUploaded()
+  );
 }
 
 function onFileError() {
@@ -139,7 +148,16 @@ function onFileError() {
 
 function onFileProgress() {
   isUploading.value = uploaderInstance.value.isUploading();
+  successFileSizeText.value = uploaderInstance.value?.sizeUploaded();
+  console.log("上传-", successFileSizeText.value);
 }
+
+function onFileUploaded(data) {
+  uploadedFilesCount.value++;
+  console.log("data--", data);
+}
+
+/** 获取当前文件列 */
 
 /** 关闭文件组件 */
 function closeListNotification() {
@@ -165,6 +183,7 @@ watchEffect(() => {
     <uploader
       :options="options"
       :file-status-text="statusText"
+      :autoStart="autoStart"
       class="uploader-ui"
       ref="uploaderRef"
       @complete="onComplete"
@@ -172,6 +191,7 @@ watchEffect(() => {
       @file-added="onFileAdded"
       @file-error="onFileError"
       @file-progress="onFileProgress"
+      @file-uploaded="onFileUploaded"
     >
       <uploader-unsupport></uploader-unsupport>
       <uploader-drop v-if="props.needDrop">
@@ -180,43 +200,59 @@ watchEffect(() => {
       <uploader-btn ref="uploadFileButtonRef" :attrs="attrs"></uploader-btn>
       <uploader-btn ref="uploadFilesButtonRef" :directory="true"></uploader-btn>
       <div class="custom-template" v-show="showList">
-        <div
-          class="custom-template-title inline-flex justify-between items-center w-full"
-        >
-          <div class="custom-template-status">
-            <a-space>
-              <CloseCircleOutlined
-                class="status-icon error-icon"
-                v-if="isUploading === 'error'"
-              />
-              <SyncOutlined
-                class="status-icon loading-icon"
-                spin
-                v-else-if="isUploading === true"
-              />
-              <CheckCircleOutlined
-                v-else-if="isUploading === false"
-                class="status-icon completed-icon"
-              />
-              <ExclamationCircleOutlined v-else class="status-icon info-icon" />
-              <span class="upload-status-title">{{ uploaderStatusTitle }}</span>
-            </a-space>
-          </div>
-          <div class="custom-template-close-icon">
-            <CloseOutlined
-              class="close-icon cursor-pointer"
-              @click="closeListNotification"
-            />
-          </div>
-        </div>
+        <a-collapse v-model:activeKey="collapseList">
+          <a-collapse-panel key="open" :show-arrow="false">
+            <template #header>
+              <div
+                class="custom-template-title inline-flex justify-between items-center w-full"
+              >
+                <div class="custom-template-status">
+                  <a-space>
+                    <CloseCircleOutlined
+                      class="status-icon error-icon"
+                      v-if="isUploading === 'error'"
+                    />
+                    <SyncOutlined
+                      class="status-icon loading-icon"
+                      spin
+                      v-else-if="isUploading === true"
+                    />
+                    <CheckCircleOutlined
+                      v-else-if="isUploading === false"
+                      class="status-icon completed-icon"
+                    />
+                    <ExclamationCircleOutlined
+                      v-else
+                      class="status-icon info-icon"
+                    />
+                    <span class="upload-status-title">{{
+                      uploaderStatusTitle
+                    }}</span>
+                  </a-space>
+                </div>
+                <div class="custom-template-close-icon">
+                  <a-space>
+                    <CloseOutlined
+                      class="close-icon cursor-pointer"
+                      @click="closeListNotification"
+                    />
+                  </a-space>
+                </div>
+              </div>
+            </template>
 
-        <div class="custom-template-count">
-          <span>已上传 1 个任务，共 {{ successFileSizeText }} KB</span>
-        </div>
+            <div class="custom-template-count">
+              <span
+                >已上传 {{ uploadedFilesCount }} 个任务，共
+                {{ successFileSizeText }}</span
+              >
+            </div>
 
-        <div class="custom-template-content">
-          <uploader-list></uploader-list>
-        </div>
+            <div class="custom-template-content">
+              <uploader-list></uploader-list>
+            </div>
+          </a-collapse-panel>
+        </a-collapse>
       </div>
     </uploader>
   </div>
@@ -230,9 +266,7 @@ watchEffect(() => {
   z-index: 1000;
   box-sizing: border-box;
   width: 500px;
-  background-color: var(--colorBgContainer);
-  border: 1px solid var(--colorBorderSecondary);
-  border-radius: 6px;
+  border-radius: 8px;
   box-shadow: var(--boxShadowSecondary);
 
   .uploader-ui {
@@ -280,9 +314,6 @@ watchEffect(() => {
 
     .custom-template {
       .custom-template-title {
-        box-sizing: border-box;
-        padding: 16px 16px 8px;
-
         .status-icon {
           font-size: 22px;
         }

@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-07-11 13:29:09
+ * @LastEditTime: 2024-08-06 09:52:45
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -112,7 +112,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     },
     server: {
       host: "0.0.0.0", // 指定服务器主机名
-      port: 8880, // 指定服务器端口
+      port: 8000, // 指定服务器端口
       hmr: true, // 开启热更新
       open: true, // 在服务器启动时自动在浏览器中打开应用程序
       https: false, // 是否开启 https

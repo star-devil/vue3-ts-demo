@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-04-30 15:11:58
+ * @LastEditTime: 2024-08-06 09:46:26
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
@@ -89,4 +89,22 @@ export function actionIsDisabled(
     if (disableAction) return true;
   }
   return false;
+}
+
+/**
+ * @description 格式化字节数
+ * @param bytes 字节数
+ * @param decimals 小数位数
+ * @returns 格式化后的字节数
+ */
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (bytes === 0) return "0 B";
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
