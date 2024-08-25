@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-11 11:15:33
- * @LastEditTime: 2024-07-26 11:16:20
+ * @LastEditTime: 2024-08-24 12:33:31
  * @LastEditors: wangqiaoling
  * @Description: 代码编辑器
 -->
@@ -320,6 +320,7 @@ function saveCode() {
           v-model:value="defalutLanguage"
           class="small-width"
           :options="languageList"
+          size="small"
         ></a-select>
       </a-space>
 
@@ -329,6 +330,7 @@ function saveCode() {
           v-model:value="defaultFontSize"
           class="small-width"
           addon-after="px"
+          size="small"
         >
         </a-input-number>
       </a-space>
@@ -339,13 +341,18 @@ function saveCode() {
           v-model:value="defaultLineHeight"
           class="small-width"
           addon-after="px"
+          size="small"
         >
         </a-input-number>
       </a-space>
 
       <a-space>
         <span>宽度</span>
-        <a-input-number v-model:value="defaultWidth.number" class="large-width">
+        <a-input-number
+          v-model:value="defaultWidth.number"
+          class="large-width"
+          size="small"
+        >
           <template #addonAfter>
             <a-select v-model:value="defaultWidth.unix" style="width: 70px">
               <a-select-option value="%">%</a-select-option>
@@ -364,6 +371,7 @@ function saveCode() {
         <a-input-number
           v-model:value="defaultHeight.number"
           class="large-width"
+          size="small"
         >
           <template #addonAfter>
             <a-select v-model:value="defaultHeight.unix" style="width: 70px">
@@ -383,8 +391,9 @@ function saveCode() {
         <a-select
           ref="select"
           v-model:value="theme"
-          class="large-width"
+          class="small-width"
           :options="themeList"
+          size="small"
         ></a-select>
       </a-space>
 
@@ -394,6 +403,7 @@ function saveCode() {
           v-model:checked="hasBorder"
           checked-children="显示"
           un-checked-children="隐藏"
+          size="small"
         />
       </a-space>
       <a-space>
@@ -402,12 +412,13 @@ function saveCode() {
           v-model:checked="readOnly"
           checked-children="是"
           un-checked-children="否"
+          size="small"
         />
       </a-space>
 
-      <CopyButton v-if="needCopy" :code="props.code" />
+      <CopyButton size="small" v-if="needCopy" :code="props.code" />
 
-      <a-button @click="saveCode" type="primary"> 保存 </a-button>
+      <a-button @click="saveCode" type="primary" size="small"> 保存 </a-button>
     </a-space>
   </div>
 
@@ -431,7 +442,7 @@ function saveCode() {
   margin-bottom: 8px;
 
   .small-width {
-    width: 120px;
+    width: 100px;
   }
 
   .large-width {

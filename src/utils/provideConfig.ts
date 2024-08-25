@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-08-06 09:46:26
+ * @LastEditTime: 2024-08-24 11:56:56
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
@@ -69,7 +69,7 @@ export function covertFunction(originProps: any, extraCallbackData: any) {
 
 /**
  * @description 可用于动态控制操作是否禁用(or是否隐藏or是否渲染，凡是可以用true/false判断的都使用这个方法)
- * @param disable 用于判断禁用的对象参数，数组内各item之间是或关系，item内部属性是与关系
+ * @param disable 用于判断禁用的对象参数，数组内各item之间是或关系，item内部属性是与关系；
  * @param targetData 目标数据，如果与item内部属性值相同则禁用，与或判断参看disable
  * @returns boolean
  */
@@ -77,18 +77,29 @@ export function actionIsDisabled(
   disable: { [key: string]: any }[],
   targetData: { [key: string]: any }
 ) {
-  if (!disable || disable.length === 0) return false;
-  for (const condition of disable) {
-    let disableAction = true;
-    forIn(condition, (value, key) => {
-      if (targetData[key] !== value) {
-        disableAction = false;
-        return;
+  if (!disable?.length) return false;
+
+  return disable.some((condition) => {
+    return Object.entries(condition).every(([key, value]) => {
+      if (typeof value === "string") {
+        if (value.startsWith("!==")) {
+          const comparisonValue = value.slice(3);
+          const targetValue = targetData[key];
+
+          // 尝试将 comparisonValue 转换为数字以处理数字类型的比较
+          const parsedComparisonValue = isNaN(Number(comparisonValue))
+            ? comparisonValue
+            : Number(comparisonValue);
+
+          return targetValue !== parsedComparisonValue;
+        }
+        if (value === "not empty") {
+          return Boolean(targetData[key]);
+        }
       }
+      return targetData[key] === value;
     });
-    if (disableAction) return true;
-  }
-  return false;
+  });
 }
 
 /**
