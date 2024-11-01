@@ -1,14 +1,17 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-07-26 14:50:19
- * @LastEditTime: 2024-08-05 16:56:50
+ * @LastEditTime: 2024-08-13 16:15:33
  * @LastEditors: wangqiaoling
  * @Description: 文件上传plus,支持分块、断点等功能，但是必须在mian.ts中进行全局引用。
  * @Description: 文档地址：https://github.com/simple-uploader/vue-uploader/blob/vue3/README_zh-CN.md
 -->
 <script setup lang="ts">
+import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 import { emitter, formatBytes } from "@utils/provideConfig";
+import { Modal } from "ant-design-vue";
 import { assign, union } from "lodash";
+import { createVNode } from "vue";
 import { ACCEPT_CONFIG } from "./acceptFile";
 
 // 文件上传
@@ -19,7 +22,6 @@ const uploaderInstance = ref(null);
 // 文件列表通知框
 const uploaderStatusTitle = ref<string>("请上传文件");
 const collapseList = ref(["open"]);
-const uploadedFilesCount = ref<number>(0);
 // 上传文件按钮
 const uploadFileButtonRef = ref(null);
 // 上传文件夹按钮
@@ -36,6 +38,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   emitter.off("globalUploaderSelect");
+  uploaderInstance.value.bootstrap();
 });
 
 const props = defineProps({
@@ -124,6 +127,8 @@ const statusText = {
 
 /** 成功上传的文件总大小 */
 const successFileSizeText = ref<string>("");
+/** 成功上传文件数量 */
+const uploadedFilesCount = ref<number>(0);
 /** 文件是否上传完成(包含上传中、上传完成和失败) */
 const isUploading = ref<boolean | string>("");
 
@@ -136,10 +141,8 @@ function onFileAdded() {
 function onUploadStart() {}
 
 function onComplete() {
-  console.log("是否上传完成", uploaderInstance.value.isUploading());
-  successFileSizeText.value = formatBytes(
-    uploaderInstance.value?.sizeUploaded()
-  );
+  uploadedFilesCount.value++;
+  console.log("上传完成");
 }
 
 function onFileError() {
@@ -148,21 +151,29 @@ function onFileError() {
 
 function onFileProgress() {
   isUploading.value = uploaderInstance.value.isUploading();
-  successFileSizeText.value = uploaderInstance.value?.sizeUploaded();
-  console.log("上传-", successFileSizeText.value);
 }
 
 function onFileUploaded(data) {
-  uploadedFilesCount.value++;
   console.log("data--", data);
 }
 
-/** 获取当前文件列 */
-
 /** 关闭文件组件 */
 function closeListNotification() {
-  showList.value = false;
-  uploaderInstance.value.cancel();
+  Modal.confirm({
+    title: "你确定要关闭上传窗口吗？",
+    icon: createVNode(ExclamationCircleOutlined),
+    content: "窗口关闭后，所有未完成上传的文件将被取消上传！",
+    onOk() {
+      showList.value = false;
+      uploadedFilesCount.value = 0;
+      uploaderInstance.value.cancel();
+      uploaderInstance.value.bootstrap();
+      uploaderInstance.value = null;
+    },
+    onCancel() {
+      console.log("Cancel");
+    },
+  });
 }
 
 watchEffect(() => {
@@ -175,6 +186,10 @@ watchEffect(() => {
   } else {
     uploaderStatusTitle.value = "请上传文件";
   }
+  console.log("shangchuan--", uploaderInstance.value);
+  successFileSizeText.value = formatBytes(
+    uploaderInstance.value?.sizeUploaded()
+  );
 });
 </script>
 
@@ -199,7 +214,7 @@ watchEffect(() => {
       </uploader-drop>
       <uploader-btn ref="uploadFileButtonRef" :attrs="attrs"></uploader-btn>
       <uploader-btn ref="uploadFilesButtonRef" :directory="true"></uploader-btn>
-      <div class="custom-template" v-show="showList">
+      <div class="custom-template" v-if="showList">
         <a-collapse v-model:activeKey="collapseList">
           <a-collapse-panel key="open" :show-arrow="false">
             <template #header>
@@ -234,7 +249,7 @@ watchEffect(() => {
                   <a-space>
                     <CloseOutlined
                       class="close-icon cursor-pointer"
-                      @click="closeListNotification"
+                      @click.stop="closeListNotification"
                     />
                   </a-space>
                 </div>

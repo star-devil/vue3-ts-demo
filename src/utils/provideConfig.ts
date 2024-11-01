@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-08-06 09:46:26
+ * @LastEditTime: 2024-08-13 15:07:19
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
@@ -74,9 +74,12 @@ export function covertFunction(originProps: any, extraCallbackData: any) {
  * @returns boolean
  */
 export function actionIsDisabled(
-  disable: { [key: string]: any }[],
+  disable: { [key: string]: any }[] | Function,
   targetData: { [key: string]: any }
 ) {
+  if (typeof disable === "function") {
+    return disable(targetData);
+  }
   if (!disable || disable.length === 0) return false;
   for (const condition of disable) {
     let disableAction = true;
