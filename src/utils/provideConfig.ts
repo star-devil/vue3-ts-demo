@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-11-26 11:06:10
+ * @LastEditTime: 2024-11-26 11:21:14
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
@@ -77,18 +77,29 @@ export function actionIsDisabled(
   disable: { [key: string]: any }[],
   targetData: { [key: string]: any }
 ) {
-  if (!disable || disable.length === 0) return false;
-  for (const condition of disable) {
-    let disableAction = true;
-    forIn(condition, (value, key) => {
-      if (targetData[key] !== value) {
-        disableAction = false;
-        return;
+  if (!disable?.length) return false;
+
+  return disable.some((condition) => {
+    return Object.entries(condition).every(([key, value]) => {
+      if (typeof value === "string") {
+        if (value.startsWith("!==")) {
+          const comparisonValue = value.slice(3);
+          const targetValue = targetData[key];
+
+          // 尝试将 comparisonValue 转换为数字以处理数字类型的比较
+          const parsedComparisonValue = isNaN(Number(comparisonValue))
+            ? comparisonValue
+            : Number(comparisonValue);
+
+          return targetValue !== parsedComparisonValue;
+        }
+        if (value === "not empty") {
+          return Boolean(targetData[key]);
+        }
       }
+      return targetData[key] === value;
     });
-    if (disableAction) return true;
-  }
-  return false;
+  });
 }
 
 /**

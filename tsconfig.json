@@ -46,7 +46,6 @@
     "src/**/*.vue",
     "types/*.d.ts",
     "src/auto-import.d.ts",
-    "vite.config.ts",
     "_mockProdServer.ts"
   ],
   "exclude": ["vite.config.ts", "dist", "node_modules"],
