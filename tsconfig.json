@@ -47,7 +47,7 @@
     "types/*.d.ts",
     "src/auto-import.d.ts",
     "vite.config.ts",
-    "mockProdServer.ts"
+    "_mockProdServer.ts"
   ],
   "exclude": ["vite.config.ts", "dist", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }] //每个引用的`path`属性都可以指向到包含`tsconfig.json`文件的目录，或者直接指向到配置文件本身（名字是任意的）

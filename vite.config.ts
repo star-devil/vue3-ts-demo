@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-08-06 09:52:45
+ * @LastEditTime: 2024-11-26 10:36:10
  * @LastEditors: wangqiaoling
  * @Description: 整体配置
  */
@@ -64,7 +64,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         localEnabled: command === "serve",
         prodEnabled: true,
         injectCode:
-          "import { setupProdMockServer } from '/mockProdServer.ts'; setupProdMockServer();",
+          "import { setupProdMockServer } from './api/mock/_mockProdServer.ts'; setupProdMockServer();",
         supportTs: true,
       }),
       viteCommonjs(),
