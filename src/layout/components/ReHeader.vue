@@ -140,8 +140,8 @@ onBeforeMount(() => {
         layoutData.name === 'noSider'
           ? 'fix-header'
           : layoutData.name === 'custom'
-          ? 'right-header'
-          : 'top-header',
+            ? 'right-header'
+            : 'top-header',
         're-header',
       ]"
       :style="changHeaderStyle"

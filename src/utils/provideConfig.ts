@@ -1,7 +1,7 @@
 /*
  * @Author: wangqiaoling
  * @Date: 2023-11-10 13:11:32
- * @LastEditTime: 2024-08-13 15:07:19
+ * @LastEditTime: 2024-11-26 11:06:10
  * @LastEditors: wangqiaoling
  * @Description: 提供一些配置方法
  */
@@ -69,17 +69,14 @@ export function covertFunction(originProps: any, extraCallbackData: any) {
 
 /**
  * @description 可用于动态控制操作是否禁用(or是否隐藏or是否渲染，凡是可以用true/false判断的都使用这个方法)
- * @param disable 用于判断禁用的对象参数，数组内各item之间是或关系，item内部属性是与关系
+ * @param disable 用于判断禁用的对象参数，数组内各item之间是或关系，item内部属性是与关系；
  * @param targetData 目标数据，如果与item内部属性值相同则禁用，与或判断参看disable
  * @returns boolean
  */
 export function actionIsDisabled(
-  disable: { [key: string]: any }[] | Function,
+  disable: { [key: string]: any }[],
   targetData: { [key: string]: any }
 ) {
-  if (typeof disable === "function") {
-    return disable(targetData);
-  }
   if (!disable || disable.length === 0) return false;
   for (const condition of disable) {
     let disableAction = true;

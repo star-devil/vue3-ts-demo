@@ -1,7 +1,7 @@
 <!--
  * @Author: wangqiaoling
  * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-05-08 14:21:44
+ * @LastEditTime: 2024-08-24 12:30:46
  * @LastEditors: wangqiaoling
  * @Description: 操作按钮组合
 -->
@@ -14,6 +14,19 @@ const extraProps = props.cellData.column.extraProps || {};
 let actionsPropsMap = reactive({});
 let popConfirmPropsMap = reactive({});
 onBeforeMount(() => {
+  bindDataToButton();
+});
+
+watch(
+  () => props.cellData,
+  () => {
+    bindDataToButton();
+  },
+  { deep: true }
+);
+
+/** 动态绑定数据到按钮上 */
+function bindDataToButton() {
   extraProps.actions.map((item: any, index: number) => {
     actionsPropsMap[index] = covertFunction(item.props, props.cellData.record); // 为点击按钮绑定当前点击行数据
 
@@ -23,11 +36,6 @@ onBeforeMount(() => {
         props.cellData.record
       )); // 为popconfirm绑定当前点击行数据
   });
-});
-
-/** 最后一项不显示分隔符 */
-function isShowDivider(index: number) {
-  return index < extraProps.actions.length - 1;
 }
 
 /** 处理文字按钮显示的十六进制颜色 */
@@ -38,6 +46,7 @@ function hexColorStyle(color: string | undefined) {
     };
   }
 }
+
 /** @description 颜色值转化
  * success: 系统success颜色
  * warning: 系统warning颜色
@@ -76,84 +85,83 @@ function coverToolTipColor(color: string | undefined): string {
 </script>
 
 <template>
-  <span
-    v-if="
-      extraProps.actionsType === 'link' ||
-      extraProps.actionsType === 'text' ||
-      extraProps.actionsType === 'mixin' ||
-      extraProps.actionsType === '' ||
-      extraProps.actionsType === undefined
-    "
-  >
-    <span
-      v-for="(item, index) in extraProps.actions"
-      :key="index"
-      class="px-"
-      v-show="!actionIsDisabled(item.hide, props.cellData.record)"
+  <span>
+    <a-space
+      v-if="
+        extraProps.actionsType === 'link' ||
+        extraProps.actionsType === 'text' ||
+        extraProps.actionsType === 'mixin' ||
+        extraProps.actionsType === '' ||
+        extraProps.actionsType === undefined
+      "
+      :size="0"
     >
-      <a-popconfirm
-        v-if="item.popConfirm"
-        v-bind.prop="popConfirmPropsMap[index]"
+      <template #split>
+        <a-divider type="vertical" />
+      </template>
+      <template v-for="(item, index) in extraProps.actions" :key="index">
+        <template v-if="!actionIsDisabled(item.hide, props.cellData.record)">
+          <a-popconfirm
+            v-if="item.popConfirm"
+            v-bind.prop="popConfirmPropsMap[index]"
+          >
+            <a-button
+              v-bind.prop="actionsPropsMap[index]"
+              :style="hexColorStyle(item.color)"
+              :class="[
+                extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
+                convertColor(item.color),
+              ]"
+              :type="extraProps.actionsType || 'link'"
+              :disabled="actionIsDisabled(item.disable, props.cellData.record)"
+              >{{ item.text }}
+            </a-button>
+          </a-popconfirm>
+          <a-button
+            v-else
+            v-bind.prop="actionsPropsMap[index]"
+            :style="hexColorStyle(item.color)"
+            :class="[
+              extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
+              convertColor(item.color),
+            ]"
+            :type="extraProps.actionsType || 'link'"
+            :disabled="actionIsDisabled(item.disable, props.cellData.record)"
+            >{{ item.text }}
+          </a-button>
+        </template>
+      </template>
+    </a-space>
+    <a-space-compact block v-else-if="extraProps.actionsType === 'icon'">
+      <a-tooltip
+        v-for="(item, index) in extraProps.actions"
+        :key="index"
+        :title="item.text"
+        :color="coverToolTipColor(item.color)"
+        v-show="!actionIsDisabled(item.hide, props.cellData.record)"
+        placement="topLeft"
       >
+        <a-popconfirm
+          v-if="item.popConfirm"
+          v-bind.prop="popConfirmPropsMap[index]"
+          placement="bottom"
+        >
+          <a-button
+            v-bind.prop="actionsPropsMap[index]"
+            :style="hexColorStyle(item.color)"
+            :class="convertColor(item.color)"
+            :disabled="actionIsDisabled(item.disable, props.cellData.record)"
+          ></a-button>
+        </a-popconfirm>
         <a-button
+          v-else
           v-bind.prop="actionsPropsMap[index]"
           :style="hexColorStyle(item.color)"
-          :class="[
-            extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
-            convertColor(item.color),
-          ]"
-          :type="extraProps.actionsType || 'link'"
-          :disabled="actionIsDisabled(item.disable, props.cellData.record)"
-          >{{ item.text }}
-        </a-button>
-      </a-popconfirm>
-      <a-button
-        v-else
-        v-bind.prop="actionsPropsMap[index]"
-        :style="hexColorStyle(item.color)"
-        :class="[
-          extraProps.actionsType === 'text' ? 'px-1' : 'px-0',
-          convertColor(item.color),
-        ]"
-        :type="extraProps.actionsType || 'link'"
-        :disabled="actionIsDisabled(item.disable, props.cellData.record)"
-        >{{ item.text }}
-      </a-button>
-      <a-divider v-show="isShowDivider(index)" type="vertical" />
-    </span>
-  </span>
-  <span v-else-if="extraProps.actionsType === 'icon'">
-    <a-tooltip
-      v-for="(item, index) in extraProps.actions"
-      :key="index"
-      :title="item.text"
-      :color="coverToolTipColor(item.color)"
-      v-show="!actionIsDisabled(item.hide, props.cellData.record)"
-      placement="topLeft"
-    >
-      <a-popconfirm
-        v-if="item.popConfirm"
-        v-bind.prop="popConfirmPropsMap[index]"
-        placement="bottom"
-      >
-        <a-button
-          v-bind.prop="actionsPropsMap[index]"
-          :style="hexColorStyle(item.color)"
-          :class="['px-0', convertColor(item.color)]"
-          :type="extraProps.actionsType"
+          :class="convertColor(item.color)"
           :disabled="actionIsDisabled(item.disable, props.cellData.record)"
         ></a-button>
-      </a-popconfirm>
-      <a-button
-        v-else
-        v-bind.prop="actionsPropsMap[index]"
-        :style="hexColorStyle(item.color)"
-        :class="['px-0', convertColor(item.color)]"
-        :type="extraProps.actionsType"
-        :disabled="actionIsDisabled(item.disable, props.cellData.record)"
-      ></a-button>
-      <a-divider type="vertical" v-show="isShowDivider(index)" />
-    </a-tooltip>
+      </a-tooltip>
+    </a-space-compact>
   </span>
 </template>
 
