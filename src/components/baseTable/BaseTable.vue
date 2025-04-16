@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-03-22 16:08:49
- * @LastEditTime: 2024-08-24 12:19:05
- * @LastEditors: wangqiaoling
- * @Description: 基础表格封装
--->
 <script lang="ts" setup>
 import { SmileOutlined } from "@ant-design/icons-vue";
 import { disposeColumns } from "./renderComponents";

@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-03-25 09:31:13
- * @LastEditTime: 2024-08-24 12:30:46
- * @LastEditors: wangqiaoling
- * @Description: 操作按钮组合
--->
 <script setup lang="ts">
 import { commonColor } from "@/theme/getTokenStore";
 import { actionIsDisabled, covertFunction } from "@utils/provideConfig";

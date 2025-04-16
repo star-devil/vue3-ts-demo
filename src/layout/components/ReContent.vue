@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2023-12-12 11:30:07
- * @LastEditTime: 2024-03-21 14:44:16
- * @LastEditors: wangqiaoling
  * @Description: Content：内容部分，自带默认样式，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">

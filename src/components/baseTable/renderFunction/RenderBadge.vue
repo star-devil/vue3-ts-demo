@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-05-09 15:19:54
- * @LastEditTime: 2024-05-11 10:45:44
- * @LastEditors: wangqiaoling
- * @Description: 单元格内渲染徽标
--->
 <script setup lang="ts">
 const props = defineProps(["cellData"]);
 const extraProps = cloneDeep(props.cellData.column.extraProps) || {};

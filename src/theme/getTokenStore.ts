@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-28 10:04:01
- * @LastEditTime: 2024-05-08 15:05:40
- * @LastEditors: wangqiaoling
  * @Description: 当前存储的主题配置
  */
 import { useThemeToken } from "@store/modules/themeTokenData";

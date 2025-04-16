@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-03-21 10:00:04
- * @LastEditTime: 2024-03-21 15:54:46
- * @LastEditors: wangqiaoling
  * @Description: 将当前所处的<ConfigProvider>下的ant design token映射为CSS变量字符串，写入一个对应的style标签。
  */
 import { theme } from "ant-design-vue";

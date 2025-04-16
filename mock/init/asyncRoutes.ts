@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-01-24 13:27:15
- * @LastEditTime: 2024-04-08 09:47:43
- * @LastEditors: wangqiaoling
- * @Description: 模拟服务器返回权限路由表
- */
 import { MockMethod } from "vite-plugin-mock";
 
 const permissionRouter = {

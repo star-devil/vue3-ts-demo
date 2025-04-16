@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2023-11-21 14:10:49
- * @LastEditTime: 2024-02-01 15:16:21
- * @LastEditors: wangqiaoling
- * @Description: axios错误处理函数
- */
 import NProgress from "@utils/progress";
 import type { AxiosError } from "axios";
 

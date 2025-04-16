@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-27 16:29:28
- * @LastEditTime: 2023-12-28 14:25:19
- * @LastEditors: wangqiaoling
  * @Description: 存储当前主题配置
  */
 import type { AliasToken } from "ant-design-vue/es/theme/interface";

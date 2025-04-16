@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2023-12-13 14:14:02
- * @LastEditTime: 2024-01-19 13:51:59
- * @LastEditors: wangqiaoling
  * @Description: 系统logo和名称
 -->
 <script setup lang="ts">

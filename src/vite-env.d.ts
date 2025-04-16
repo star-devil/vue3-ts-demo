@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2023-11-21 09:18:32
- * @LastEditTime: 2024-04-28 14:14:31
- * @LastEditors: wangqiaoling
- * @Description: 增加环境变量的智能提示
- */
 /// <reference types="vite/client" />
 interface ImportMetaEnv {
   readonly VITE_DROP_CONSOLE: string; //去除console 数据是只读的无法被修改

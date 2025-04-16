@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-03-26 10:58:31
- * @LastEditTime: 2024-05-06 17:31:21
- * @LastEditors: wangqiaoling
- * @Description:
- */
 import { MockMethod } from "vite-plugin-mock";
 
 export const baseTableData = [

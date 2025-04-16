@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2023-12-08 10:40:53
- * @LastEditTime: 2024-07-09 11:07:26
- * @LastEditors: wangqiaoling
  * @Description: 典型的页面布局
 -->
 <script setup lang="ts">

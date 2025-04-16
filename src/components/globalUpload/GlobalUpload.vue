@@ -1,11 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-07-26 14:50:19
- * @LastEditTime: 2024-08-13 16:15:33
- * @LastEditors: wangqiaoling
- * @Description: 文件上传plus,支持分块、断点等功能，但是必须在mian.ts中进行全局引用。
- * @Description: 文档地址：https://github.com/simple-uploader/vue-uploader/blob/vue3/README_zh-CN.md
--->
 <script setup lang="ts">
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 import { emitter, formatBytes } from "@utils/provideConfig";

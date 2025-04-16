@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-01-03 14:33:18
- * @LastEditTime: 2024-03-21 14:48:42
- * @LastEditors: wangqiaoling
  * @Description: 登录注册页
 -->
 <script setup lang="ts">

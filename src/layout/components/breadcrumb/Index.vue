@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-01-11 16:54:01
- * @LastEditTime: 2024-04-30 10:18:59
- * @LastEditors: wangqiaoling
  * @Description: 面包屑组件
 -->
 <script setup lang="ts">

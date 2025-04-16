@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-03-22 14:07:03
- * @LastEditTime: 2024-05-11 10:49:09
- * @LastEditors: wangqiaoling
- * @Description: 表格扩展type
- */
 import {
   ColumnGroupType,
   ColumnType,

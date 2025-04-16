@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-07-26 16:22:18
- * @LastEditTime: 2024-08-01 14:45:11
- * @LastEditors: wangqiaoling
- * @Description: 上传文件时接收的文件类型，如果在组件使用中没有限制上传文件类型，将会使用这个文件。
- */
 export const ACCEPT_CONFIG = {
   image: [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"],
   video: [

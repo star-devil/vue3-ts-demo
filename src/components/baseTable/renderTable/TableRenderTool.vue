@@ -1,11 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-06-25 10:54:31
- * @LastEditTime: 2024-07-10 17:56:47
- * @LastEditors: wangqiaoling
- * @Description: 
--->
-
 <script setup lang="ts">
 import type { Rule } from "ant-design-vue/es/form";
 import type { UnwrapRef } from "vue";

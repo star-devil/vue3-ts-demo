@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2023-11-09 10:13:48
- * @LastEditTime: 2024-08-05 16:03:16
- * @LastEditors: wangqiaoling
- * @Description: 
--->
 <script setup lang="ts">
 import { useThemeStore } from "@store/modules/setting";
 import { theme } from "ant-design-vue";

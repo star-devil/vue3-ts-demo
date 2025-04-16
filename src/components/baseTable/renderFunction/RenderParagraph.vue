@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-04-11 10:58:39
- * @LastEditTime: 2024-07-26 13:29:28
- * @LastEditors: wangqiaoling
- * @Description: 单元格内渲染长文本（段落）。两种方式：大量文本推荐优先使用 expandable，少量文本推荐使用 tooltip
--->
 <script setup lang="ts">
 const props = defineProps(["cellData"]);
 const extraProps = props.cellData.column.extraProps || {};

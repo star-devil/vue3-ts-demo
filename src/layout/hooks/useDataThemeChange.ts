@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-19 15:50:31
- * @LastEditTime: 2024-03-22 17:11:38
- * @LastEditors: wangqiaoling
  * @Description: 系统主题配置
  */
 import { themeColors } from "@/theme/index";

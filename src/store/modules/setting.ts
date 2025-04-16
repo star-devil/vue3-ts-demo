@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-11-09 10:21:19
- * @LastEditTime: 2024-04-28 14:14:59
- * @LastEditors: wangqiaoling
  * @Description: 主题和布局配置
  */
 import { storage } from "@utils/reStorage";

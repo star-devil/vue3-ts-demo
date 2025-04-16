@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-03-22 17:11:17
- * @LastEditors: wangqiaoling
  * @Description: 弹出的系统配置抽屉
 -->
 <script setup lang="ts">

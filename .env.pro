@@ -1,10 +1,3 @@
-###
- # @Author: wangqiaoling
- # @Date: 2023-11-09 13:55:11
- # @LastEditTime: 2023-12-29 16:29:30
- # @LastEditors: wangqiaoling
- # @Description: 生产环境变量
-### 
 VITE_DROP_CONSOLE = true # 去除console
 VITE_SYS_PREFIX = 'ts_0.0.1' # 项目名称前缀：名称+版本号，用于浏览器缓存标识
 VITE_SHOW_SET = true # 展示系统配置

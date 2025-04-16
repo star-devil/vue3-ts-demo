@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-28 15:57:35
- * @LastEditTime: 2024-04-28 14:20:03
- * @LastEditors: wangqiaoling
  * @Description: 界面配置，包括灰色模式、色弱模式等
  */
 import { useThemeStore } from "@store/modules/setting";

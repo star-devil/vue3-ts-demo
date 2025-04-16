@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-07-25 16:12:28
- * @LastEditTime: 2024-07-25 16:18:33
- * @LastEditors: wangqiaoling
  * @Description: 复制按钮示例
 -->
 <script setup lang="ts">

@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-07-25 14:50:47
- * @LastEditTime: 2024-07-25 15:13:19
- * @LastEditors: wangqiaoling
  * @Description: 基于a-typography-paragraph封装的复制按钮，无需下载别的插件
 -->
 <script setup lang="ts">

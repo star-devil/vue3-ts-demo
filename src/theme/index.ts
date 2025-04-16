@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-14 10:26:42
- * @LastEditTime: 2024-03-22 17:09:47
- * @LastEditors: wangqiaoling
  * @Description: 主题色配置文件
  */
 

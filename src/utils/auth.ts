@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-29 10:21:57
- * @LastEditTime: 2024-05-08 11:07:32
- * @LastEditors: wangqiaoling
  * @Description: 登入后信息存取操作
  */
 import { useUserInfo } from "@store/modules/userInfo";

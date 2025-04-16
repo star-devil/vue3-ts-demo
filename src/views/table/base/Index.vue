@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-01-02 10:20:08
- * @LastEditTime: 2024-07-11 13:21:55
- * @LastEditors: wangqiaoling
- * @Description: 
--->
 <script setup lang="ts">
 import { emitter } from "@utils/provideConfig";
 import { useRouter } from "vue-router";

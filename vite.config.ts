@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2023-11-10 15:12:45
- * @LastEditTime: 2024-11-26 10:36:10
- * @LastEditors: wangqiaoling
- * @Description: 整体配置
- */
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import { ConfigEnv, UserConfigExport, defineConfig, loadEnv } from "vite";

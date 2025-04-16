@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-03-26 10:56:06
- * @LastEditTime: 2024-04-09 14:00:29
- * @LastEditors: wangqiaoling
- * @Description:
- */
 import pkg from "lodash";
 import { MockMethod } from "vite-plugin-mock";
 import { baseTableData } from "./tableData";

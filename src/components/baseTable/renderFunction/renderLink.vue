@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-03-25 09:30:39
- * @LastEditTime: 2024-05-06 16:36:29
- * @LastEditors: wangqiaoling
- * @Description: 单元格link链接，用于页面跳转或者打开新页面包括iframe
--->
 <script setup lang="ts">
 import { actionIsDisabled, covertFunction } from "@utils/provideConfig";
 

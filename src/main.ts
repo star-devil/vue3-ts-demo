@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2023-12-12 13:57:43
- * @LastEditTime: 2024-08-02 16:18:05
- * @LastEditors: wangqiaoling
- * @Description: 全局配置
- */
 // tailwind样式
 import "./styles/tailwind.css";
 // 重置样式

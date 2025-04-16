@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-03 14:31:22
- * @LastEditTime: 2024-01-05 16:38:11
- * @LastEditors: wangqiaoling
  * @Description: 其他无需layout页面，不需要展示菜单导航以及额外模块，只需要展示业务内容模块
  */
 /**

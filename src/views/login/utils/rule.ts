@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-18 15:27:54
- * @LastEditTime: 2024-01-30 10:58:19
- * @LastEditors: wangqiaoling
  * @Description: 登录校验
  */
 import type { Rule } from "ant-design-vue/es/form";

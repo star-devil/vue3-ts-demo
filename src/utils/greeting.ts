@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-30 15:17:36
- * @LastEditTime: 2024-01-30 15:19:02
- * @LastEditors: wangqiaoling
  * @Description: 根据时间返回欢迎语
  */
 export const getGreeting = () => {

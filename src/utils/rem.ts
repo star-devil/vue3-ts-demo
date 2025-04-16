@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-18 14:50:26
- * @LastEditTime: 2024-01-18 16:24:18
- * @LastEditors: wangqiaoling
  * @Description: 页面像素自适应
  */
 // 自适应

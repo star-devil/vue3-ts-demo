@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-04-11 15:11:31
- * @LastEditTime: 2024-04-16 13:53:50
- * @LastEditors: wangqiaoling
- * @Description: 
--->
 <script setup lang="ts">
 import TextClamp from "vue3-text-clamp";
 </script>

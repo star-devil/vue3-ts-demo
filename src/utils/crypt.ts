@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-18 14:07:09
- * @LastEditTime: 2023-12-19 09:39:22
- * @LastEditors: wangqiaoling
  * @Description: 数据加密解密
  */
 import CryptoJS from "crypto-js";

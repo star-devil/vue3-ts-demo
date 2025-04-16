@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-03-26 11:06:44
- * @LastEditTime: 2024-05-06 17:34:46
- * @LastEditors: wangqiaoling
- * @Description: 模拟获取表格数据
- */
 import { http } from "@api/request/axios";
 
 export type BaseTableData = {

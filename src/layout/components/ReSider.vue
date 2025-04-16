@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2023-12-08 13:39:08
- * @LastEditTime: 2024-07-08 16:52:32
- * @LastEditors: wangqiaoling
  * @Description: Sider：侧边栏，自带默认样式及基本功能，其下可嵌套任何元素，只能放在 Layout 中。
 -->
 <script setup lang="ts">

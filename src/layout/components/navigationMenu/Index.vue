@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-07-26 10:04:00
- * @LastEditors: wangqiaoling
  * @Description: layout导航菜单组件，根据路由动态生成
 -->
 <script setup lang="ts">

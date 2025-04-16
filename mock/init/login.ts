@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-01-24 14:01:26
- * @LastEditTime: 2024-04-28 10:57:42
- * @LastEditors: wangqiaoling
- * @Description: mock登录接口
- */
 import { MockMethod } from "vite-plugin-mock";
 
 export default [

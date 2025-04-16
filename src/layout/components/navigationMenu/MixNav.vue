@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-01-04 16:45:49
- * @LastEditTime: 2024-07-09 11:08:59
- * @LastEditors: wangqiaoling
  * @Description: layout混合导航模式菜单组件，一级菜单在顶部显示，二级菜单在侧边栏显示
 -->
 <script setup lang="ts">

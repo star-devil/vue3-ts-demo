@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-11-13 10:45:50
- * @LastEditTime: 2024-02-06 10:02:28
- * @LastEditors: wangqiaoling
  * @Description: 简单路由配置
  */
 import NProgress from "@/utils/progress";

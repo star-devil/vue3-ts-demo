@@ -1,8 +1,4 @@
 <!--
- * @Author: wangqiaoling
- * @Date: 2024-03-25 09:29:47
- * @LastEditTime: 2024-03-28 17:27:50
- * @LastEditors: wangqiaoling
  * @Description: 单元格内渲染标签（只要数据结构支持，也可以用在任何适当的地方）
 -->
 <script setup lang="ts">

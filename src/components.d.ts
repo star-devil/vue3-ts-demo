@@ -69,7 +69,7 @@ declare module 'vue' {
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
     QuestionCircleOutlined: (typeof import("@ant-design/icons-vue"))["QuestionCircleOutlined"]
     ReloadOutlined: typeof import('@ant-design/icons-vue')['ReloadOutlined']
-    RenderAction: typeof import('./components/baseTable/renderFunction/renderAction.vue')['default']
+    RenderAction: typeof import('./components/baseTable/renderFunction/RenderAction.vue')['default']
     RenderBadge: typeof import('./components/baseTable/renderFunction/RenderBadge.vue')['default']
     RenderDefualt: typeof import('./components/baseTable/renderFunction/RenderDefualt.vue')['default']
     RenderLink: typeof import('./components/baseTable/renderFunction/RenderLink.vue')['default']

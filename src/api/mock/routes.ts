@@ -1,10 +1,3 @@
-/*
- * @Author: wangqiaoling
- * @Date: 2024-02-02 14:14:05
- * @LastEditTime: 2024-02-02 14:14:50
- * @LastEditors: wangqiaoling
- * @Description:
- */
 import { http } from "@api/request/axios";
 
 type Result = {

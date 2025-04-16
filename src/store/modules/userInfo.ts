@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-01-23 10:42:55
- * @LastEditTime: 2024-07-09 09:52:49
- * @LastEditors: wangqiaoling
  * @Description: 存储用户可用的个人信息
  */
 import {

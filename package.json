@@ -1,9 +1,9 @@
 {
   "name": "init-app",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
-  "author": "wondersEGG",
+  "author": "EGG",
   "scripts": {
     "serve": "pnpm dev",
     "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite --mode dev",

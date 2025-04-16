@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-07-11 11:12:58
- * @LastEditTime: 2024-08-13 13:40:57
- * @LastEditors: wangqiaoling
  * @Description: 组件示例菜单
  */
 export default {

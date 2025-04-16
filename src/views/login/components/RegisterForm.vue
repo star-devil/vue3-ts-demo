@@ -1,10 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @Date: 2024-01-19 14:14:17
- * @LastEditTime: 2024-01-23 11:06:23
- * @LastEditors: wangqiaoling
- * @Description: 注册表单
--->
 <script setup lang="ts">
 import message from "ant-design-vue/es/message";
 import PasswordMeter from "vue-simple-password-meter";

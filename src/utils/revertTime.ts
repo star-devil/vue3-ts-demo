@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2024-08-13 15:07:11
- * @LastEditTime: 2024-08-13 15:42:31
- * @LastEditors: wangqiaoling
  * @Description: 自定义函数，将毫秒转换为更易读的格式
  */
 import dayjs from "dayjs";

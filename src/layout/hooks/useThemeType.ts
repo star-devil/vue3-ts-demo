@@ -1,8 +1,4 @@
 /*
- * @Author: wangqiaoling
- * @Date: 2023-12-29 10:26:31
- * @LastEditTime: 2023-12-29 10:27:53
- * @LastEditors: wangqiaoling
  * @Description: 日间、夜间模式切换
  */
 import { useThemeStore } from "@store/modules/setting";
